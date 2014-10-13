@@ -191,7 +191,9 @@ void testApp::keyPressed( int key ){
             break;
     
         case 'f':
-            ofToggleFullscreen();
+            //ofToggleFullscreen();
+			ofSetWindowShape( 1980*2, 1080*2 );
+			ofSetWindowPosition( 0, 0 );
             break;
 
         case 'm':

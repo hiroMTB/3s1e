@@ -82,12 +82,12 @@ public:
             c.g += ( g[4]-0.5 ) * 0.002;
             c.b += ( g[5]-0.5 ) * 0.002;
             
-            if( ofRandom(1.0)>0.6){
-                c.a = g[6] * 0.4;
+            if( ofRandom(1.0)>0.5){
+                c.a = g[6] * 0.8;
             }else{
                 c.a = 0;
             }
-            
+			
 //            c.setSaturation( 0.2 );
             if( i==0 ){
                 trail.setColor( i, ofFloatColor( ofRandom(0.8,1.0),0,0, ofRandom(0.7,1.0)) );

@@ -98,11 +98,10 @@ void testApp::draw(){
     
     
     for ( int i=0; i<la.size(); i++ ) {
-//        ofTranslate( 1, 1 );
         if( bDraw_agent ){
-            if( ofRandom(1.0)>0.2 ){
+            //if( ofRandom(1.0)>0.2 ){
                 la[i].draw();
-            }
+            //}
         }
         if( bDraw_connection_inside_of_agent ){
             la[i].draw_connection_inside_of_agent();
@@ -156,17 +155,11 @@ void testApp::draw_connection_between_agnet(){
 void testApp::change_settings(){
     in_angle = ofRandom( 0, 360 );
     out_angle = in_angle + ofRandom( -360, 360 );
-    initial_radius = ofRandom( 10, 400 );
+    initial_radius = ofRandom( 10, 1200 );
     sequencial_add_speed = ofRandom( 5, 10 );
     current_setting_start_frame = ofGetFrameNum();
     center.set( ofRandom(-200, 200), ofRandom(-200, 200), ofRandom(-10, 10) );
     
-     //nice seting
-//     in_angle = 360; //ofRandom( 0, 360 );
-//     out_angle = -20; //ofRandom( 0, 360 );
-//     initial_radius = 400; //ofRandom( 10, 400 );
-//     sequencial_add_speed = 10; //ofRandom( 1, 10 );
-//     current_setting_start_frame = ofGetFrameNum();
 }
 
 void testApp::draw_info(){
@@ -243,7 +236,7 @@ void testApp::keyPressed( int key ){
             break;
 
         case 'S':
-            saver.start( ofGetTimestampString(), "gm2.1_", 500 );
+            saver.start( ofGetTimestampString(), "gm2.1_", 3000 );
             break;
             
         default:

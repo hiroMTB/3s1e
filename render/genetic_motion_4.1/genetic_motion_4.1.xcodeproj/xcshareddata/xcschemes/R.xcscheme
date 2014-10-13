@@ -32,9 +32,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "genetic_motion_2.1.app"
-            BlueprintName = "genetic_motion_2.1"
-            ReferencedContainer = "container:genetic_motion_2.1.xcodeproj">
+            BuildableName = "genetic_motion_2.1_r1.app"
+            BlueprintName = "genetic_motion_4.1"
+            ReferencedContainer = "container:genetic_motion_4.1.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -43,7 +43,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "genetic_motion_2.1.app"
-            BlueprintName = "genetic_motion_2.1"
-            ReferencedContainer = "container:genetic_motion_2.1.xcodeproj">
+            BuildableName = "genetic_motion_2.1_r1.app"
+            BlueprintName = "genetic_motion_4.1"
+            ReferencedContainer = "container:genetic_motion_4.1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

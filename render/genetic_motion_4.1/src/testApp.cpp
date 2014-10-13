@@ -17,9 +17,7 @@ testApp::testApp(){
 }
 
 void testApp::setup(){
-
-    num_agent = 3000;
-
+	
     in_angle = ofRandom( -360, 360 );
     out_angle = ofRandom( -360, 360 );
     
@@ -36,25 +34,22 @@ void testApp::setup(){
 
 void testApp::update(){
     int frame = ofGetFrameNum();
-    float step_angle = (out_angle-in_angle)/num_agent;
+    float step_angle = (out_angle-in_angle)/ 3000.0;
     int w = 0; //ofGetWidth();
     int h = 0; //ofGetHeight();
     
     if( frame%100 == 0 ){
         change_settings();
     }
-    
-    
+	
     if( bStart ){
-        if( la.size() < num_agent){
-            LineAgent l;
-            if( bSequencial_add){
-                l.setup( in_angle + step_angle*(float)frame*sequencial_add_speed, initial_radius, center );
-            }else{
-                l.setup( ofRandom(in_angle, out_angle), initial_radius, center );
-            }
-            la.push_back( l );
-        }
+		LineAgent l;
+		if( bSequencial_add){
+			l.setup( in_angle + step_angle*(float)frame*sequencial_add_speed, initial_radius, center );
+		}else{
+			l.setup( ofRandom(in_angle, out_angle), initial_radius, center );
+		}
+		la.push_back( l );
     }
     
     if( bStart ){

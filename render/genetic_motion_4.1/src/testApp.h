@@ -82,8 +82,8 @@ public:
             c.g += ( g[4]-0.5 ) * 0.002;
             c.b += ( g[5]-0.5 ) * 0.002;
             
-            if( ofRandom(1.0)>0.5){
-                c.a = g[6] * 0.8;
+            if( ofRandom(1.0)>0.4){
+                c.a = g[6] * 0.85;
             }else{
                 c.a = 0;
             }
@@ -126,7 +126,7 @@ public:
     
     void draw() {
         glLineWidth( 1 );
-		glPointSize( 2 );
+		glPointSize( 1 );
         trail.draw( OF_MESH_POINTS );
 	}
     
@@ -179,7 +179,6 @@ public:
     bool bDraw_agent;
     bool bSequencial_add;
     
-    int num_agent;
     int current_setting_start_frame;
     float in_angle;
     float out_angle;

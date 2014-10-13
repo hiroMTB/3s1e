@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "genetic_motion_2.1_r1.app"
+            BuildableName = "genetic_motion_4.1.app"
             BlueprintName = "genetic_motion_4.1"
             ReferencedContainer = "container:genetic_motion_4.1.xcodeproj">
          </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "genetic_motion_2.1_r1.app"
+            BuildableName = "genetic_motion_4.1.app"
             BlueprintName = "genetic_motion_4.1"
             ReferencedContainer = "container:genetic_motion_4.1.xcodeproj">
          </BuildableReference>

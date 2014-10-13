@@ -193,7 +193,7 @@ void testApp::keyPressed( int key ){
             break;
 
         case 'S':
-            saver.start( ofGetTimestampString(), "gm2.1_", 3000 );
+            saver.start( ofGetTimestampString(), "", 3000 );
             break;
             
         default:

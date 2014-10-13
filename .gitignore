@@ -1,28 +1,58 @@
+# ignore all
+# check another .ignore file in addons folder
+
+# Xcode Project
+xcuserdata/
+*.entitlements
+
+#OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+*~
+.svn/
+*.wav
+*.app/
+
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
-
-# Fortran module files
-*.mod
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
-*.lib
 
-# Executables
-*.exe
-*.out
-*.app
+# xml
+*.*.bak
+
+#emacs
+*.*~
+
+#movie file
+*.mov
+*.avi
+*.mpeg
+
+
+#image file
+#*.png
+*.jpg
+*.jpeg
+*.tiff
+*.tif
+*.gif
+
+
+#gui setting
+_settings.xml
+#.gitignore#

@@ -32,29 +32,29 @@ void testApp::setup(){
     ofEnableAntiAliasing();
     ofSetVerticalSync( true );
 
-    glEnable( GL_MULTISAMPLE );
-    GLint buf, sbuf;
-    glGetIntegerv( GL_SAMPLE_BUFFERS, &buf );
-    glGetIntegerv( GL_SAMPLES, &sbuf );
-    cout << "Number of sample buffers is " + ofToString( buf ) << endl;
-    cout << "Number of samples is " + ofToString( sbuf ) << endl;
 }
 
 void testApp::update(){
-
-    float step = ofGetFrameNum();
+    int frame = ofGetFrameNum();
     float step_angle = (out_angle-in_angle)/num_agent;
     int w = 0; //ofGetWidth();
     int h = 0; //ofGetHeight();
     
-    if( la.size() < num_agent){
-        LineAgent l;
-        if( bSequencial_add){
-            l.setup( in_angle + step_angle*step*sequencial_add_speed, initial_radius, center );
-        }else{
-            l.setup( ofRandom(in_angle, out_angle), initial_radius, center );
+    if( frame%100 == 0 ){
+        change_settings();
+    }
+    
+    
+    if( bStart ){
+        if( la.size() < num_agent){
+            LineAgent l;
+            if( bSequencial_add){
+                l.setup( in_angle + step_angle*(float)frame*sequencial_add_speed, initial_radius, center );
+            }else{
+                l.setup( ofRandom(in_angle, out_angle), initial_radius, center );
+            }
+            la.push_back( l );
         }
-        la.push_back( l );
     }
     
     if( bStart ){
@@ -117,6 +117,8 @@ void testApp::draw(){
 }
 
 void testApp::draw_connection_between_agnet(){
+    if( !bStart )
+        return;
     
     connection_between_agent.clear();
     
@@ -170,21 +172,27 @@ void testApp::change_settings(){
 void testApp::draw_info(){
     if( !bDraw_info) return;
     ofSetColor( 200 );
-    ofRect( 5, 10, 600, 300 );
+    ofRect( 5, 5, 600, 300 );
     int y = 20;
     ofSetColor( 0 );
-    ofDrawBitmapString( "space key : start genetic calculation", 20, y+=20 );
-    ofDrawBitmapString( "m     key : start animation",           20, y+=20 );
-    ofDrawBitmapString( "o     key : toggle ortho graphic view", 20, y+=20 );
-    ofDrawBitmapString( "i     key : draw connection line inside of line agent", 20, y+=20 );
-    ofDrawBitmapString( "b     key : draw connection line between line agents", 20, y+=20 );
-    ofDrawBitmapString( "r     key : toggle rotatation",         20, y+=20 );
-    ofDrawBitmapString( "a     key : draw line agent",           20, y+=20 );
-    ofDrawBitmapString( "s     key : sequencial add",            20, y+=20 );
-    ofDrawBitmapString( "I     key : draw info",                 20, y+=20 );
-    ofDrawBitmapString( "c     key : change settings",           20, y+=20 );
-
-    ofDrawBitmapString( "S     key : save image",                20, y+=20 );
+    stringstream ss;
+    ss << "fps       : " << (int)ofGetFrameRate() << "\n";
+    ss << "cur frame : " << saver.frame_cur << "\n";
+    ss << "end frame : " << saver.frame_end << "\n";
+    ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
+    ss << "space key : start genetic calculation\n";
+    ss << "m     key : start animation\n";
+    ss << "o     key : toggle ortho graphic view\n";
+    ss << "i     key : draw connection line inside of line agent\n";
+    ss << "b     key : draw connection line between line agents\n";
+    ss << "r     key : toggle rotatation\n";
+    ss << "a     key : draw line agent\n";
+    ss << "s     key : sequencial add\n";
+    ss << "I     key : draw info\n";
+    ss << "c     key : change settings\n";
+    ss << "S     key : save image\n";
+    ss << "f     key : toggle fullscreen\n";
+    ofDrawBitmapString( ss.str(), 20, 20 );
 }
 
 void testApp::keyPressed( int key ){
@@ -195,7 +203,7 @@ void testApp::keyPressed( int key ){
             break;
     
         case 'f':
-//            ofToggleFullscreen();
+            ofToggleFullscreen();
             break;
 
         case 'm':

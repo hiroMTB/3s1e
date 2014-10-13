@@ -8,6 +8,14 @@
 
 #include "ad_image_saver.h"
 
+ad_image_saver::ad_image_saver()
+:
+frame_cur( 0 ),
+frame_end( 0 ),
+bStart( false ){
+    
+}
+
 void ad_image_saver::start( string _dir_name, string _file_prefix, int _frame_end, string _file_extention ){
     
     dir_name = _dir_name;

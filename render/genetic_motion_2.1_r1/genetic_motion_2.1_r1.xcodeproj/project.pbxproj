@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D0ECC2C19E72B7C00C27B92 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0ECC2A19E72AC300C27B92 /* ad_image_saver.cpp */; };
+		4D4CE7AC19EBEC08005A7C3A /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4CE7A919EBEBE4005A7C3A /* ad_image_saver.cpp */; };
 		4DF4905219CE31580027CB11 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF4905019CE31580027CB11 /* QTKit.framework */; };
 		4DF4905319CE31580027CB11 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF4905119CE31580027CB11 /* QuartzCore.framework */; };
 		4DF4905519CE317C0027CB11 /* ofxDna.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF4905419CE317C0027CB11 /* ofxDna.cpp */; };
@@ -63,8 +63,8 @@
 /* Begin PBXFileReference section */
 		000883F415CE730D00D20D43 /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		008853B015CD237300DBB2AB /* ofxDna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDna.h; path = ../../../addons/ofxDna/src/ofxDna.h; sourceTree = SOURCE_ROOT; };
-		4D0ECC2A19E72AC300C27B92 /* ad_image_saver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
-		4D0ECC2B19E72AC300C27B92 /* ad_image_saver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		4D4CE7A919EBEBE4005A7C3A /* ad_image_saver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
+		4D4CE7AA19EBEBE4005A7C3A /* ad_image_saver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
 		4DF4905019CE31580027CB11 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		4DF4905119CE31580027CB11 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DF4905419CE317C0027CB11 /* ofxDna.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDna.cpp; sourceTree = "<group>"; };
@@ -138,14 +138,14 @@
 			path = ../../../addons/ofxDna/src;
 			sourceTree = SOURCE_ROOT;
 		};
-		4D0ECC2919E72AC300C27B92 /* module */ = {
+		4D4CE7A819EBEBE4005A7C3A /* module */ = {
 			isa = PBXGroup;
 			children = (
-				4D0ECC2A19E72AC300C27B92 /* ad_image_saver.cpp */,
-				4D0ECC2B19E72AC300C27B92 /* ad_image_saver.h */,
+				4D4CE7A919EBEBE4005A7C3A /* ad_image_saver.cpp */,
+				4D4CE7AA19EBEBE4005A7C3A /* ad_image_saver.h */,
 			);
 			name = module;
-			path = ../../module;
+			path = ../../../module;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -218,7 +218,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4D0ECC2919E72AC300C27B92 /* module */,
+				4D4CE7A819EBEBE4005A7C3A /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
@@ -238,9 +238,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* genetic_motion_2.1 */ = {
+		E4B69B5A0A3A1756003C02F2 /* genetic_motion_2.1_r1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "genetic_motion_2.1" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "genetic_motion_2.1_r1" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -252,7 +252,7 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = genetic_motion_2.1;
+			name = genetic_motion_2.1_r1;
 			productName = myOFApp;
 			productReference = E4B69B5B0A3A1756003C02F2 /* genetic_motion_2.1Debug.app */;
 			productType = "com.apple.product-type.application";
@@ -264,7 +264,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "genetic_motion_2.1" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "genetic_motion_2.1_r1" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -285,7 +285,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* genetic_motion_2.1 */,
+				E4B69B5A0A3A1756003C02F2 /* genetic_motion_2.1_r1 */,
 			);
 		};
 /* End PBXProject section */
@@ -321,7 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D0ECC2C19E72B7C00C27B92 /* ad_image_saver.cpp in Sources */,
+				4D4CE7AC19EBEC08005A7C3A /* ad_image_saver.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4DF4905519CE317C0027CB11 /* ofxDna.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
@@ -486,7 +486,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = genetic_motion_2.1Debug;
+				PRODUCT_NAME = genetic_motion_2.1_r1Debug;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -572,7 +572,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = genetic_motion_2.1;
+				PRODUCT_NAME = genetic_motion_2.1_r1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -580,7 +580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "genetic_motion_2.1" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "genetic_motion_2.1_r1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -589,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "genetic_motion_2.1" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "genetic_motion_2.1_r1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,

@@ -94,6 +94,8 @@ void testApp::draw(){
         }
     } ofPopMatrix();
 
+    saver.save();
+    
     draw_info();
 }
 
@@ -104,7 +106,12 @@ void testApp::draw_info(){
     int y = 20;
     ofSetColor( 0 );
     stringstream ss;
-    ss << "space key : start genetic calculation\n";
+    ss << "fps       : " << (int)ofGetFrameRate() << "\n";
+    ss << "cur frame : " << saver.frame_cur << "\n";
+    ss << "end frame : " << saver.frame_end << "\n";
+    ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
+
+    ss << "space key : start\n";
     ss << "f     key : render resolution\n";
     ss << "I     key : draw info\n";
     ss << "S     key : save image\n";
@@ -128,7 +135,7 @@ void testApp::keyPressed( int key ){
 
         case 'S':
             bStart = true;
-            saver.start( ofGetTimestampString(), "gm2.1_", 500 );
+            saver.start( ofGetTimestampString(), "", 3000 );
             break;
         default:
             break;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D06523C19EDC8ED00D3A079 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D06523A19EDC8E300D3A079 /* ad_image_saver.cpp */; };
 		4DF4905219CE31580027CB11 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF4905019CE31580027CB11 /* QTKit.framework */; };
 		4DF4905319CE31580027CB11 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF4905119CE31580027CB11 /* QuartzCore.framework */; };
 		4DF4905519CE317C0027CB11 /* ofxDna.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF4905419CE317C0027CB11 /* ofxDna.cpp */; };
@@ -62,6 +63,8 @@
 /* Begin PBXFileReference section */
 		000883F415CE730D00D20D43 /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		008853B015CD237300DBB2AB /* ofxDna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDna.h; path = ../../../addons/ofxDna/src/ofxDna.h; sourceTree = SOURCE_ROOT; };
+		4D06523A19EDC8E300D3A079 /* ad_image_saver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
+		4D06523B19EDC8E300D3A079 /* ad_image_saver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
 		4DF4905019CE31580027CB11 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		4DF4905119CE31580027CB11 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DF4905419CE317C0027CB11 /* ofxDna.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDna.cpp; sourceTree = "<group>"; };
@@ -135,6 +138,16 @@
 			path = ../../../addons/ofxDna/src;
 			sourceTree = SOURCE_ROOT;
 		};
+		4D06523919EDC8E300D3A079 /* module */ = {
+			isa = PBXGroup;
+			children = (
+				4D06523A19EDC8E300D3A079 /* ad_image_saver.cpp */,
+				4D06523B19EDC8E300D3A079 /* ad_image_saver.h */,
+			);
+			name = module;
+			path = ../../../module;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +218,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4D06523919EDC8E300D3A079 /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
@@ -307,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D06523C19EDC8ED00D3A079 /* ad_image_saver.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4DF4905519CE317C0027CB11 /* ofxDna.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,

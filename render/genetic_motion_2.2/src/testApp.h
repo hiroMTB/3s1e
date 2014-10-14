@@ -128,7 +128,8 @@ public:
 
     bool bDraw_info;
 	bool bStart;
-	vector<LineAgent> la;
+
+    vector<LineAgent> la;
     
     ofVboMesh lines;
     

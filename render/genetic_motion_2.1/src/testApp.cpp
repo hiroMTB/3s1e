@@ -3,19 +3,17 @@
 testApp::testApp(){
     bDraw_info = true;
     bStart = false;
-    bAnimate = true;
-    bRotate = false;
-    bOrtho = false;
+    bAdd_agent = true;
 }
 
 void testApp::setup(){
 
-    num_agent = 100;
+    num_agent = 500;
     ofVec3f center( 0, 0, 0 );
 
     for ( int i=0; i<num_agent; i++ ) {
         LineAgent l;
-        l.setup( center, 300 );
+        l.setup( center, 500 );
         la.push_back( l );
 	}
 	
@@ -35,12 +33,13 @@ void testApp::update(){
                 la[i].dna.mate( la[i+1].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
             }
             
-            la[i].add_result();
+            la[i].update_agent();
             
-            if( bAnimate ){
-                la[i].animate();
-                la[i].animate_noise( i );
-            }
+            if( bAdd_agent )
+                la[i].add_result();
+            
+            la[i].animate();
+            la[i].animate_noise( i );
         }
     }
 }
@@ -53,8 +52,6 @@ void testApp::draw(){
 	ofBackground( 255 );
     
     ofSetColor( 255 );
-    if( bOrtho )
-        ofSetupScreenOrtho();
 
     ofPushMatrix(); {
         ofTranslate( ofGetWidth()/2, ofGetHeight()/2 );
@@ -63,6 +60,8 @@ void testApp::draw(){
         }
     } ofPopMatrix();
 
+    saver.save();
+    
     draw_info();
 }
 
@@ -72,11 +71,19 @@ void testApp::draw_info(){
     ofRect( 5, 10, 400, 200 );
     int y = 20;
     ofSetColor( 0 );
-    ofDrawBitmapString( "space key : start genetic calculation", 20, y+=20 );
-    ofDrawBitmapString( "f     key : full screen",               20, y+=20 );
-    ofDrawBitmapString( "a     key : start animation",           20, y+=20 );
-    ofDrawBitmapString( "o     key : toggle ortho graphic view", 20, y+=20 );
-    ofDrawBitmapString( "I     key : draw info",                 20, y+=20 );
+    
+    ofSetColor( 0 );
+    stringstream ss;
+    ss << "fps       : " << (int)ofGetFrameRate() << "\n";
+    ss << "cur frame : " << saver.frame_cur << "\n";
+    ss << "end frame : " << saver.frame_end << "\n";
+    ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
+    
+    ss << "space key : start\n";
+    ss << "f     key : render resolution\n";
+    ss << "I     key : draw info\n";
+    ss << "S     key : save image\n";
+    ofDrawBitmapString( ss.str(), 20, 20 );
 }
 
 void testApp::keyPressed( int key ){
@@ -85,21 +92,24 @@ void testApp::keyPressed( int key ){
 		case ' ':
             bStart = !bStart;
             break;
-    
-        case 'f':
-            ofToggleFullscreen();
-            break;
 
         case 'a':
-            bAnimate = !bAnimate;
+            bAdd_agent = !bAdd_agent;
             break;
-        
-        case 'o':
-            bOrtho = !bOrtho;
+            
+        case 'f':
+            ofSetWindowShape( 1920*2, 1080*2 );
+            break;
 
         case 'I':
             bDraw_info = !bDraw_info;
             break;
+            
+        case 'S':
+            bStart = true;
+            saver.start( ofGetTimestampString(), "", 3000 );
+            break;
+
         default:
             break;
 	}

@@ -1,7 +1,8 @@
 #include "testApp.h"
 
 testApp::testApp(){
-    bDraw_info = true;
+	ofSetWindowPosition(0, 0);
+	bDraw_info = true;
     bStart = false;
     bAnimate = true;
     bRotate = false;
@@ -161,8 +162,8 @@ void testApp::keyPressed( int key ){
             break;
     
         case 'f':
-            ofToggleFullscreen();
-            break;
+			ofSetWindowShape( 1920*2, 1080*2 );
+			break;
 
         case 'm':
             bAnimate = !bAnimate;

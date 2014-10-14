@@ -54,6 +54,7 @@ void ad_image_saver::save(){
         cout << "/// image saver end at : " + ofGetTimestampString() << endl;
         cout << "///" << endl;
         bStart = false;
+		ofExit();
     }
 }
 

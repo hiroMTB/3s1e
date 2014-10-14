@@ -1,7 +1,8 @@
 #include "testApp.h"
 
 testApp::testApp(){
-    bDraw_info = true;
+	ofSetWindowPosition( 0, 0 );
+	bDraw_info = true;
     bStart = false;
     bAnimate = true;
     bRotate = false;
@@ -14,6 +15,7 @@ testApp::testApp(){
     current_setting_start_frame = 0;
     sequencial_add_speed = 1;
     center.set( 0, 0, 0 );
+	current_la_pos.set( 0, 0, 0 );
 }
 
 void testApp::setup(){
@@ -38,7 +40,7 @@ void testApp::update(){
     int w = 0; //ofGetWidth();
     int h = 0; //ofGetHeight();
     
-    if( frame%100 == 0 ){
+    if( frame%500 == 0 ){
         change_settings();
     }
 	
@@ -50,11 +52,14 @@ void testApp::update(){
 			l.setup( ofRandom(in_angle, out_angle), initial_radius, center );
 		}
 		la.push_back( l );
+		
+		current_la_pos = l.pos;
+		
     }
     
     if( bStart ){
         for ( int i=0; i<la.size(); i++ ) {
-            if( ofGetKeyPressed() || ofRandom(1.0)<0.3 ||i==la.size()-1 ){
+            if( ofRandom(1.0)<0.3 ||i==la.size()-1 ){
                 la[i].dna.setBoundsMode( i%3 );
                 la[i].dna.mutate(  ofMap(mouseX, 0, ofGetWidth(), 0, 0.5)*0.4 );
             }else{
@@ -102,7 +107,7 @@ void testApp::draw(){
             la[i].draw_connection_inside_of_agent();
         }
 	}
-    
+	
     ofPopMatrix();
 
     saver.save();
@@ -116,45 +121,59 @@ void testApp::draw_connection_between_agnet(){
     
     connection_between_agent.clear();
     
-    int num_line = 2000;
+    int num_line = la.size() * 0.1;
     
     for( int i=0; i<num_line; i++ ){
         
         int agent1 = floor( ofRandom(0, la.size()) );
-        int agent2 = floor( ofRandom(0, la.size()) );
-    
-        int nv1 = la[agent1].trail.getNumVertices();
-        int nv2 = la[agent2].trail.getNumVertices();
-    
-        if( nv1==0 || nv2==0 ) break;
-        
-        int index1 = floor( ofRandom(0, nv1) );
-        int index2 = floor( ofRandom(0, nv2) );
-        
-        ofVec3f p1 = la[agent1].trail.getVertex( index1 );
-        ofVec3f p2 = la[agent2].trail.getVertex( index2 );
-        
-        float d = p1.distance( p2 );
-        if( 30<d && d<180 ){
-            connection_between_agent.addVertex( p1 );
-            connection_between_agent.addVertex( p2 );
-            connection_between_agent.addColor( la[agent1].trail.getColor( index1 )*0.1 );
-            connection_between_agent.addColor( la[agent2].trail.getColor( index2 )*0.1 );
-        }
+		
+		for( int j=0; j<300; j++ ){
+			int agent2 = floor( ofRandom(0, la.size()) );
+		
+			int nv1 = la[agent1].trail.getNumVertices();
+			int nv2 = la[agent2].trail.getNumVertices();
+		
+			if( nv1==0 || nv2==0 ) break;
+			
+			int index1 = floor( ofRandom(0, nv1) );
+			int index2 = floor( ofRandom(0, nv2) );
+			
+			ofVec3f p1 = la[agent1].trail.getVertex( index1 );
+			ofVec3f p2 = la[agent2].trail.getVertex( index2 );
+			
+			float d = p1.distance( p2 );
+			if( 10<d && d<60 ){
+				connection_between_agent.addVertex( p1 );
+				connection_between_agent.addVertex( p2 );
+				connection_between_agent.addColor( la[agent1].trail.getColor( index1 )*0.1 );
+				connection_between_agent.addColor( la[agent2].trail.getColor( index2 )*0.1 );
+			}
+		}
     }
-    
+	
+	for( int i=ofRandom(10, 100); i<la.size(); ){
+		int last = la[i].trail.getNumVertices()-1;
+		if( last>2 ){
+			connection_between_agent.addVertex( ofVec3f(0,0,0) );
+			connection_between_agent.addVertex( la[i].trail.getVertex(last) );
+			connection_between_agent.addColor( ofFloatColor(0, ofRandom(0.2, 0.6)) );
+			connection_between_agent.addColor( ofFloatColor(0, ofRandom(0.2, 0.6)) );
+		}
+		
+		i+= ofRandom( 1, 200 );
+	}
+	
     glLineWidth( 1 );
     connection_between_agent.drawWireframe();
 }
 
 void testApp::change_settings(){
     in_angle = ofRandom( 0, 360 );
-    out_angle = in_angle + ofRandom( -360, 360 );
-    initial_radius = ofRandom( 10, 1200 );
-    sequencial_add_speed = ofRandom( 5, 10 );
+    out_angle = in_angle + ofRandom( 100, 360 );
+    initial_radius = ofRandom( 300, 900 );
+    sequencial_add_speed = ofRandom( 6, 8 );
     current_setting_start_frame = ofGetFrameNum();
-    center.set( ofRandom(-200, 200), ofRandom(-200, 200), ofRandom(-10, 10) );
-    
+    center.set( 0, 0, 0 );
 }
 
 void testApp::draw_info(){
@@ -191,9 +210,7 @@ void testApp::keyPressed( int key ){
             break;
     
         case 'f':
-            //ofToggleFullscreen();
-			ofSetWindowShape( 1980*2, 1080*2 );
-			ofSetWindowPosition( 0, 0 );
+			ofSetWindowShape( 1920*2, 1080*2 );
             break;
 
         case 'm':

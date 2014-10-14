@@ -35,7 +35,7 @@ void testApp::update(){
     
     for( int i=0; i<pos.size(); i++ ){
         ofVec3f &p = pos[i];
-        if( p.y>2.54 ){
+        if( p.y>2.68 ){
             points.addVertex( p );
             points.addColor( ofFloatColor(ofRandom(0.3,0.8), 0.2) );
         }
@@ -43,8 +43,8 @@ void testApp::update(){
     
     lines.clear();
     int num_p = points.getNumVertices();
-    int line_num = 10000;
-    if( pos.size()!=0 ){
+    int line_num = 1000;
+    if( pos.size()!=0 && num_p>2 ){
         for( int i=0; i<line_num; i++ ){
             
             int index1 = floor( ofRandom( 0, num_p ));

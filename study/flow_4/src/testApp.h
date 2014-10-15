@@ -14,8 +14,6 @@ public:
 	void keyPressed(int key);
 
     bool bInit;
-    bool bStart;
-    float frame;
     ofVboMesh points;
     ofVboMesh lines;
     

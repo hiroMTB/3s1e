@@ -1,10 +1,7 @@
 #include "testApp.h"
 
 void testApp::setup(){
-    ofSetWindowPosition( 0, 0 );
     bInit = false;
-    bStart = true;
-    frame = 0;
     ofSetVerticalSync( true );
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
@@ -26,16 +23,14 @@ void testApp::setup(){
 }
 
 void testApp::update(){
-    
-    if( !bStart )
-        return;
-    
-    frame++;
-    float time =  frame * 0.0333333;
+
+    float frame = ofGetFrameNum();
+    float time = frame * 0.03333333;
     abc.setTime( time );
 
     vector<ofVec3f> pos;
     abc.get( 0, pos );
+
 
     if( !bInit && pos.size()>0 ) {
         for( int i=0; i<pos.size(); i++ ){
@@ -46,10 +41,12 @@ void testApp::update(){
 
     points.clear();
     for( int i=0; i<pos.size(); i++ ){
-        ofVec3f p = pos[i]; // - initial_pos[i];
+        ofVec3f p = pos[i] - initial_pos[i];
+        ofVec3f xA( i*0.000003,0,0 );
+//        xA.rotate( (float)i*0.2, ofVec3f(0,0,1) );
         
-        points.addVertex( p );
-        points.addColor( ofFloatColor( ofNoise(i, frame*0.001)-0.2, 0.5) );
+        points.addVertex( p + xA );
+        points.addColor( ofFloatColor(ofNoise(i, frame*0.001), MAX(p.z, 0.1)+ofRandom(0.1,0.5)) );
     }
 
     if( 0 ){
@@ -90,8 +87,8 @@ void testApp::draw(){
     ofEnableAntiAliasing();
     
     ofBackground( 255 );
-    
 	cam.begin();
+    
 	glPointSize(1);
     
     ofPushMatrix();
@@ -114,34 +111,6 @@ void testApp::draw(){
 }
 
 void testApp::keyPressed( int key ){
-    switch( key ) {
-
-        case ' ':
-            bStart = !bStart;
-            break;
-            
-        case 'f':
-            ofToggleFullscreen();
-//            ofSetWindowShape( 1920*2, 1080*2 );
-            break;
-            
-            
-        case 'o':
-            //bOrtho = !bOrtho;
-            break;
-            
-            
-        case 'I':
-            //bDraw_info = !bDraw_info;
-            break;
-            
-        case 'S':
-            //saver.start( ofGetTimestampString(), "", 3000 );
-            break;
-            
-        default:
-            break;
-    }
     
 }
 

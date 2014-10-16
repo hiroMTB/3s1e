@@ -61,7 +61,6 @@ public:
     }
 
     void animate() {
-        float t = ofGetFrameNum();
         for( int i=0; i<trail.getNumVertices(); i++ ){
             ofVec3f p = trail.getVertex( i );
 
@@ -86,23 +85,26 @@ public:
             ofVec3f p = trail.getVertex( i );
             float fbm1 = 0;
             float fbm2 = 0;
-            
+			float fbm3 = 0;
+			
             int octave = 4;
             float amp = 0.5;
-            ofVec2f pos( p.x, p.y );
+            ofVec3f pos( p.x, p.y, p.z );
             pos *= 0.001;
             for( int i=0; i<octave; i++ ){
-                fbm1 += ofSignedNoise( pos.x, pos.y, t ) * amp;
-                fbm2 += ofSignedNoise( pos.y, pos.x, t ) * amp;
-                pos *= 2.0;
+                fbm1 += ofSignedNoise( pos.x, pos.y,  t ) * amp;
+                fbm2 += ofSignedNoise( pos.y, pos.z,  t ) * amp;
+                fbm3 += ofSignedNoise( pos.z, pos.x, t ) * amp;
+				pos *= 2.0;
                 amp *= 0.5;
             }
             
             fbm1 *= 2.0;
             fbm2 *= 2.0;
-            p.x += fbm1;
-            p.y += fbm2;
-            
+			fbm3 *= 2.0;
+			p.x += fbm1;
+			p.y += fbm2;
+			p.z += fbm3;
             trail.setVertex( i, p );
         }
     }

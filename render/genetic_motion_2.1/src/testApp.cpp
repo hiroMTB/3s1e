@@ -1,6 +1,7 @@
 #include "testApp.h"
 
 testApp::testApp(){
+	ofSetWindowPosition( 0, 0 );
     bDraw_info = true;
     bStart = false;
     bAdd_agent = true;
@@ -13,7 +14,7 @@ void testApp::setup(){
 
     for ( int i=0; i<num_agent; i++ ) {
         LineAgent l;
-        l.setup( center, 500 );
+        l.setup( center, 600 );
         la.push_back( l );
 	}
 	
@@ -30,7 +31,7 @@ void testApp::update(){
             }else{
                 la[i].dna.setBoundsMode( i%3 );
                 la[i].dna.setMateMode( floor(ofRandom(0,4)) );
-                la[i].dna.mate( la[i+1].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
+                la[i].dna.mate( la[i+1].dna,  0.1*0.4 );
             }
             
             la[i].update_agent();

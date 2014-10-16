@@ -11,10 +11,10 @@ void testApp::setup(){
 	ofSetFrameRate( 60 );
     ofVec3f center( 0, 0, 0 );
 
-    int res = 6000;
+    int res = 1600;
     for ( int i=0; i<res; i++ ) {
         LineAgent l;
-        l.setup( center, 300, i, res );
+        l.setup( center, 450, i, res );
         la.push_back( l );
 	}
 	
@@ -33,15 +33,18 @@ void testApp::update(){
                 la[i].dna.setBoundsMode( i%3 );
                 la[i].dna.setMateMode( floor(ofRandom(0,4)) );
                 if( i != la.size()-1){
-                    la[i].dna.mate( la[i+1].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
+                    la[i].dna.mate( la[i+1].dna, 0.1*0.4 );
                 }else{
-                    la[i].dna.mate( la[0].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
+                    la[i].dna.mate( la[0].dna, 0.1*0.4 );
                 }
             }
             
             la[i].update_agent();
-            la[i].add_result();
-            
+			
+			if( la.size() < 3000 ){
+				la[i].add_result();
+			}
+			
             la[i].animate();
             la[i].animate_noise( i );
         }
@@ -81,11 +84,13 @@ void testApp::draw(){
 	ofBackground( 255 );
     
     ofSetColor( 255 );
-    ofSetupScreenOrtho();
+//    ofSetupScreenOrtho();
 
     ofPushMatrix(); {
-        ofTranslate( ofGetWidth()/2, ofGetHeight()/2 );
-        
+
+		ofTranslate( ofGetWidth()/2, ofGetHeight()/2 );
+		ofRotate( -90,0,0,1 );
+
         glLineWidth( 1 );
         lines.draw();
 

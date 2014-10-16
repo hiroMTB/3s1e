@@ -83,7 +83,7 @@ public:
             pos *= 0.001;
             for( int i=0; i<octave; i++ ){
                 fbm1 += ofSignedNoise( pos.x, pos.y, t ) * amp;
-                fbm2 += ofSignedNoise( pos.y, pos.x, t ) * amp;
+                fbm2 += ofSignedNoise( pos.x*0.1, pos.y*0.1, t ) * amp;
                 pos *= 2.0;
                 amp *= 0.5;
             }

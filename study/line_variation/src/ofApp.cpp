@@ -41,30 +41,34 @@ void ofApp::make_line(){
     int n = 0;
     static ofFloatColor c;
 
-    while( posx < ofGetWidth()-100 ){
-        c = color;
-        int type = floor( ofRandom(0, lines.size()-0.01) );
-        float l = ofRandom( 0.3, 5.0 ) / (float)(type+1.0);
-        float ry = ofRandom( -rand_y, rand_y );
+    for( int i=0; i<10; i++ ){
+        while( posx < ofGetWidth()-100 ){
+            c = color;
+            int type = floor( ofRandom(0, lines.size()-0.01) );
+            float l = ofRandom( 0.3, 5.0 ) / (float)(type+1.0);
+            float ry = ofRandom( -rand_y, rand_y );
+            
+            lines[type].addVertex( ofVec3f(posx, posy+ry, 0) );
+            posx += l;
+            lines[type].addVertex( ofVec3f(posx, posy+ry, 0) );
         
-        lines[type].addVertex( ofVec3f(posx, posy+ry, 0) );
-        posx += l;
-        lines[type].addVertex( ofVec3f(posx, posy+ry, 0) );
-    
-        c.setBrightness( c.getBrightness()+ofRandom(-0.1, 0.1) );
-        c.setSaturation( c.getSaturation()+ofRandom(-0.1, 0.1) );
-        c.a = ofRandom( 0.5 );
-        lines[type].addColor( c );
+            c.setBrightness( c.getBrightness()+ofRandom(-0.1, 0.1) );
+            c.setSaturation( c.getSaturation()+ofRandom(-0.1, 0.1) );
+            c.a = ofRandom( 0.5 );
+            lines[type].addColor( c );
 
-        c.setBrightness( c.getBrightness()+ofRandom(-0.1, 0.1) );
-        c.setSaturation( c.getSaturation()+ofRandom(-0.1, 0.1) );
-        c.a = ofRandom( 0.5 );
-        //c.a = 1;
-        lines[type].addColor( c );
+            c.setBrightness( c.getBrightness()+ofRandom(-0.1, 0.1) );
+            c.setSaturation( c.getSaturation()+ofRandom(-0.1, 0.1) );
+            c.a = ofRandom( 0.3, 0.8 );
+            //c.a = 1;
+            lines[type].addColor( c );
+            
+            float g = ofRandom( gap, gap*2 );
+            posx += g;
+            n++;
+        }
         
-        float g = ofRandom( gap, gap*2 );
-        posx += g;
-        n++;
+        posx = 0;
     }
 }
 
@@ -89,7 +93,7 @@ void ofApp::make_points(){
         
         c.setBrightness( c.getBrightness()+ofRandom(-0.1, 0.1) );
         c.setSaturation( c.getSaturation()+ofRandom(-0.1, 0.1) );
-        c.a = ofRandom( 0.5 );
+        c.a = ofRandom( 0.3, 0.8 );
         //c.a = 1;
         points[type].addColor( c );
         
@@ -107,7 +111,7 @@ void ofApp::draw(){
 
     ofBackground( 0, 0, 0, 0 );
     ofPushMatrix(); {
-        ofTranslate( 50, ofGetHeight()/2 - 200 );
+        ofTranslate( 50, ofGetHeight()/2 );
         ofSetColor( 200, 255 );
         
         if( bDraw_underline ){
@@ -122,7 +126,7 @@ void ofApp::draw(){
     }ofPopMatrix();
 
     ofPushMatrix(); {
-        ofTranslate( 50, ofGetHeight()/2 + 200 );
+        ofTranslate( 50, ofGetHeight()/2 );
         ofSetColor( 200, 355 );
         
         if( bDraw_underline ){
@@ -131,7 +135,7 @@ void ofApp::draw(){
             ofLine( 0, 0, ofGetWidth(), 0 );
         }
         for( int i=0; i<lines.size(); i++ ){
-            glPointSize( 1+i );
+            glPointSize( i );
             points[i].draw( OF_MESH_POINTS );
         }
     } ofPopMatrix();

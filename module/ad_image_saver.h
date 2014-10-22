@@ -16,7 +16,7 @@ class ad_image_saver{
     
 public:
     ad_image_saver();
-    void start( string dir_name, string file_prefix, int frame_end, string file_extention=".tiff" );
+    void start( string dir_name, string file_prefix, int frame_end, int cur_frame=0, string file_extention=".tiff" );
     void save();
     
 #ifdef AD_IMAGE_SAVER_USE_FBO

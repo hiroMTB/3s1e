@@ -12,22 +12,34 @@
 	<dict>
 		<key>064AB9D6C11CA905B867B8A1D99E46EA6A7B2E67</key>
 		<string>https://github.com/hiroMTB/adld.git</string>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>https://github.com/hiroMTB/3s1e.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>line_variation/line_variation.xcodeproj</string>
+	<string>study/line_variation/line_variation.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>064AB9D6C11CA905B867B8A1D99E46EA6A7B2E67</key>
-		<string>../../..</string>
+		<string>../../../../../study</string>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/hiroMTB/adld.git</string>
+	<string>https://github.com/hiroMTB/3s1e.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>064AB9D6C11CA905B867B8A1D99E46EA6A7B2E67</string>
+	<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
+			<key>IDESourceControlWCCName</key>
+			<string>apps</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

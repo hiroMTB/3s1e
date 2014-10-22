@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D8AB1C70-C8D3-4E3C-ADC4-C5B03F4BBB1E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ofxBulletEventsExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>https://github.com/hiroMTB/3s1e.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>demo/btEventsExample/ofxBulletEventsExample.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/hiroMTB/3s1e.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
+			<key>IDESourceControlWCCName</key>
+			<string>apps</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,5 +1,5 @@
 #include "ofMain.h"
-#include "testApp.h"
+#include "ofApp.h"
 #include "ofAppGlutWindow.h"
 #include "ofAppGLFWWindow.h"
 
@@ -8,5 +8,5 @@ int main( ){
     window.setDoubleBuffering( true );
     window.setNumSamples( 8 );
     ofSetupOpenGL( &window, 1920, 1080, OF_WINDOW );
-    ofRunApp( new testApp() );
+    ofRunApp( new ofApp() );
 }

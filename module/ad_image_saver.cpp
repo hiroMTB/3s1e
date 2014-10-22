@@ -16,14 +16,14 @@ bStart( false ){
     
 }
 
-void ad_image_saver::start( string _dir_name, string _file_prefix, int _frame_end, string _file_extention ){
+void ad_image_saver::start( string _dir_name, string _file_prefix, int _frame_end, int _cur_frame, string _file_extention ){
     
     dir_name = _dir_name;
     file_prefix = _file_prefix;
     frame_end = _frame_end;
     file_extention = _file_extention;
     
-    frame_cur = 0;
+    frame_cur = _cur_frame;
     bStart = true;
     
 #ifdef AD_IMAGE_SAVER_USE_FBO

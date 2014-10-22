@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
 	ofSetVerticalSync(true);
@@ -15,7 +16,7 @@ void ofApp::setup(){
     lines.setMode( OF_PRIMITIVE_LINES );
     points.setMode( OF_PRIMITIVE_POINTS );
     
-    abc.open( "pine_tree.abc");
+    abc.open( ad_util::data_path + "3d/pine_tree.abc");
     abc.get(1, mesh);
 }
 

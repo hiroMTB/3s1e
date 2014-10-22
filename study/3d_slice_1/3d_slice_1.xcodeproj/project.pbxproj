@@ -29,6 +29,8 @@
 		4D5D7C8819E830B2006B67E7 /* libIexMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5D7C5819E83076006B67E7 /* libIexMath.a */; };
 		4D5D7C8919E830B2006B67E7 /* libIlmThread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5D7C5919E83076006B67E7 /* libIlmThread.a */; };
 		4D5D7C8A19E830B2006B67E7 /* libImath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5D7C5A19E83076006B67E7 /* libImath.a */; };
+		4DF2248F19F7E75C000EDE35 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF2248B19F7E75C000EDE35 /* ad_image_saver.cpp */; };
+		4DF2249019F7E75C000EDE35 /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF2248D19F7E75C000EDE35 /* ad_util.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -355,6 +357,10 @@
 		4D5D7C6619E83076006B67E7 /* ofxAlembicUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAlembicUtil.h; sourceTree = "<group>"; };
 		4D5D7C6719E83076006B67E7 /* ofxAlembicWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAlembicWriter.cpp; sourceTree = "<group>"; };
 		4D5D7C6819E83076006B67E7 /* ofxAlembicWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAlembicWriter.h; sourceTree = "<group>"; };
+		4DF2248B19F7E75C000EDE35 /* ad_image_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
+		4DF2248C19F7E75C000EDE35 /* ad_image_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		4DF2248D19F7E75C000EDE35 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
+		4DF2248E19F7E75C000EDE35 /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_util.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -860,6 +866,18 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		4DF2248A19F7E75C000EDE35 /* module */ = {
+			isa = PBXGroup;
+			children = (
+				4DF2248B19F7E75C000EDE35 /* ad_image_saver.cpp */,
+				4DF2248C19F7E75C000EDE35 /* ad_image_saver.h */,
+				4DF2248D19F7E75C000EDE35 /* ad_util.cpp */,
+				4DF2248E19F7E75C000EDE35 /* ad_util.h */,
+			);
+			name = module;
+			path = ../../../module;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +949,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4DF2248A19F7E75C000EDE35 /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -1038,6 +1057,8 @@
 				4D5D7C7719E8309D006B67E7 /* ofxAlembicUtil.cpp in Sources */,
 				4D5D7C7819E8309D006B67E7 /* ofxAlembicWriter.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				4DF2248F19F7E75C000EDE35 /* ad_image_saver.cpp in Sources */,
+				4DF2249019F7E75C000EDE35 /* ad_util.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

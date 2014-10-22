@@ -20,4 +20,6 @@ public:
     vector<ofVec3f> speed;
     
     int res;
+    
+    string data_path;
 };

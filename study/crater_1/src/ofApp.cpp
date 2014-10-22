@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
 
@@ -8,7 +9,7 @@ void ofApp::setup(){
     
     extrusionAmount = 80.0;
     res = 4;
-    make_quad( "crater1.jpg" );
+    make_quad( ad_util::data_path + "img/crater1.jpg" );
     cam.setDistance( 1000 );
 }
 
@@ -141,7 +142,7 @@ void ofApp::keyPressed( int key ){
         case 'a':
         {
             int i = ofRandom(1, 7);
-            make_quad("crater" + ofToString(i)+ ".jpg");
+            make_quad( ad_util::data_path + "img/crater" + ofToString(i)+ ".jpg");
             break;
         }
 		case 'f':

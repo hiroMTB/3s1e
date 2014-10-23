@@ -14,9 +14,44 @@ void ofApp::setup(){
     cam.setFov( 40 );
     
     extrusionAmount = 50;
+    
+    mainMesh.clear();
+    mainMesh.setUsage( GL_DYNAMIC_DRAW );
+    mainMesh.setMode( OF_PRIMITIVE_TRIANGLES );
+    
+    mesh_w = 512*2;
+    mesh_h = 512;
+    for( int y=0; y<mesh_h; y++ ){
+        for( int x=0; x<mesh_w; x++ ){
+            mainMesh.addVertex( ofVec3f(x,y,0) );
+            mainMesh.addColor( ofFloatColor(1) );
+        }
+    }
+    
+    set_indices();
 }
 
-void ofApp::make_random_quad(){
+void ofApp::set_indices(){
+    mainMesh.clearIndices();
+    
+    // index
+    int index = 0;
+    for( int y=0; y<mesh_h-1; y++ ){
+        for( int x=0; x<mesh_w-1; x++ ){
+            mainMesh.addIndex( index );
+            mainMesh.addIndex( index + 1 );
+            mainMesh.addIndex( index + mesh_w );
+            
+            mainMesh.addIndex( index + 1 );
+            mainMesh.addIndex( index + mesh_w + 1);
+            mainMesh.addIndex( index + mesh_w );
+            index++;
+        }
+    }
+    
+}
+
+void ofApp::make_random_mesh(){
 
     ofDirectory dir;
     int dir_num = dir.listDir( ad_util::data_path + "img/crater_mosaic" );
@@ -25,92 +60,65 @@ void ofApp::make_random_quad(){
         string dir_path = dir.getPath( level );
         ofDirectory level_dir;
         int file_num = level_dir.listDir( dir_path );
-        int n = floor( ofRandom(0, file_num) );
-        string file_path = level_dir.getPath( n );
-        make_quad( file_path );
+        
+        ofImage imgL, imgR;
+        bool loadOK = false;
+        while( loadOK==false ) {
+            int n1 = floor( ofRandom(0, file_num) );
+            string file_name_L =level_dir.getName( n1 );
+            
+            vector<string> words = ofSplitString( file_name_L, "_");
+            string xids = words[ words.size()-2 ];
+            string yids_ext = words[ words.size()-1 ];
+            int xid = ofToInt( xids );
 
-        cout << "load: LV: " << dir.getName(level)<< ", name: " << file_path << endl;
+            string file_name_R = "";
 
-    }
-}
-
-void ofApp::make_line( string file_name ){
-    img.loadImage( file_name );
-
-    mainMesh.clear();
-    mainMesh.setUsage( GL_DYNAMIC_DRAW );
-    mainMesh.setMode( OF_PRIMITIVE_LINES );
-
-    int width = img.getWidth() / res;
-    int height = img.getHeight() / res;
-    
-    for( int y=0; y<height-1; y++ ){
-        for( int x=0; x<width; x++ ){
-            ofVec2f index1( x*res, y*res );
-            ofVec2f index2( (x+1)*res, y*res );
-            ofFloatColor c1 = img.getPixelsRef().getColor( index1.x, index1.y );
-            ofFloatColor c2 = img.getPixelsRef().getColor( index2.x, index2.y );
-    
-            float b1 = c1.getBrightness();
-            float b2 = c2.getBrightness();
-            float z1 = b1 * extrusionAmount;
-            float z2 = b2 * extrusionAmount;
-            mainMesh.addVertex( ofVec3f(index1.x, index1.y, z1) );
-            mainMesh.addVertex( ofVec3f(index2.x, index2.y, z2) );
-
-            float a1 = b1>0.3 ? 1.0 : 0.7;
-            float a2 = b2>0.3 ? 1.0 : 0.7;
-            mainMesh.addColor( ofFloatColor(0.7-b1, a1) );
-            mainMesh.addColor( ofFloatColor(0.7-b2, a2) );
+            for( int i=0; i<words.size()-2; i++ ){
+                file_name_R += words[i];
+                file_name_R += "_";
+            }
+            
+            file_name_R += ofToString( xid+1 ) + "_" + yids_ext;
+            string file_path_R = dir_path + "/" + file_name_R;
+            string file_path_L =level_dir.getPath( n1 );
+            
+            cout << "loading imgL: " << file_path_L << ", imgR: " << file_path_R << endl;
+            
+            loadOK = imgL.loadImage(file_path_L) && imgR.loadImage(file_path_R);
         }
+    
+        int res = 1;
+        load_mesh( imgL, ofVec2f(0,0), res, extrusionAmount, 1 );
+        load_mesh( imgR, ofVec2f(mesh_w/2, 0), res, extrusionAmount, 1 );
     }
 }
 
-void ofApp::make_quad( string file_name ){
-
-    img.loadImage( file_name );
-    mainMesh.clear();
-    mainMesh.setUsage( GL_DYNAMIC_DRAW );
-    mainMesh.setMode( OF_PRIMITIVE_TRIANGLES );
-
-    int width = img.getWidth() / res;
-    int height = img.getHeight() / res;
+void ofApp::load_mesh( ofImage &img, ofVec2f start, int resolution, float extrusion, int size ){
+    int w = img.getWidth() / resolution;
+    int h = img.getHeight() / resolution;
     
-    for( int y=0; y<height; y++ ){
-        for( int x=0; x<width; x++ ){
-
-            ofFloatColor c = img.getPixelsRef().getColor( x*res, y*res );
+    for( int y=0; y<h; y++ ){
+        for( int x=0; x<w; x++ ){
+            
+            int mx = start.x + x*size * resolution;
+            int my = start.y + y*size* resolution;
+            
+            if( mx>=mesh_w || my>=mesh_h )
+                continue;
+            
+            if( mx<0 || my<0 )
+                continue;
+            
+            int index = mx + my*mesh_w;
+            ofFloatColor c = img.getPixelsRef().getColor( x*resolution, y*resolution );
             float b = c.getBrightness();
-            float z = b * extrusionAmount;
-            mainMesh.addVertex( ofVec3f(x*res, y*res, z) );
-//            mainMesh.addColor( c );
-            mainMesh.addColor( ofFloatColor(b*1.5 - 0.1, 0.9) );
+            float z = b * extrusion;
+            mainMesh.setVertex( index, ofVec3f( mx, my, z) );
+            mainMesh.setColor( index, ofFloatColor(b*1.5 - 0.1, 0.9) );
         }
     }
     
-    // index
-    int index = 0;
-    for( int y=0; y<height-1; y++ ){
-        for( int x=0; x<width-1; x++ ){
-//            mainMesh.addIndex(x+y*width);				// 0
-//            mainMesh.addIndex((x+1)+y*width);			// 1
-//            mainMesh.addIndex(x+(y+1)*width);			// 10
-//            
-//            mainMesh.addIndex((x+1)+y*width);			// 1
-//            mainMesh.addIndex((x+1)+(y+1)*width);		// 11
-//            mainMesh.addIndex(x+(y+1)*width);			// 10
-
-            mainMesh.addIndex( index );
-            mainMesh.addIndex( index + 1 );
-            mainMesh.addIndex( index + width );
-            
-            mainMesh.addIndex( index + 1 );
-            mainMesh.addIndex( index + width + 1);
-            mainMesh.addIndex( index + width );
-            
-            index++;
-        }
-    }
 }
 
 void ofApp::update(){
@@ -123,7 +131,7 @@ void ofApp::update(){
         if( p.z < 0 )
             continue;
         
-        int w = img.getWidth() / res;
+        int w = mesh_w;
         if( 0 ){
             ofVec2f sp( i%w, i/w );
             ofVec3f noise;
@@ -162,7 +170,7 @@ void ofApp::draw(){
     ofBackground( 255 );
     
     cam.begin(); {
-        ofTranslate( -img.getWidth()/2, - img.getHeight()/2 );
+        ofTranslate( -mesh_w/2, -mesh_h/2 );
         glPointSize( 1 );
         glLineWidth( 1 );
         mainMesh.drawWireframe();
@@ -177,7 +185,7 @@ void ofApp::keyPressed( int key ){
 	switch(key) {
         case 'a':
         {
-            make_random_quad();
+            make_random_mesh();
             break;
         }
 		case 'f':

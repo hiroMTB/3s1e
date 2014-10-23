@@ -7,10 +7,31 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
     
-    extrusionAmount = 80.0;
-    res = 4;
-    make_quad( ad_util::data_path + "img/crater1.jpg" );
-    cam.setDistance( 1000 );
+    extrusionAmount = 30.0;
+    res = 1;
+
+    cam.setDistance( 700 );
+    cam.setFov( 40 );
+    
+    extrusionAmount = 50;
+}
+
+void ofApp::make_random_quad(){
+
+    ofDirectory dir;
+    int dir_num = dir.listDir( ad_util::data_path + "img/crater_mosaic" );
+    if( dir_num>0 ){
+        int level = floor( ofRandom(0, dir_num) );
+        string dir_path = dir.getPath( level );
+        ofDirectory level_dir;
+        int file_num = level_dir.listDir( dir_path );
+        int n = floor( ofRandom(0, file_num) );
+        string file_path = level_dir.getPath( n );
+        make_quad( file_path );
+
+        cout << "load: LV: " << dir.getName(level)<< ", name: " << file_path << endl;
+
+    }
 }
 
 void ofApp::make_line( string file_name ){
@@ -46,6 +67,7 @@ void ofApp::make_line( string file_name ){
 }
 
 void ofApp::make_quad( string file_name ){
+
     img.loadImage( file_name );
     mainMesh.clear();
     mainMesh.setUsage( GL_DYNAMIC_DRAW );
@@ -61,24 +83,32 @@ void ofApp::make_quad( string file_name ){
             float b = c.getBrightness();
             float z = b * extrusionAmount;
             mainMesh.addVertex( ofVec3f(x*res, y*res, z) );
-            
-            float a = b>0.3 ? 1.0 : 0;
-            mainMesh.addColor( ofFloatColor(1.0-b, a) );
-
-            speed.push_back( ofVec3f(0,0,0) );
+//            mainMesh.addColor( c );
+            mainMesh.addColor( ofFloatColor(b*1.5 - 0.1, 0.9) );
         }
     }
     
     // index
+    int index = 0;
     for( int y=0; y<height-1; y++ ){
         for( int x=0; x<width-1; x++ ){
-            mainMesh.addIndex(x+y*width);				// 0
-            mainMesh.addIndex((x+1)+y*width);			// 1
-            mainMesh.addIndex(x+(y+1)*width);			// 10
+//            mainMesh.addIndex(x+y*width);				// 0
+//            mainMesh.addIndex((x+1)+y*width);			// 1
+//            mainMesh.addIndex(x+(y+1)*width);			// 10
+//            
+//            mainMesh.addIndex((x+1)+y*width);			// 1
+//            mainMesh.addIndex((x+1)+(y+1)*width);		// 11
+//            mainMesh.addIndex(x+(y+1)*width);			// 10
+
+            mainMesh.addIndex( index );
+            mainMesh.addIndex( index + 1 );
+            mainMesh.addIndex( index + width );
             
-            mainMesh.addIndex((x+1)+y*width);			// 1
-            mainMesh.addIndex((x+1)+(y+1)*width);		// 11
-            mainMesh.addIndex(x+(y+1)*width);			// 10
+            mainMesh.addIndex( index + 1 );
+            mainMesh.addIndex( index + width + 1);
+            mainMesh.addIndex( index + width );
+            
+            index++;
         }
     }
 }
@@ -94,26 +124,34 @@ void ofApp::update(){
             continue;
         
         int w = img.getWidth() / res;
-        ofVec2f sp( i%w, i/w );
-        
-        ofVec3f noise;
-        int octave = 4;
-        float amp = 0.5;
-        sp *= 0.01;
-        
-        for( int i=0; i<octave; i++ ){
-//            noise.x += ofSignedNoise( sp.x, frame*0.001 ) * amp * 0.1;
-//            noise.y += ofSignedNoise( sp.y, frame*0.001 ) * amp * 0.1;
-            noise.z += ofNoise( sp.x, sp.y, frame*0.001 ) * amp;
-            sp *= 2.0;
-            amp *= 0.5;
-        }
+        if( 0 ){
+            ofVec2f sp( i%w, i/w );
+            ofVec3f noise;
+            int octave = 4;
+            float amp = 0.5;
+            sp *= 0.01;
+            
+            for( int i=0; i<octave; i++ ){
+                //noise.x += ofSignedNoise( sp.x, frame*0.001 ) * amp;
+                //noise.y += ofSignedNoise( sp.y, frame*0.001 ) * amp;
+                noise.z += ofNoise( sp.x, sp.y, frame*0.001 ) * amp;
+                sp *= 2.0;
+                amp *= 0.5;
+            }
 
-        p -= noise*2.0;
+            noise *= 0.05;
+            p -= noise;
+        }
+        
+        p.z -= 0.1;
+        
         mainMesh.setVertex( i, p );
         
-        float a = p.z>40 ? 1 : 0.7;
-        mainMesh.setColor( i , ofFloatColor(p.z/extrusionAmount, a) );
+        ofFloatColor c = mainMesh.getColor( i );
+        float a = p.z/extrusionAmount;
+        a = p.z>13 ? 0.95 : 0.0;
+        
+        mainMesh.setColor( i , ofFloatColor(c, a) );
     }
 }
 
@@ -122,28 +160,24 @@ void ofApp::draw(){
     ofEnableAlphaBlending();
     ofEnableSmoothing();
     ofBackground( 255 );
-
-//    cam.enableOrtho();
     
-    cam.begin();
-    ofTranslate( -img.getWidth()/2, - img.getHeight()/2 );
-    glPointSize( 1 );
-    glLineWidth( 1 );
-    mainMesh.drawWireframe();
-	cam.end();
+    cam.begin(); {
+        ofTranslate( -img.getWidth()/2, - img.getHeight()/2 );
+        glPointSize( 1 );
+        glLineWidth( 1 );
+        mainMesh.drawWireframe();
+    } cam.end();
 	
 	ofSetColor( 255 );
 	string msg = "fps: " + ofToString(ofGetFrameRate(), 2 );
 	ofDrawBitmapString( msg, 10, 20 );
-	
 }
 
 void ofApp::keyPressed( int key ){
 	switch(key) {
         case 'a':
         {
-            int i = ofRandom(1, 7);
-            make_quad( ad_util::data_path + "img/crater" + ofToString(i)+ ".jpg");
+            make_random_quad();
             break;
         }
 		case 'f':

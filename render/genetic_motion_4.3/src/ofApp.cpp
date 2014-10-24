@@ -163,12 +163,13 @@ void ofApp::update(){
                 
                 multimap<float, ofVec3f>::iterator itr = near_p.begin();
 
-                ofVec3f p2 = itr->second;
                 for(; itr!=near_p.end(); itr++ ){
 //                    if( i==0  && ofRandom(1.0)>0.9 ){
 //                        ofVec3f dir = p2 - p1;
 //                        p1 = dir.normalize() * 200;
 //                    }
+
+                    ofVec3f p2 = itr->second;
                     connection_between_agent.addVertex( p1 );
                     connection_between_agent.addVertex( p2 );
                     connection_between_agent.addColor( ofFloatColor( ofRandom(0.2,0.4), ofRandom(0.2, 0.4) ) );

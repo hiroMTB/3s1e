@@ -2,7 +2,7 @@
 #include "ad_util.h"
 
 void ofApp::setup(){
-
+	ofSetWindowPosition( 0, 0 );
     bStart = false;
     bDraw_info = true;
     

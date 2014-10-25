@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
 	ofSetWindowPosition( 0, 0 );
@@ -26,7 +27,7 @@ void ofApp::setup(){
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
 
-	frame=680;
+	frame=0;
 }
 
 void ofApp::update(){
@@ -36,7 +37,7 @@ void ofApp::update(){
 	frame++;
 
     ofxAlembic::Reader abc;
-    string path = "abc3000/HY_Emitter02_" + ofToString( frame,0,5,'0' )+ ".abc";
+	string path = ad_util::data_path + "/sim/flow_4.1/HY_Emitter02_" + ofToString( frame,0,5,'0' )+ ".abc";
     abc.open(path);
     
     vector<ofVec3f> pos;

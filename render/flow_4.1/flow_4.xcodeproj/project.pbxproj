@@ -51,6 +51,7 @@
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
 		F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F684962C19F62C0400AFC707 /* ad_image_saver.cpp */; };
+		F6D8787719FC329E00AB7D1F /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6D8787519FC329E00AB7D1F /* ad_util.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -383,6 +384,8 @@
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		F684962C19F62C0400AFC707 /* ad_image_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
 		F684962D19F62C0400AFC707 /* ad_image_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		F6D8787519FC329E00AB7D1F /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
+		F6D8787619FC329E00AB7D1F /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_util.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -956,6 +959,8 @@
 		F684962B19F62C0400AFC707 /* module */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8787519FC329E00AB7D1F /* ad_util.cpp */,
+				F6D8787619FC329E00AB7D1F /* ad_util.h */,
 				F684962C19F62C0400AFC707 /* ad_image_saver.cpp */,
 				F684962D19F62C0400AFC707 /* ad_image_saver.h */,
 			);
@@ -1055,6 +1060,7 @@
 				4DA4431419D070770025C4B7 /* ofxAlembicWriter.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */,
+				F6D8787719FC329E00AB7D1F /* ad_util.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

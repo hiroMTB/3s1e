@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "crater_5.app"
-               BlueprintName = "crater_5"
-               ReferencedContainer = "container:crater_5.xcodeproj">
+               BuildableName = "crater_4.1.app"
+               BlueprintName = "crater_4.1"
+               ReferencedContainer = "container:crater_4.1.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "crater_5.app"
-            BlueprintName = "crater_5"
-            ReferencedContainer = "container:crater_5.xcodeproj">
+            BuildableName = "crater_4.1.app"
+            BlueprintName = "crater_4.1"
+            ReferencedContainer = "container:crater_4.1.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "crater_5.app"
-            BlueprintName = "crater_5"
-            ReferencedContainer = "container:crater_5.xcodeproj">
+            BuildableName = "crater_4.1.app"
+            BlueprintName = "crater_4.1"
+            ReferencedContainer = "container:crater_4.1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "crater_5.app"
-            BlueprintName = "crater_5"
-            ReferencedContainer = "container:crater_5.xcodeproj">
+            BuildableName = "crater_4.1.app"
+            BlueprintName = "crater_4.1"
+            ReferencedContainer = "container:crater_4.1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

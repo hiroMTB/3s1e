@@ -10,7 +10,7 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
     
-    cam.setDistance( 233 );
+    cam.setDistance( 633 );
 //    cam.setLensOffset( ofVec2f(0, 0.2) );
     
     // Master mesh
@@ -143,7 +143,7 @@ void ofApp::draw(){
 	ofEnableDepthTest();
     ofEnableAlphaBlending();
     ofEnableSmoothing();
-    ofBackground( 200 );
+    ofBackground( 255 );
     
     cam.begin();
     ofTranslate( -mesh_w/2, -mesh_h/2 );
@@ -173,7 +173,7 @@ void ofApp::draw_info(){
 //    ss << "cur frame : " << saver.frame_cur << "\n";
 //    ss << "end frame : " << saver.frame_end << "\n";
     ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
-    ss << "space key : start genetic calculation\n";
+    ss << "space key : start\n";
     ss << "I     key : draw info\n";
     ss << "S     key : save image\n";
     ss << "f     key : toggle fullscreen\n";

@@ -1,11 +1,12 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
 	ofBackground(0);
 	
-	string path = "water_mesh.abc";
+	string path = ad_util::data_path + "/sim/test/water_mesh.abc";
 	
 	abc.open(path);
 	

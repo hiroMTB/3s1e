@@ -1,7 +1,6 @@
 #include "ofApp.h"
 
-<<<<<<< HEAD:study/flow_4/src/testApp.cpp
-void testApp::setup(){
+void ofApp::setup(){
 	ofSetWindowPosition( 0, 0 );
 	bInit = false;
 	bStart = false;
@@ -21,19 +20,6 @@ void testApp::setup(){
     cam.setFarClip( 10000 );
 	cam.setLensOffset( ofVec2f(0, 0.98) );
     
-=======
-void ofApp::setup(){
-    bInit = false;
-    ofSetVerticalSync( true );
-	ofSetFrameRate( 60 );
-	ofBackground( 0 );
-    
-    cam.setDistance( 27 );
-    cam.setNearClip( 0.00001 );
-    cam.setFarClip( 10000 );
-    cam.setFov( 1 );
-    cam.setLensOffset( ofVec2f(0, 0.7) );
->>>>>>> FETCH_HEAD:study/flow_4/src/ofApp.cpp
     points.setUsage( GL_DYNAMIC_DRAW );
     points.setMode( OF_PRIMITIVE_POINTS );
 
@@ -43,22 +29,14 @@ void ofApp::setup(){
 	frame=680;
 }
 
-<<<<<<< HEAD:study/flow_4/src/testApp.cpp
-void testApp::update(){
+void ofApp::update(){
 	if( !bStart )
 		return;
 	
 	frame++;
-
-    ofxAlembic::Reader abc;
-    string path = "abc3000/HY_Emitter02_" + ofToString( frame,0,5,'0' )+ ".abc";
-=======
-void ofApp::update(){
-    int frame = ofGetFrameNum();
-
+	
     ofxAlembic::Reader abc;
     string path = "rf/HY_Emitter02_" + ofToString( frame,0,5,'0' )+ ".abc";
->>>>>>> FETCH_HEAD:study/flow_4/src/ofApp.cpp
     abc.open(path);
     
     vector<ofVec3f> pos;
@@ -114,15 +92,11 @@ void ofApp::update(){
     }
 }
 
-<<<<<<< HEAD:study/flow_4/src/testApp.cpp
-void testApp::draw(){
-=======
 void ofApp::draw(){
     ofEnableAlphaBlending();
     ofEnableSmoothing();
     ofEnableAntiAliasing();
->>>>>>> FETCH_HEAD:study/flow_4/src/ofApp.cpp
-    
+	
     ofBackground( 255 );
 	cam.begin();
 	glPointSize( 3 );
@@ -135,8 +109,7 @@ void ofApp::draw(){
 	draw_info();
 }
 
-<<<<<<< HEAD:study/flow_4/src/testApp.cpp
-void testApp::draw_info(){
+void ofApp::draw_info(){
 	if( !bDraw_info) return;
 	ofSetColor( 200 );
 	ofRect( 5, 5, 600, 300 );
@@ -154,7 +127,7 @@ void testApp::draw_info(){
 	ofDrawBitmapString( ss.str(), 20, 20 );
 }
 
-void testApp::keyPressed( int key ){
+void ofApp::keyPressed( int key ){
 	
 	switch( key ) {
 		case ' ':
@@ -177,12 +150,4 @@ void testApp::keyPressed( int key ){
 		default:
 			break;
 	}
-=======
-void ofApp::keyPressed( int key ){
-    
-}
-
-void ofApp::exit(){
-//    abc.close();
->>>>>>> FETCH_HEAD:study/flow_4/src/ofApp.cpp
 }

@@ -127,8 +127,8 @@ void ofApp::keyPressed( int key ){
             break;
             
         case 'f':
-            ofToggleFullscreen();
-//            ofSetWindowShape( 1920*2, 1080*2 );
+            //ofToggleFullscreen();
+            ofSetWindowShape( 1920*2, 1080*2 );
             break;
             
             

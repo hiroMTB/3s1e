@@ -6,7 +6,7 @@ void ofApp::setup(){
     bStart = false;
     bDraw_info = true;
     
-    res = 1;
+    res = 3;
     extrusionAmount = 45;
     threthold = 8;
 

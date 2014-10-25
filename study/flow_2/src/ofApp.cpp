@@ -1,11 +1,12 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
 	ofBackground(0);
 	
-	string path = "test1.abc";
+	string path = ad_util::data_path + "/sim/test/test1.abc";
 	abc.open(path);
     abc.dumpNames();
     

@@ -50,10 +50,8 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
-		F652BAED19FC4FA700B9B91D /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F652BAE519FC4FA700B9B91D /* ad_image_saver.cpp */; };
-		F652BAEE19FC4FA700B9B91D /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F652BAE719FC4FA700B9B91D /* ad_util.cpp */; };
-		F652BAEF19FC4FA700B9B91D /* ofGLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F652BAEA19FC4FA700B9B91D /* ofGLUtils.cpp */; };
-		F652BAF019FC4FA700B9B91D /* ofImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F652BAEB19FC4FA700B9B91D /* ofImage.cpp */; };
+		F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F684962C19F62C0400AFC707 /* ad_image_saver.cpp */; };
+		F6D8787719FC329E00AB7D1F /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6D8787519FC329E00AB7D1F /* ad_util.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,7 +369,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* flow_1Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flow_1Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* flow_4Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flow_4Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
@@ -384,13 +382,10 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		F652BAE519FC4FA700B9B91D /* ad_image_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
-		F652BAE619FC4FA700B9B91D /* ad_image_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
-		F652BAE719FC4FA700B9B91D /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
-		F652BAE819FC4FA700B9B91D /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_util.h; sourceTree = "<group>"; };
-		F652BAEA19FC4FA700B9B91D /* ofGLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofGLUtils.cpp; sourceTree = "<group>"; };
-		F652BAEB19FC4FA700B9B91D /* ofImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofImage.cpp; sourceTree = "<group>"; };
-		F652BAEC19FC4FA700B9B91D /* ofImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofImage.h; sourceTree = "<group>"; };
+		F684962C19F62C0400AFC707 /* ad_image_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
+		F684962D19F62C0400AFC707 /* ad_image_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		F6D8787519FC329E00AB7D1F /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
+		F6D8787619FC329E00AB7D1F /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_util.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -937,14 +932,14 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* flow_1Debug.app */,
+				E4B69B5B0A3A1756003C02F2 /* flow_4Debug.app */,
 			);
 			sourceTree = "<group>";
 		};
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F652BAE419FC4FA700B9B91D /* module */,
+				F684962B19F62C0400AFC707 /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -961,35 +956,24 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
-		F652BAE419FC4FA700B9B91D /* module */ = {
+		F684962B19F62C0400AFC707 /* module */ = {
 			isa = PBXGroup;
 			children = (
-				F652BAE519FC4FA700B9B91D /* ad_image_saver.cpp */,
-				F652BAE619FC4FA700B9B91D /* ad_image_saver.h */,
-				F652BAE719FC4FA700B9B91D /* ad_util.cpp */,
-				F652BAE819FC4FA700B9B91D /* ad_util.h */,
-				F652BAE919FC4FA700B9B91D /* ofCustomize */,
+				F6D8787519FC329E00AB7D1F /* ad_util.cpp */,
+				F6D8787619FC329E00AB7D1F /* ad_util.h */,
+				F684962C19F62C0400AFC707 /* ad_image_saver.cpp */,
+				F684962D19F62C0400AFC707 /* ad_image_saver.h */,
 			);
 			name = module;
 			path = ../../../module;
 			sourceTree = "<group>";
 		};
-		F652BAE919FC4FA700B9B91D /* ofCustomize */ = {
-			isa = PBXGroup;
-			children = (
-				F652BAEA19FC4FA700B9B91D /* ofGLUtils.cpp */,
-				F652BAEB19FC4FA700B9B91D /* ofImage.cpp */,
-				F652BAEC19FC4FA700B9B91D /* ofImage.h */,
-			);
-			path = ofCustomize;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* flow_1 */ = {
+		E4B69B5A0A3A1756003C02F2 /* flow_4.1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "flow_1" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "flow_4.1" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -1001,9 +985,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = flow_1;
+			name = flow_4.1;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* flow_1Debug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* flow_4Debug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1013,7 +997,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "flow_1" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "flow_4.1" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1034,7 +1018,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* flow_1 */,
+				E4B69B5A0A3A1756003C02F2 /* flow_4.1 */,
 			);
 		};
 /* End PBXProject section */
@@ -1072,13 +1056,11 @@
 			files = (
 				4DA4431119D070770025C4B7 /* ofxAlembicReader.cpp in Sources */,
 				4DA4431219D070770025C4B7 /* ofxAlembicType.cpp in Sources */,
-				F652BAEF19FC4FA700B9B91D /* ofGLUtils.cpp in Sources */,
 				4DA4431319D070770025C4B7 /* ofxAlembicUtil.cpp in Sources */,
 				4DA4431419D070770025C4B7 /* ofxAlembicWriter.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				F652BAF019FC4FA700B9B91D /* ofImage.cpp in Sources */,
-				F652BAED19FC4FA700B9B91D /* ad_image_saver.cpp in Sources */,
-				F652BAEE19FC4FA700B9B91D /* ad_util.cpp in Sources */,
+				F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */,
+				F6D8787719FC329E00AB7D1F /* ad_util.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1244,7 +1226,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				PREBINDING = NO;
-				PRODUCT_NAME = flow_1Debug;
+				PRODUCT_NAME = flow_4.1Debug;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1339,7 +1321,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				PREBINDING = NO;
-				PRODUCT_NAME = flow_1;
+				PRODUCT_NAME = flow_4.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1347,7 +1329,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "flow_1" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "flow_4.1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -1356,7 +1338,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "flow_1" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "flow_4.1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,

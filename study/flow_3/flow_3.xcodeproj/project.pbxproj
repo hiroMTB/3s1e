@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0AF3F819FC29FB00EAF706 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0AF3F119FC29FB00EAF706 /* ad_image_saver.cpp */; };
+		4D0AF3F919FC29FB00EAF706 /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0AF3F319FC29FB00EAF706 /* ad_util.cpp */; };
+		4D0AF3FA19FC29FB00EAF706 /* ofImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0AF3F619FC29FB00EAF706 /* ofImage.cpp */; };
 		4DA4431119D070770025C4B7 /* ofxAlembicReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA442FD19D0702D0025C4B7 /* ofxAlembicReader.cpp */; };
 		4DA4431219D070770025C4B7 /* ofxAlembicType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA442FF19D0702D0025C4B7 /* ofxAlembicType.cpp */; };
 		4DA4431319D070770025C4B7 /* ofxAlembicUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA4430119D0702D0025C4B7 /* ofxAlembicUtil.cpp */; };
@@ -83,6 +86,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D0AF3F119FC29FB00EAF706 /* ad_image_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
+		4D0AF3F219FC29FB00EAF706 /* ad_image_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		4D0AF3F319FC29FB00EAF706 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
+		4D0AF3F419FC29FB00EAF706 /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_util.h; sourceTree = "<group>"; };
+		4D0AF3F619FC29FB00EAF706 /* ofImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofImage.cpp; sourceTree = "<group>"; };
+		4D0AF3F719FC29FB00EAF706 /* ofImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofImage.h; sourceTree = "<group>"; };
 		4DA441E519D0702C0025C4B7 /* Drawable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Drawable.h; sourceTree = "<group>"; };
 		4DA441E619D0702C0025C4B7 /* DrawContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawContext.h; sourceTree = "<group>"; };
 		4DA441E719D0702C0025C4B7 /* Foundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Foundation.h; sourceTree = "<group>"; };
@@ -429,6 +438,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D0AF3F019FC29FB00EAF706 /* module */ = {
+			isa = PBXGroup;
+			children = (
+				4D0AF3F119FC29FB00EAF706 /* ad_image_saver.cpp */,
+				4D0AF3F219FC29FB00EAF706 /* ad_image_saver.h */,
+				4D0AF3F319FC29FB00EAF706 /* ad_util.cpp */,
+				4D0AF3F419FC29FB00EAF706 /* ad_util.h */,
+				4D0AF3F519FC29FB00EAF706 /* ofCustomize */,
+			);
+			name = module;
+			path = ../../../module;
+			sourceTree = "<group>";
+		};
+		4D0AF3F519FC29FB00EAF706 /* ofCustomize */ = {
+			isa = PBXGroup;
+			children = (
+				4D0AF3F619FC29FB00EAF706 /* ofImage.cpp */,
+				4D0AF3F719FC29FB00EAF706 /* ofImage.h */,
+			);
+			path = ofCustomize;
+			sourceTree = "<group>";
+		};
 		4DA4419B19D0702C0025C4B7 /* ofxAlembic */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +964,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4D0AF3F019FC29FB00EAF706 /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -1040,6 +1072,9 @@
 				4DA4431319D070770025C4B7 /* ofxAlembicUtil.cpp in Sources */,
 				4DA4431419D070770025C4B7 /* ofxAlembicWriter.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				4D0AF3F819FC29FB00EAF706 /* ad_image_saver.cpp in Sources */,
+				4D0AF3FA19FC29FB00EAF706 /* ofImage.cpp in Sources */,
+				4D0AF3F919FC29FB00EAF706 /* ad_util.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1075,6 +1110,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -1105,6 +1141,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",

@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
     ofSetWindowPosition( 0, 0 );
@@ -9,7 +10,7 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
 	
-	string path = "HY_Emitter01.abc";
+    string path = ad_util::data_path + "/sim/test/hybrido_test.abc";
 	abc.open(path);
     abc.dumpNames();
     

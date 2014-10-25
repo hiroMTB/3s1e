@@ -102,7 +102,7 @@ void ofApp::draw(){
     cam.begin(); {
         glPointSize( 1 );
         glLineWidth( 1 );
-        ofSetColor( 255, 5 );
+        ofSetColor( 255, 25 );
         mesh.draw( OF_MESH_WIREFRAME );
 
         ofSetColor( 255, 255 );

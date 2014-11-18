@@ -14,7 +14,7 @@
 		<string>https://github.com/hiroMTB/3s1e.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>module_test/perlin/ofxGpuPerlinSample.xcodeproj</string>
+	<string>module/perlin_test/ofxGpuPerlinSample.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
 			<key>IDESourceControlWCCName</key>
-			<string>apps</string>
+			<string>app</string>
 		</dict>
 	</array>
 </dict>

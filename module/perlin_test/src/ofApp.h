@@ -13,8 +13,7 @@ public:
     void keyPressed(int key);
     void windowResized(int w, int h);
 
-    ofxGpuNoise noise1, noise2, noise3, noise4;
-    
+	float w, h;
+	ofxGpuNoise noise;
     ofVboMesh mesh;
-    ofEasyCam cam;
 };

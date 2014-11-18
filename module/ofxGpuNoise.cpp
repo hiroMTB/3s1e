@@ -24,7 +24,6 @@ mHeight( 0 ),
 mShaderType( ofxGpuNoise::SHADER_TYPE_Perlin ),
 mShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO ),
 mSendSamplingPoints( false ),
-mShowSamplingPointTex( true ),
 mSamplingPointsScale( 1 ),
 mSamplingPointsOffset(0){
 
@@ -176,11 +175,13 @@ void ofxGpuNoise::update() {
 
 void ofxGpuNoise::draw( int x, int y, float scale ) {
     mFbo.draw( x, y, mWidth*scale, mHeight*scale );
-    
-    if( mSendSamplingPoints && mShowSamplingPointTex ) {
-        glColor3f( 1, 1, 1 );
-        mSamplingPointsTexture.draw( x, y+mHeight*scale+20, mWidth*scale*0.2, mHeight*scale*0.2 );
-    }
+}
+
+void ofxGpuNoise::draw_samplingPointTexture( int x, int y, float scale ){
+	if( mSendSamplingPoints ) {
+		glColor3f( 1, 1, 1 );
+		mSamplingPointsTexture.draw( x, y, mWidth*scale, mHeight*scale );
+	}
 }
 
 void ofxGpuNoise::reset(){
@@ -223,6 +224,14 @@ int ofxGpuNoise::getHeight() const {
 float ofxGpuNoise::getFreq() const {
     return mFreq;
 }
+
+ofVec2f ofxGpuNoise::getSamplingPoints( int index ){
+	if( index<mSamplingPoints.size() )
+		return mSamplingPoints.at( index );
+	else
+		return ofVec2f( -123,-123 );
+}
+
 //  Setter
 void ofxGpuNoise::setFrame( float aFrame ) {
     mFrame = aFrame;

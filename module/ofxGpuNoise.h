@@ -26,7 +26,8 @@ public:
     
     void            setup();
     void            update();
-    void            draw(int x, int y, float scale);
+    void            draw( int x, int y, float scale );
+	void			draw_samplingPointTexture( int x, int y, float scale );
     
     void            reset();
     void            clear();
@@ -34,7 +35,9 @@ public:
     ofPixels *      getNoiseData();
     ShaderType      getShaderType() const;
     ShaderDerivType getShaderDerivType() const;
-    int             getWidth() const;
+	ofVec2f			getSamplingPoints( int index );
+	
+	int             getWidth() const;
     int             getHeight() const;
     float           getFreq() const;
     
@@ -49,7 +52,7 @@ public:
     void            setSamplingPoint( const ofVec2f & point, int position );
     void            setSendSamplingPoints( bool aSendSamplingPoints );
     void            toggleUseFboReader();
-    
+
 private:
     
     static bool     mShaderCompiled;
@@ -62,7 +65,6 @@ private:
     bool            mPixelAllocated;
     bool            mDownloadNoiseData;
     bool            mSendSamplingPoints;
-    bool            mShowSamplingPointTex;
     
     int             mWidth;
     int             mHeight;

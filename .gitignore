@@ -60,3 +60,7 @@ xcuserdata/
 #gui setting
 _settings.xml
 #.gitignore#
+
+
+#binary file
+.bin

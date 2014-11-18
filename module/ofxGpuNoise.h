@@ -24,7 +24,7 @@ public:
     void            compileShader( string frag_name, ShaderType t, ShaderDerivType dt );
     void            create( int aValidWidth, int aValidHeight );
     
-    void            setup();
+    void            setup( string shader_file_path="" );
     void            update();
     void            draw( int x, int y, float scale );
 	void			draw_samplingPointTexture( int x, int y, float scale );
@@ -75,7 +75,8 @@ private:
     float           mFreq;
     float           mSamplingPointsScale;
     float           mSamplingPointsOffset;
-    
+	
+	string			mShader_file_path;
     ofFbo           mFbo;
     ShaderType      mShaderType;
     ShaderDerivType mShaderDerivType;

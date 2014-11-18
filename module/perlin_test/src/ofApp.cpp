@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "ad_util.h"
 
 void ofApp::setup(){
     ofSetWindowTitle( "ofxGpuPerlinSample" );
@@ -6,7 +7,7 @@ void ofApp::setup(){
     w = 512;
     h = 512;
     
-    noise.setup();
+	noise.setup( ad_util::data_path + "shader/");
     noise.setOctaves( 4 );
     noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
     noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO );

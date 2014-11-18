@@ -28,6 +28,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		F6EA0D1F1A1C0E22003429C0 /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6EA0D1D1A1C0E22003429C0 /* ad_util.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,15 +64,6 @@
 /* Begin PBXFileReference section */
 		4D9CE3D81A0A03880080057A /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxGpuNoise.cpp; path = ../../../module/ofxGpuNoise.cpp; sourceTree = "<group>"; };
 		4D9CE3D91A0A03880080057A /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxGpuNoise.h; path = ../../../module/ofxGpuNoise.h; sourceTree = "<group>"; };
-		4D9CE3DC1A0A03D90080057A /* passThru_vert.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = passThru_vert.glsl; sourceTree = "<group>"; };
-		4D9CE3E01A0A03D90080057A /* Cellular3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular3D.glsl; sourceTree = "<group>"; };
-		4D9CE3E11A0A03D90080057A /* Cellular3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular3D_Deriv.glsl; sourceTree = "<group>"; };
-		4D9CE3E41A0A03D90080057A /* Perlin3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin3D.glsl; sourceTree = "<group>"; };
-		4D9CE3E51A0A03D90080057A /* Perlin3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin3D_Deriv.glsl; sourceTree = "<group>"; };
-		4D9CE3E91A0A03D90080057A /* SimplexPerlin3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin3D.glsl; sourceTree = "<group>"; };
-		4D9CE3EA1A0A03D90080057A /* SimplexPerlin3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin3D_Deriv.glsl; sourceTree = "<group>"; };
-		4D9CE3ED1A0A03D90080057A /* Value3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value3D.glsl; sourceTree = "<group>"; };
-		4D9CE3EE1A0A03D90080057A /* Value3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value3D_Deriv.glsl; sourceTree = "<group>"; };
 		4D9CE3FA1A0A32800080057A /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
 		4D9CE3FB1A0A32800080057A /* ofxFastFboReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -97,6 +89,8 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		F6EA0D1D1A1C0E22003429C0 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_util.cpp; path = ../../ad_util.cpp; sourceTree = "<group>"; };
+		F6EA0D1E1A1C0E22003429C0 /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_util.h; path = ../../ad_util.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,31 +120,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D9CE3DB1A0A03D90080057A /* shader */ = {
-			isa = PBXGroup;
-			children = (
-				4D9CE3DC1A0A03D90080057A /* passThru_vert.glsl */,
-				4D9CE3DD1A0A03D90080057A /* Wombat */,
-			);
-			name = shader;
-			path = bin/data/shader;
-			sourceTree = SOURCE_ROOT;
-		};
-		4D9CE3DD1A0A03D90080057A /* Wombat */ = {
-			isa = PBXGroup;
-			children = (
-				4D9CE3E01A0A03D90080057A /* Cellular3D.glsl */,
-				4D9CE3E11A0A03D90080057A /* Cellular3D_Deriv.glsl */,
-				4D9CE3E41A0A03D90080057A /* Perlin3D.glsl */,
-				4D9CE3E51A0A03D90080057A /* Perlin3D_Deriv.glsl */,
-				4D9CE3E91A0A03D90080057A /* SimplexPerlin3D.glsl */,
-				4D9CE3EA1A0A03D90080057A /* SimplexPerlin3D_Deriv.glsl */,
-				4D9CE3ED1A0A03D90080057A /* Value3D.glsl */,
-				4D9CE3EE1A0A03D90080057A /* Value3D_Deriv.glsl */,
-			);
-			path = Wombat;
-			sourceTree = "<group>";
-		};
 		4D9CE3F81A0A32800080057A /* ofxFastFboReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,7 +208,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4D9CE3DB1A0A03D90080057A /* shader */,
+				F6EA0D1D1A1C0E22003429C0 /* ad_util.cpp */,
+				F6EA0D1E1A1C0E22003429C0 /* ad_util.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -346,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				F6EA0D1F1A1C0E22003429C0 /* ad_util.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				4D9CE3FC1A0A32800080057A /* ofxFastFboReader.cpp in Sources */,
 				4D9CE3DA1A0A03880080057A /* ofxGpuNoise.cpp in Sources */,

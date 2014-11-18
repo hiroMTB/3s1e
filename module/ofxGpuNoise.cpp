@@ -33,24 +33,25 @@ ofxGpuNoise::~ofxGpuNoise(){
     reset();
 }
 
-void ofxGpuNoise::setup(){
+void ofxGpuNoise::setup( string aShader_file_path ){
     if( !mShaderCompiled ){
-        compileShader("Perlin3D.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_NO );
-        compileShader("Perlin3D_Deriv.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_YES );
-        compileShader("SimplexPerlin3D.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_NO );
-        compileShader("SimplexPerlin3D_Deriv.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_YES );
-        compileShader("Cellular3D.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_NO );
-        compileShader("Cellular3D_Deriv.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_YES );
-        compileShader("Value3D.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_NO );
-        compileShader("Value3D_Deriv.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_YES );
+		mShader_file_path = aShader_file_path;
+        compileShader( "Perlin3D.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_NO );
+        compileShader( "Perlin3D_Deriv.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_YES );
+        compileShader( "SimplexPerlin3D.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_NO );
+        compileShader( "SimplexPerlin3D_Deriv.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_YES );
+        compileShader( "Cellular3D.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_NO );
+        compileShader( "Cellular3D_Deriv.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_YES );
+        compileShader( "Value3D.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_NO );
+        compileShader( "Value3D_Deriv.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_YES );
         mShaderCompiled = true;
     }
 }
 
 void ofxGpuNoise::compileShader( string frag_name , ShaderType t, ShaderDerivType dt ) {
     
-    string vert_path( "shader/passThru_vert.glsl" );
-    string frag_path( "shader/Wombat/" + frag_name );
+    string vert_path( mShader_file_path + "passThru_vert.glsl" );
+    string frag_path( mShader_file_path + "Wombat/" + frag_name );
     
     ofFile vert( vert_path);
     

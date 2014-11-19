@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>B08A829E-51ED-4704-AB2F-7BDF5EB41961</string>
+	<string>35EF5B19-7AA0-40E0-866D-22E0D2B78BAD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>genetic_motion_4</string>
+	<string>emptyExample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
 		<string>https://github.com/hiroMTB/3s1e.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>render/genetic_motion_4.3/genetic_motion_4.xcodeproj</string>
+	<string>render/genetic_motion_4.3/emptyExample.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
 			<key>IDESourceControlWCCName</key>
-			<string>apps</string>
+			<string>app</string>
 		</dict>
 	</array>
 </dict>

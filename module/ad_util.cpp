@@ -8,4 +8,4 @@
 
 #include "ad_util.h"
 
-string ad_util::data_path = "../../../../data/";
+string ad_util::data_path = "../../../../common_data/";

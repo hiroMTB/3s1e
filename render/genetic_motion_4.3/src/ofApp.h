@@ -4,6 +4,7 @@
 #include "ofxDna.h"
 #include "ad_image_saver.h"
 #include "ofxVectorGraphics.h"
+#include "ofxGpuNoise.h"
 
 class LineAgent {
 public:		
@@ -178,5 +179,5 @@ public:
     ofVboMesh connection_between_agent;
     ad_image_saver saver;
     ofVboMesh connection_between_pivot;
-    
+	ofxGpuNoise noise;
 };

@@ -1,7 +1,10 @@
 #include "ofApp.h"
 
 ofApp::ofApp(){
-    bDraw_info = true;
+	
+	//ofSetLogLevel( OF_LOG_VERBOSE );
+		
+	bDraw_info = true;
     bStart = false;
     bAnimate = true;
     bRotate = false;
@@ -14,6 +17,15 @@ ofApp::ofApp(){
     current_setting_start_frame = 0;
     sequencial_add_speed = 1;
     center.set( 0, 0, 0 );
+
+	string shader_path = ofToDataPath("") + "../../../../../app/ofxGpuNoise/libs/shader/";
+	noise.setup( shader_path );
+	noise.setOctaves( 4 );
+	noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
+	noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO );
+	noise.setSendSamplingPoints( false );
+	noise.setSamplingPointsScale( 0.001 );
+	noise.create( 512, 512 );
 }
 
 void ofApp::setup(){
@@ -42,7 +54,10 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-    
+	
+	noise.setFrame( ofGetFrameNum() * 0.03 );
+	noise.update();
+	
     float step = ofGetFrameNum() - current_setting_start_frame;
     float step_angle = (out_angle-in_angle) / sequencial_add_speed;
     int w = 0;
@@ -228,6 +243,8 @@ void ofApp::draw(){
     saver.save();
     
     draw_info();
+
+	noise.draw(5, 5, 0.5 );
 }
 
 void ofApp::draw_vector_graphics(){

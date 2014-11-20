@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7D301A34-9124-4694-958D-34A065F3CFE6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>grav_line_1</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>https://github.com/hiroMTB/3s1e.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>study/physics_4/grav_line_1.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/hiroMTB/3s1e.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
+			<key>IDESourceControlWCCName</key>
+			<string>app</string>
+		</dict>
+	</array>
+</dict>
+</plist>

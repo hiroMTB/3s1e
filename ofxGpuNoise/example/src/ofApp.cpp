@@ -3,11 +3,12 @@
 void ofApp::setup(){
 
     ofSetWindowTitle( "ofxGpuPerlinSample" );
+    ofSetFrameRate( 60 );
     
     w = 512;
     h = 512;
 
-	string shader_path = ofToDataPath("") + "../../../../../app/ofxGpuNoise/libs/shader/";
+	string shader_path = ofToDataPath("") + "../../../../../apps/ofxGpuNoise/libs/shader/";
 	noise.setup( shader_path );
     noise.setOctaves( 4 );
     noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
@@ -15,30 +16,38 @@ void ofApp::setup(){
     noise.setSendSamplingPoints( true );
     noise.setSamplingPointsScale( 0.001 );
     noise.create( w, h );
+
+    mesh.clear();
+    vector<ofVec3f> ps;
+    ps.assign(w*h, ofVec3f(0,0,0) );
+    vector<ofFloatColor> cs;
+    cs.assign(w*h, ofFloatColor(0) );
+    mesh.addVertices( ps );
+    mesh.addColors( cs );
+    mesh.setMode( OF_PRIMITIVE_POINTS );
+    mesh.setUsage( GL_DYNAMIC_DRAW );
 }
 
 void ofApp::update(){
     
-    mesh.clear();
-    mesh.setMode( OF_PRIMITIVE_POINTS );
-    mesh.setUsage( GL_DYNAMIC_DRAW );
-    
     noise.setFrame( ofGetFrameNum() * 0.01 );
     noise.update();
 
-    ofPixels * pix = noise.getNoiseData();
-
-	int w = pix->getWidth();
-    int h = pix->getHeight();
+    vector<ofVec3f> &vs = mesh.getVertices();
+    vector<ofFloatColor> &cs = mesh.getColors();
+    unsigned char * pix = noise.getNoiseData();
     int index = 0;
+
+    /*
+     *      this loop could be around 262,144( when you use 512*512 noise)
+     *      Be carefull how to get/set all pixel data
+     */
     for( int y=0; y<h; y++ ){
         for( int x=0; x<w; x++ ){
-            ofColor c1 = pix->getColor( x, y );
-            mesh.addVertex( ofVec2f(x, c1.r+128+y-h) );
-			ofFloatColor cf;
-			ofVec2f sp = noise.getSamplingPoints( index );
-            cf.set( sp.x, sp.y, 0 );
-            mesh.addColor( cf );
+            unsigned char r = pix[index*3 + 0];
+            vs[index].set(x, r+128+y-h,0);
+			ofVec2f &sp = noise.getSamplingPoints( index );
+            cs[index].set( sp.x, sp.y, 0 );
             index++;
         }
     }
@@ -52,31 +61,41 @@ void ofApp::draw(){
     ofBackground( 0 );
     ofSetColor( 255 );
 	
-	ofPushMatrix();
-	ofTranslate(20, ofGetHeight()/2-h/2 );
-	
-	ofPushMatrix();
-    noise.draw( 0, 0, 1);
-	ofPopMatrix();
-	
-	ofPushMatrix();
-    ofTranslate( w + 20, 0 );
-	noise.draw_samplingPointTexture( 0, 0, 1 );
-	ofPopMatrix();
-	
-	ofPushMatrix();{
-		ofTranslate( w*2+40, h/2 );
-		ofSetColor( 255 );
-		glPointSize( 1 );
-		mesh.draw();
-	}ofPopMatrix();
+    ofPushMatrix(); {
+        ofTranslate(20, ofGetHeight()/2-h/2 );
+        
+        ofPushMatrix(); {
+            noise.draw( 0, 0, 1);
+        } ofPopMatrix();
+        
+        ofPushMatrix(); {
+            ofTranslate( w + 20, 0 );
+            noise.draw_samplingPointTexture( 0, 0, 1 );
+        }ofPopMatrix();
+        
+        ofPushMatrix();{
+            ofTranslate( w*2+40, h/2 );
+            ofSetColor( 255 );
+            glPointSize( 1 );
+            mesh.draw();
+        }ofPopMatrix();
+        
+    }ofPopMatrix();
+    
+    ofPushMatrix();{
+        ofSetColor( 255 );
+        stringstream ss;
+        ss << "fps: " << ofGetFrameRate() << "\n";
+        ofDrawBitmapString( ss.str(), 20, 20 );
+    }ofPopMatrix();
 }
 
 void ofApp::keyPressed(int key){
     switch ( key){
         case 'p':
-            noise.toggleUseFboReader();
+            noise.toggleUseFastFboReader();
             break;
+
         case 'f':
             ofToggleFullscreen();
             break;

@@ -16,7 +16,7 @@ ofxGpuNoise::ofxGpuNoise()
 mFrame( 0 ),
 mFreq( 0.01 ),
 mOctaves( 4 ),
-mUseFboReader( true ),
+mUseFastFboReader( true ),
 mDownloadNoiseData( true ),
 mPixelAllocated( false ),
 mWidth( 0 ),
@@ -98,8 +98,8 @@ void ofxGpuNoise::create( int aValidWidth, int aValidHeight ) {
     settings.wrapModeVertical = GL_CLAMP_TO_EDGE;
     mFbo.allocate( settings );
     
-    mNoiseData.clear();
-    mNoiseData.allocate( mWidth, mHeight, OF_PIXELS_RGB );
+    mNoiseDataPix.clear();
+    mNoiseDataPix.allocate( mWidth, mHeight, OF_PIXELS_RGB );
     
     /*
      *      Texture setup
@@ -129,11 +129,17 @@ void ofxGpuNoise::update() {
      *      Update sampling point texture
      */
     if( mSendSamplingPoints ) {
+        float * pix = mSamplingPointsPix.getPixels();
+
         for(int i=0; i<mHeight; i++){
             for(int j=0; j<mWidth; j++){
                 int index = i*mWidth + j;
                 ofVec2f point = mSamplingPoints[index];
-                mSamplingPointsPix.setColor( j, i, ofFloatColor(point.x, point.y, 0.0) );
+                
+                //  Don't use ofPixels::setPixel(x,y,ofColor) it's slow
+                pix[index*3 + 0] = point.x;
+                pix[index*3 + 1] = point.y;
+                pix[index*3 + 2] = 0.0;
             }
         }
         mSamplingPointsTexture.loadData( mSamplingPointsPix );
@@ -167,13 +173,12 @@ void ofxGpuNoise::update() {
     
     /*
      *      Read noise data from GPU and store
-     *      Fbo -> FboReader(or Surface) -> mNoiseData
      */
     if( mDownloadNoiseData ) {
-        if( mUseFboReader ){
-            mFboReader.readToPixels( mFbo, mNoiseData );
+        if( mUseFastFboReader ){
+            mFboReader.readToPixels( mFbo, mNoiseDataPix );
         }else{
-            mFbo.getTextureReference().readToPixels( mNoiseData );
+            mFbo.getTextureReference().readToPixels( mNoiseDataPix );
         }
         mPixelAllocated = true;
     }
@@ -192,8 +197,8 @@ void ofxGpuNoise::draw_samplingPointTexture( int x, int y, float scale ){
 }
 
 void ofxGpuNoise::reset(){
-    if( mNoiseData.isAllocated() && mPixelAllocated ){
-        mNoiseData.clear();
+    if( mNoiseDataPix.isAllocated() && mPixelAllocated ){
+        mNoiseDataPix.clear();
         mPixelAllocated = false;
     }
 }
@@ -208,8 +213,8 @@ void ofxGpuNoise::clear(){
 }
 
 //  Getter
-ofPixels * ofxGpuNoise::getNoiseData() {
-    return &mNoiseData;
+unsigned char * ofxGpuNoise::getNoiseData() {
+    return mNoiseDataPix.getPixels();
 }
 
 ofxGpuNoise::ShaderType ofxGpuNoise::getShaderType() const {
@@ -232,11 +237,11 @@ float ofxGpuNoise::getFreq() const {
     return mFreq;
 }
 
-ofVec2f ofxGpuNoise::getSamplingPoints( int index ){
+ofVec2f & ofxGpuNoise::getSamplingPoints( int index ){
 	if( index<mSamplingPoints.size() )
 		return mSamplingPoints.at( index );
-	else
-		return ofVec2f( -123,-123 );
+//	else
+//		return ofVec2f( -123,-123 );
 }
 
 //  Setter
@@ -280,6 +285,6 @@ void ofxGpuNoise::setSamplingPoint( const ofVec2f & point, int position ) {
     mSamplingPoints[position] = point;
 }
 
-void ofxGpuNoise::toggleUseFboReader() {
-    mUseFboReader = !mUseFboReader;
+void ofxGpuNoise::toggleUseFastFboReader() {
+    mUseFastFboReader = !mUseFastFboReader;
 }

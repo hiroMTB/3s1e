@@ -32,10 +32,11 @@ public:
     void            reset();
     void            clear();
     
-    ofPixels *      getNoiseData();
+    //ofPixels      getNoiseDataPix(){}           // could be super slow because we need to retleave every pix.
+    unsigned char * getNoiseData();
     ShaderType      getShaderType() const;
     ShaderDerivType getShaderDerivType() const;
-	ofVec2f			getSamplingPoints( int index );
+	ofVec2f & 		getSamplingPoints( int index );
 	
 	int             getWidth() const;
     int             getHeight() const;
@@ -51,7 +52,7 @@ public:
     void            setSamplingPoints( const vector<ofVec2f>& aSamplingPoints );
     void            setSamplingPoint( const ofVec2f & point, int position );
     void            setSendSamplingPoints( bool aSendSamplingPoints );
-    void            toggleUseFboReader();
+    void            toggleUseFastFboReader();
 
 private:
     
@@ -61,7 +62,7 @@ private:
     
     static ofShader mShaders[ mShaderTypeNum ][ mShaderDerivTypeNum ];
     
-    bool            mUseFboReader;
+    bool            mUseFastFboReader;
     bool            mPixelAllocated;
     bool            mDownloadNoiseData;
     bool            mSendSamplingPoints;
@@ -84,7 +85,7 @@ private:
     ofFloatPixels   mSamplingPointsPix;
     ofTexture       mSamplingPointsTexture;
     ofxFastFboReader mFboReader;
-    ofPixels        mNoiseData;
+    ofPixels        mNoiseDataPix;
     
     ofPlanePrimitive plane;
 };

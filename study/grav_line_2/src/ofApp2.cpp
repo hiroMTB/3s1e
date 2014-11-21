@@ -7,3 +7,5 @@
 //
 
 #include "ofApp2.h"
+
+ofApp2 * ofApp2::app = NULL;

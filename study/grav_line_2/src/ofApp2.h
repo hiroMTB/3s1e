@@ -11,15 +11,34 @@
 #include "ofMain.h"
 #include "ad_grav_line.h"
 #include "ad_image_saver.h"
+#include "ofxGpuNoise.h"
 
 class ofApp2 : public ofBaseApp{
     
 public:
+	
+	static ofApp2 * app;
+	static ofApp2 * init(){ app = new ofApp2(); return app; }
+	
     void setup(){
         bDraw_info = true;
         cam.setDistance(1000);
         cam.setLensOffset( ofVec2f(0, 1.2) );
-        gravline.setup( &cam );
+
+		gpu_noise.setup( ofToDataPath("") + "/../../../../../apps/ofxGpuNoise/libs/shader/");
+		gpu_noise.setOctaves( 4 );
+		gpu_noise.setFreq( 0.1 );
+		gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
+		gpu_noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+
+		int nsize = 128;
+		gpu_noise.create( nsize, nsize);
+		noise_size = nsize * nsize;
+		gpu_noise.setFrame( 0.01 );
+		gpu_noise.update();
+		noise = gpu_noise.getNoiseData();
+		
+		gravline.setup( &cam );
         
         ofVec2f p0(0,0);
         ofVec2f p1(-900,1000);
@@ -37,9 +56,13 @@ public:
         gravline.create_line(p3, p4);
 
         ofBackground(0);
+		
     };
     
     void update(){
+		gpu_noise.setFrame( ofGetFrameNum()*0.01 );
+		gpu_noise.update();
+		noise = gpu_noise.getNoiseData();
         gravline.update();
     }
     
@@ -55,7 +78,9 @@ public:
 
         saver.save();
         draw_info();
-    }
+		gpu_noise.draw(400, 10,1);
+
+	}
 
     void draw_info(){
         if ( !bDraw_info)
@@ -77,7 +102,7 @@ public:
         ss << "\n";
 
         ofSetColor( 0);
-        ofDrawBitmapString( ss.str().c_str(), 10, 10 );
+        ofDrawBitmapString( ss.str(), 10, 10 );
     };
     
     void keyPressed( int key ){
@@ -90,12 +115,26 @@ public:
                 break;
         };
     }
-    
-    bool bDraw_info;
+	
+	float getNoise( int index, int ch=0 ){
+		index %= noise_size;
+		return noise[index*3 + ch]/255.0;
+	}
+
+	float getSignedNoise( int index, int ch=0 ){
+		index %= noise_size;
+		return (noise[index*3 + ch]-128)*2.0/255.0;
+	}
+
+	bool bDraw_info;
     float frame;
     
     ofEasyCam cam;
     ad_grav_line gravline;
 
     ad_image_saver saver;
+	
+	ofxGpuNoise gpu_noise;
+	int noise_size;
+	unsigned char * noise;
 };

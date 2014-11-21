@@ -7,6 +7,7 @@
 //
 
 #include "ad_grav_line.h"
+#include "ofApp2.h"
 
 ad_grav_line::ad_grav_line()
 :bInitPhysics(false)
@@ -44,11 +45,11 @@ void ad_grav_line::add_random_particle( int num ){
         pos.y += 500;
         ofxBulletSphere * s= new ofxBulletSphere();
         
-        float size = ofNoise(pos.x*0.1, i*0.001) * 10.0;
+		float size = ofApp2::app->getNoise(i) * 10.0;
         size = ofMap(size, 0, 10.0, 1, 9);
-        float mass = 5.0 - ofNoise(pos.x*0.01+10, i*0.001) * 3.0;
+		float mass = 5.0 - ofApp2::app->getNoise(i) * 3.0;
         if( ofRandomuf() < 0.1) mass = 0;
-        float friction = ofNoise(pos.x*0.00001+1, i*0.01+10.0) * 10.0;
+		float friction = ofApp2::app->getNoise(i+100) * 10.0;
         s->init( sphereShapes[(int)size] );
         s->create( world.world, pos, mass );
         s->setFriction( friction );
@@ -96,17 +97,17 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2 ){
         for(int d=0; d<2; d++){
             ofVec3f pos = p1 + adder*i;
             pos += adder * offset;
-            pos += adder*ofSignedNoise(ofRandomf(), i*0.001 );
+            pos += adder*ofApp2::app->getSignedNoise(i*10);
             ofxBulletSphere * s= new ofxBulletSphere();
             
-            float mass = 5.0 - ofNoise(pos.x*0.01+10, i*0.001) * 3.0;
-            float size = ofNoise( mass*0.1, pos.y*0.1, d*10+i*0.001) * 10.0 + i*0.001;
+			float mass = 5.0 - ofApp2::app->getNoise(i,1) * 3.0;
+            float size = ofApp2::app->getNoise(i+300,2) * 10.0 + i*0.001;
             size = ofMap(size, 0, 10.0, 1, 9, true);
 
             if( ofRandomuf() < 0.011)
                 mass = 0;
 
-            float friction = ofNoise(pos.x*0.00001+1, i*0.01+10.0) * 10.0;
+            float friction = ofApp2::app->getNoise(i+400,2) * 10.0;
             s->init( sphereShapes[(int)size] );
             s->create( world.world, pos, mass );
             s->setFriction( friction );
@@ -141,14 +142,17 @@ void ad_grav_line::update_attrs(){
     }
     
     // gravity
-    for( int i=0; i<shapes.size(); i++ ){
-        
-        ofVec3f pos = shapes[i]->getPosition();
+	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
+	for( int i=0; i<objs.size(); i++ ){
+		
+		btTransform &trans = objs[i]->getWorldTransform();
+		btVector3 &bpos = trans.getOrigin();
+		ofVec3f pos(bpos.x(), bpos.y(), bpos.z());
         ofVec3f force( 0,0,0 );
         
         for( int g=0; g<gvls.size(); g++ ){
             
-            if( ofNoise( i*0.1, g+0.1, frame*0.01)>0.7) continue;
+            if( ofApp2::app->getNoise(i,2) >0.7) continue;
             
             ofVboMesh & attrs = gvls[g].attrs;
             for( int j=0; j<attrs.getNumVertices(); j++ ){
@@ -157,7 +161,7 @@ void ad_grav_line::update_attrs(){
                 float dist2 = diff.lengthSquared();
                 if(dist2>10){
                     float power = (1.0/dist2) * 1000000.0;
-                    force += diff.normalized() * (power * ofNoise(j*0.1, frame*0.001));
+                    force += diff.normalized() * (power * ofApp2::app->getNoise(i*2) );
                 }
             }
             
@@ -178,15 +182,15 @@ void ad_grav_line::update_attrs(){
 void ad_grav_line::update_lines(){
 
     lines.clear();
-    for( int i=0; i<shapes.size(); i++ ){
-        
-        //        if(ofRandom(1.0)>0.1)
-        //            continue;
-        ofVec3f pos1 = shapes[i]->getPosition();
-        
-        float noise = ofNoise(pos1.x*0.1, pos1.y*0.01, i*0.0001);
+	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
+	for( int i=0; i<objs.size(); i++ ){
+		btTransform &trans = objs[i]->getWorldTransform();
+		btVector3 &bpos = trans.getOrigin();
+		ofVec3f pos1( bpos.x(), bpos.y(), bpos.z() );
+		
+        float noise = ofApp2::app->getNoise(i);
         int num_line = 3; // + noise*noise*8.0;
-        bool bStatic1 = shapes[i]->getMass() == 0;
+        bool bStatic1 = objs[i]->isStaticObject();
         if( bStatic1 ) num_line = 1;
         
         multimap<float, ofVec3f> near_p;
@@ -196,12 +200,16 @@ void ad_grav_line::update_lines(){
         }
         
 
-        for( int j=i+1; j<shapes.size(); j++ ){
-            bool bStatic2 = shapes[j]->getMass() == 0;
+        for( int j=i+1; j<objs.size(); j++ ){
+
+			bool bStatic2 = objs[j]->isStaticObject();
             if( bStatic1 && bStatic2 ) continue;
             
-            ofVec3f pos2 = shapes[j]->getPosition();
-            float dist = pos1.distance( pos2 );
+			btTransform &trans = objs[j]->getWorldTransform();
+			btVector3 &bpos = trans.getOrigin();
+			ofVec3f pos2( bpos.x(), bpos.y(), bpos.z() );
+
+			float dist = pos1.distance( pos2 );
             
             multimap<float, ofVec3f>::iterator itr = near_p.end();
             
@@ -228,12 +236,14 @@ void ad_grav_line::update_lines(){
             if( d<1 || limit<d  ) continue;
             lines.addVertex( pos1 );
             lines.addVertex( pos2 );
-            ofFloatColor c;
-            c.setHsb(   ofNoise(i*0.1,      frame*0.001)*0.6 + 0.55,
-                        ofNoise(10+i*0.2,   frame*0.001)*0.4 + 0.2,
-                        ofNoise(2+i*3,      frame*0.001)*0.3 + 0.2
+
+			ofFloatColor c;
+			 c.setHsb(  ofApp2::app->getNoise(i,0)*0.5	+ 0.5,
+						ofApp2::app->getNoise(i,1)*0.6	+ 0.2,
+						ofApp2::app->getNoise(i,2)*0.6	+ 0.1
                      );
-            c.a = ofNoise(noise+0.3, c.r*0.001, frame*0.001)*0.8 + 0.3;
+			
+			c.a = ofApp2::app->getNoise(i+1000)*0.8 + 0.2;
             lines.addColor( c );
             lines.addColor( c );
         }
@@ -245,12 +255,12 @@ void ad_grav_line::update_points(){
         ofVec3f sp = shapes[i]->getPosition();
         ofVec3f pp(sp);
         sp *= 0.01;
-        pp.y += ofSignedNoise( sp.x, sp.y, frame * 0.001);
+		pp.y += ofApp2::app->getSignedNoise(i+100, 2);
         pp.y += sp.y;
         points.setVertex( i, pp );
         ofFloatColor c;
-        c.setHsb( ofNoise(i*0.01)*0.4+0.55, ofRandom(0.1,0.8), ofNoise(i*0.001)*0.4+0.4);
-        c.a = ofNoise(c.r*0.0001, c.g*0.001, frame*0.001)*0.8 + 0.2;
+        c.setHsb( ofApp2::app->getNoise(i+3000,2)*0.4+0.55, ofRandom(0.1,0.8), ofApp2::app->getNoise(i*4,2)*0.4+0.4);
+        c.a = ofApp2::app->getNoise(i+3300)*0.8 + 0.2;
         points.setColor( i, c);
     }
 }
@@ -258,10 +268,19 @@ void ad_grav_line::update_points(){
 void ad_grav_line::draw(){
     ofNoFill();
     ofSetLineWidth( 1 );
-    for( int i=0; i<collision.size(); i++ ){
-        ofSetColor( 30, 150);
-        ofVec3f &p = collision[i];
-        ofCircle( p, 2 );
+	
+	for( int i=0; i<gvls.size(); i++ ){
+		ofSetLineWidth( 1 );
+		ofSetColor( 0 );
+		ofLine( gvls[i].p1, gvls[i].p2 );
+	}
+	
+	for( int i=0; i<collision.size(); i++ ){
+		if( i%10 == 0){
+			ofSetColor( 30, 150);
+			ofVec3f &p = collision[i];
+			ofCircle( p, 3 );
+		}
     }
     collision.clear();
 
@@ -270,17 +289,9 @@ void ad_grav_line::draw(){
 
     glLineWidth( 1 );
     lines.draw();
-
-    for( int i=0; i<gvls.size(); i++ ){
-        //gvls[i].attrs.draw();
-
-        ofSetLineWidth( 1 );
-        ofSetColor( 0 );
-        //ofLine( gvls[i].p1, gvls[i].p2 );
-    }
 }
 
 void ad_grav_line::onCollision( ofxBulletCollisionData &cdata ){
-    if(frame > 300)
+    if(frame > 100)
         collision.insert( collision.end(), cdata.worldContactPoints1.begin(), cdata.worldContactPoints1.end() );
 }

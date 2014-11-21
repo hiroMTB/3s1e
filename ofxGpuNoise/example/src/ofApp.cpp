@@ -12,7 +12,7 @@ void ofApp::setup(){
 	noise.setup( shader_path );
     noise.setOctaves( 4 );
     noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
-    noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO );
+    noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
     noise.setSendSamplingPoints( true );
     noise.setSamplingPointsScale( 0.001 );
     noise.create( w, h );

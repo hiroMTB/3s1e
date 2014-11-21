@@ -9,5 +9,5 @@ int main( ){
     window.setNumSamples( 8 );
     window.setAlphaBits( 8 );
     ofSetupOpenGL( &window, 1920, 1080, OF_FULLSCREEN );
-    ofRunApp( new ofApp2() );
+	ofRunApp( ofApp2::init());
 }

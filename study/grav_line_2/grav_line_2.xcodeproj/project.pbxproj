@@ -43,6 +43,8 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		F6FB469D1A1F688D00F7D98B /* ofxGpuNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FB46981A1F688D00F7D98B /* ofxGpuNoise.cpp */; };
+		F6FB46A51A1F699700F7D98B /* ofxFastFboReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FB46A31A1F699700F7D98B /* ofxFastFboReader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,29 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		F6FB46831A1F688D00F7D98B /* passThru_vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = passThru_vert.glsl; sourceTree = "<group>"; };
+		F6FB46851A1F688D00F7D98B /* Cellular2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular2D.glsl; sourceTree = "<group>"; };
+		F6FB46861A1F688D00F7D98B /* Cellular2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular2D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46871A1F688D00F7D98B /* Cellular3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular3D.glsl; sourceTree = "<group>"; };
+		F6FB46881A1F688D00F7D98B /* Cellular3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular3D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46891A1F688D00F7D98B /* Perlin2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin2D.glsl; sourceTree = "<group>"; };
+		F6FB468A1A1F688D00F7D98B /* Perlin2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin2D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB468B1A1F688D00F7D98B /* Perlin3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin3D.glsl; sourceTree = "<group>"; };
+		F6FB468C1A1F688D00F7D98B /* Perlin3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin3D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB468D1A1F688D00F7D98B /* Perlin4D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin4D.glsl; sourceTree = "<group>"; };
+		F6FB468E1A1F688D00F7D98B /* SimplexPerlin2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin2D.glsl; sourceTree = "<group>"; };
+		F6FB468F1A1F688D00F7D98B /* SimplexPerlin2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin2D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46901A1F688D00F7D98B /* SimplexPerlin3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin3D.glsl; sourceTree = "<group>"; };
+		F6FB46911A1F688D00F7D98B /* SimplexPerlin3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin3D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46921A1F688D00F7D98B /* Value2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value2D.glsl; sourceTree = "<group>"; };
+		F6FB46931A1F688D00F7D98B /* Value2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value2D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46941A1F688D00F7D98B /* Value3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value3D.glsl; sourceTree = "<group>"; };
+		F6FB46951A1F688D00F7D98B /* Value3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value3D_Deriv.glsl; sourceTree = "<group>"; };
+		F6FB46961A1F688D00F7D98B /* Value4D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value4D.glsl; sourceTree = "<group>"; };
+		F6FB46981A1F688D00F7D98B /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoise.cpp; sourceTree = "<group>"; };
+		F6FB46991A1F688D00F7D98B /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
+		F6FB46A31A1F699700F7D98B /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
+		F6FB46A41A1F699700F7D98B /* ofxFastFboReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +303,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F6FB46A11A1F699700F7D98B /* ofxFastFboReader */,
+				F6FB46711A1F688D00F7D98B /* ofxGpuNoise */,
 				2EEF2F0D17BB2A72003CFA1C /* ofxBullet */,
 			);
 			name = addons;
@@ -363,6 +390,85 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		F6FB46711A1F688D00F7D98B /* ofxGpuNoise */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46811A1F688D00F7D98B /* libs */,
+				F6FB46971A1F688D00F7D98B /* src */,
+			);
+			name = ofxGpuNoise;
+			path = ../../ofxGpuNoise;
+			sourceTree = "<group>";
+		};
+		F6FB46811A1F688D00F7D98B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46821A1F688D00F7D98B /* shader */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		F6FB46821A1F688D00F7D98B /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46831A1F688D00F7D98B /* passThru_vert.glsl */,
+				F6FB46841A1F688D00F7D98B /* Wombat */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
+		F6FB46841A1F688D00F7D98B /* Wombat */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46851A1F688D00F7D98B /* Cellular2D.glsl */,
+				F6FB46861A1F688D00F7D98B /* Cellular2D_Deriv.glsl */,
+				F6FB46871A1F688D00F7D98B /* Cellular3D.glsl */,
+				F6FB46881A1F688D00F7D98B /* Cellular3D_Deriv.glsl */,
+				F6FB46891A1F688D00F7D98B /* Perlin2D.glsl */,
+				F6FB468A1A1F688D00F7D98B /* Perlin2D_Deriv.glsl */,
+				F6FB468B1A1F688D00F7D98B /* Perlin3D.glsl */,
+				F6FB468C1A1F688D00F7D98B /* Perlin3D_Deriv.glsl */,
+				F6FB468D1A1F688D00F7D98B /* Perlin4D.glsl */,
+				F6FB468E1A1F688D00F7D98B /* SimplexPerlin2D.glsl */,
+				F6FB468F1A1F688D00F7D98B /* SimplexPerlin2D_Deriv.glsl */,
+				F6FB46901A1F688D00F7D98B /* SimplexPerlin3D.glsl */,
+				F6FB46911A1F688D00F7D98B /* SimplexPerlin3D_Deriv.glsl */,
+				F6FB46921A1F688D00F7D98B /* Value2D.glsl */,
+				F6FB46931A1F688D00F7D98B /* Value2D_Deriv.glsl */,
+				F6FB46941A1F688D00F7D98B /* Value3D.glsl */,
+				F6FB46951A1F688D00F7D98B /* Value3D_Deriv.glsl */,
+				F6FB46961A1F688D00F7D98B /* Value4D.glsl */,
+			);
+			path = Wombat;
+			sourceTree = "<group>";
+		};
+		F6FB46971A1F688D00F7D98B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46981A1F688D00F7D98B /* ofxGpuNoise.cpp */,
+				F6FB46991A1F688D00F7D98B /* ofxGpuNoise.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		F6FB46A11A1F699700F7D98B /* ofxFastFboReader */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46A21A1F699700F7D98B /* src */,
+			);
+			name = ofxFastFboReader;
+			sourceTree = "<group>";
+		};
+		F6FB46A21A1F699700F7D98B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB46A31A1F699700F7D98B /* ofxFastFboReader.cpp */,
+				F6FB46A41A1F699700F7D98B /* ofxFastFboReader.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxFastFboReader/src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -458,6 +564,7 @@
 				4D0ECC5419E7311300C27B92 /* GLDebugDrawer.cpp in Sources */,
 				4D4A41E41A1F0CBD006069E7 /* ofApp2.cpp in Sources */,
 				4D0ECC5519E7311300C27B92 /* ofxBulletBaseShape.cpp in Sources */,
+				F6FB46A51A1F699700F7D98B /* ofxFastFboReader.cpp in Sources */,
 				4D0ECC5619E7311300C27B92 /* ofxBulletBox.cpp in Sources */,
 				4D0ECC5719E7311300C27B92 /* ofxBulletCapsule.cpp in Sources */,
 				4D0ECC5819E7311300C27B92 /* ofxBulletCone.cpp in Sources */,
@@ -465,6 +572,7 @@
 				4D09BDCF19FAFE2400EA7FC8 /* ofImage.cpp in Sources */,
 				4D0ECC5919E7311300C27B92 /* ofxBulletConvexShape.cpp in Sources */,
 				4D0ECC5A19E7311300C27B92 /* ofxBulletCustomShape.cpp in Sources */,
+				F6FB469D1A1F688D00F7D98B /* ofxGpuNoise.cpp in Sources */,
 				4D0ECC5B19E7311300C27B92 /* ofxBulletCylinder.cpp in Sources */,
 				4D0ECC5C19E7311300C27B92 /* ofxBulletSphere.cpp in Sources */,
 				4D0ECC5D19E7311300C27B92 /* ofxBulletStaticPlane.cpp in Sources */,
@@ -572,6 +680,7 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = grav_line_2Debug;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -594,6 +703,7 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = grav_line_2;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

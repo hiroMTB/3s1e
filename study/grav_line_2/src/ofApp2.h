@@ -27,8 +27,8 @@ public:
 
 		gpu_noise.setup( ofToDataPath("") + "/../../../../../apps/ofxGpuNoise/libs/shader/");
 		gpu_noise.setOctaves( 4 );
-		gpu_noise.setFreq( 0.1 );
-		gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
+		gpu_noise.setFreq( 0.05 );
+		gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
 		gpu_noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
 
 		int nsize = 128;
@@ -78,7 +78,7 @@ public:
 
         saver.save();
         draw_info();
-		gpu_noise.draw(400, 10,1);
+		gpu_noise.draw(300, 10,1);
 
 	}
 
@@ -99,10 +99,15 @@ public:
         ss << "target pos: " << cam.getTarget().getPosition().x << ", " << cam.getTarget().getPosition().y << "," << cam.getTarget().getPosition().z << "\n";
         ss << "dist      : " << cam.getDistance() << "\n";
         ss << "fov       : " << cam.getFov() << "\n";
+
+        ss << "\nGpu Noise\n";
+        ss << "type      : " << gpu_noise.getShaderType() << "\n";
+        ss << "deriv     : " << gpu_noise.getShaderDerivType() << "\n";
+        ss << "Freq      : " << gpu_noise.getFreq() << "\n";
         ss << "\n";
 
-        ofSetColor( 0);
-        ofDrawBitmapString( ss.str(), 10, 10 );
+        ofSetColor( 0 );
+        ofDrawBitmapString( ss.str(), 10, 20 );
     };
     
     void keyPressed( int key ){
@@ -112,6 +117,27 @@ public:
                 break;
             case 'S':
                 saver.start(ofGetTimestampString(), "", 3000);
+                break;
+                
+            case OF_KEY_RIGHT:
+            {
+                int i = gpu_noise.getShaderType();
+                gpu_noise.setShaderType((ofxGpuNoise::ShaderType)++i);
+                break;
+            }
+            case OF_KEY_LEFT:
+            {
+                int i = gpu_noise.getShaderType();
+                gpu_noise.setShaderType((ofxGpuNoise::ShaderType)--i);
+                break;
+            }
+                
+            case OF_KEY_UP:
+                gpu_noise.setFreq( gpu_noise.getFreq()*2.0 );
+                break;
+                
+            case OF_KEY_DOWN:
+                gpu_noise.setFreq( gpu_noise.getFreq()*0.5 );
                 break;
         };
     }

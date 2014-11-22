@@ -238,9 +238,9 @@ void ad_grav_line::update_lines(){
             lines.addVertex( pos2 );
 
 			ofFloatColor c;
-			 c.setHsb(  ofApp2::app->getNoise(i,0)*0.5	+ 0.5,
-						ofApp2::app->getNoise(i,1)*0.6	+ 0.2,
-						ofApp2::app->getNoise(i,2)*0.6	+ 0.1
+			 c.setHsb(  ofApp2::app->getNoise(i,0)*0.3	+ 0.6,
+						ofApp2::app->getNoise(i,1)*0.3	+ 0.1,
+						ofApp2::app->getNoise(i,2)*0.3	+ 0.3
                      );
 			
 			c.a = ofApp2::app->getNoise(i+1000)*0.8 + 0.2;

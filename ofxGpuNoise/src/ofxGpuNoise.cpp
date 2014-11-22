@@ -7,6 +7,7 @@
 //
 
 #include "ofxGpuNoise.h"
+#include "ofxGpuNoiseShaders.h"
 
 ofShader ofxGpuNoise::mShaders[ ofxGpuNoise::mShaderTypeNum ][ ofxGpuNoise::mShaderDerivTypeNum ];
 bool ofxGpuNoise::mShaderCompiled = false;
@@ -26,44 +27,31 @@ mShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO ),
 mSendSamplingPoints( false ),
 mSamplingPointsScale( 1 ),
 mSamplingPointsOffset(0){
-	string data_path = ofToDataPath("");
-	mShader_file_path = data_path + "../../../../../addons/ofxGpuNoise/libs/shader/";
 }
 
 ofxGpuNoise::~ofxGpuNoise(){
     reset();
 }
 
-void ofxGpuNoise::setup( string aShader_file_path ){
+void ofxGpuNoise::setup(){
     if( !mShaderCompiled ){
-		string data_path = 	ofToDataPath("");
-		mShader_file_path = aShader_file_path;
-		ofSetDataPathRoot( mShader_file_path );
-		compileShader( "Perlin3D.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_NO );
-        compileShader( "Perlin3D_Deriv.glsl", SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_YES );
-        compileShader( "SimplexPerlin3D.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_NO );
-        compileShader( "SimplexPerlin3D_Deriv.glsl", SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_YES );
-        compileShader( "Cellular3D.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_NO );
-        compileShader( "Cellular3D_Deriv.glsl", SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_YES );
-        compileShader( "Value3D.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_NO );
-        compileShader( "Value3D_Deriv.glsl", SHADER_TYPE_Value, SHADER_DERIV_TYPE_YES );
+        compileShaderFromSrc( getPerlin3D(), SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_NO );
+        compileShaderFromSrc( getPerlin3D_Deriv(), SHADER_TYPE_Perlin, SHADER_DERIV_TYPE_YES );
+        compileShaderFromSrc( getSimplexPerlin3D(), SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_NO );
+        compileShaderFromSrc( getSimplexPerlin3D_Deriv(), SHADER_TYPE_SimplexPerlin, SHADER_DERIV_TYPE_YES );
+        compileShaderFromSrc( getCellular3D(), SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_NO );
+        compileShaderFromSrc( getCellular3D_Deriv(), SHADER_TYPE_Cellular, SHADER_DERIV_TYPE_YES );
+        compileShaderFromSrc( getValue3D(), SHADER_TYPE_Value, SHADER_DERIV_TYPE_NO );
+        compileShaderFromSrc( getValue3D_Deriv(), SHADER_TYPE_Value, SHADER_DERIV_TYPE_YES );
         mShaderCompiled = true;
-		ofSetDataPathRoot( data_path );
     }
 }
 
-void ofxGpuNoise::compileShader( string frag_name , ShaderType t, ShaderDerivType dt ) {
-    
-    string vert_path( mShader_file_path + "passThru_vert.glsl" );
-    string frag_path( mShader_file_path + "Wombat/" + frag_name );
-	
-    ofFile vert( vert_path);
-	if( vert.isFile() ){
-        cout << "compile shader[" << t <<  "][" << dt << "] = " << frag_name << endl;
-        mShaders[t][dt].load( vert_path, frag_path );
-	}else{
-		cout << "cant find file for " << vert.getAbsolutePath() << endl;
-	}
+void ofxGpuNoise::compileShaderFromSrc( string frag_code , ShaderType t, ShaderDerivType dt ) {
+
+    mShaders[t][dt].setupShaderFromSource( GL_VERTEX_SHADER, getPassThruVert() );
+    mShaders[t][dt].setupShaderFromSource( GL_FRAGMENT_SHADER, frag_code );
+    mShaders[t][dt].linkProgram();
 }
 
 void ofxGpuNoise::create( int aValidWidth, int aValidHeight ) {

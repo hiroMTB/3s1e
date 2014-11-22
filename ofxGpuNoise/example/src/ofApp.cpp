@@ -8,8 +8,7 @@ void ofApp::setup(){
     w = 512;
     h = 512;
 
-	string shader_path = ofToDataPath("") + "../../../../../apps/ofxGpuNoise/libs/shader/";
-	noise.setup( shader_path );
+	noise.setup();
     noise.setOctaves( 4 );
     noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
     noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );

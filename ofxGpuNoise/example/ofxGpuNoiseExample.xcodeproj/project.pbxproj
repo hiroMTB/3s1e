@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D7810581A20545000721FDE /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7810571A20545000721FDE /* ofxGpuNoiseShaders.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -61,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D7810551A204A9E00721FDE /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxGpuNoiseShaders.h; path = ../src/ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
+		4D7810571A20545000721FDE /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxGpuNoiseShaders.cpp; path = ../src/ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -86,25 +89,6 @@
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		F6DD22C31A1D598F00FB2A3A /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
 		F6DD22C41A1D598F00FB2A3A /* ofxFastFboReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
-		F6EA0DD01A1C49BE003429C0 /* passThru_vert.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = passThru_vert.glsl; sourceTree = "<group>"; };
-		F6EA0DD21A1C49BF003429C0 /* Cellular2D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular2D.glsl; sourceTree = "<group>"; };
-		F6EA0DD31A1C49BF003429C0 /* Cellular2D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular2D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DD41A1C49BF003429C0 /* Cellular3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular3D.glsl; sourceTree = "<group>"; };
-		F6EA0DD51A1C49BF003429C0 /* Cellular3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cellular3D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DD61A1C49BF003429C0 /* Perlin2D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin2D.glsl; sourceTree = "<group>"; };
-		F6EA0DD71A1C49BF003429C0 /* Perlin2D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin2D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DD81A1C49BF003429C0 /* Perlin3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin3D.glsl; sourceTree = "<group>"; };
-		F6EA0DD91A1C49BF003429C0 /* Perlin3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin3D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DDA1A1C49BF003429C0 /* Perlin4D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Perlin4D.glsl; sourceTree = "<group>"; };
-		F6EA0DDB1A1C49BF003429C0 /* SimplexPerlin2D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin2D.glsl; sourceTree = "<group>"; };
-		F6EA0DDC1A1C49BF003429C0 /* SimplexPerlin2D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin2D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DDD1A1C49BF003429C0 /* SimplexPerlin3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin3D.glsl; sourceTree = "<group>"; };
-		F6EA0DDE1A1C49BF003429C0 /* SimplexPerlin3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimplexPerlin3D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DDF1A1C49BF003429C0 /* Value2D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value2D.glsl; sourceTree = "<group>"; };
-		F6EA0DE01A1C49BF003429C0 /* Value2D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value2D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DE11A1C49BF003429C0 /* Value3D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value3D.glsl; sourceTree = "<group>"; };
-		F6EA0DE21A1C49BF003429C0 /* Value3D_Deriv.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value3D_Deriv.glsl; sourceTree = "<group>"; };
-		F6EA0DE31A1C49BF003429C0 /* Value4D.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Value4D.glsl; sourceTree = "<group>"; };
 		F6EA0DE41A1C49C7003429C0 /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxGpuNoise.cpp; path = ../src/ofxGpuNoise.cpp; sourceTree = "<group>"; };
 		F6EA0DE51A1C49C7003429C0 /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxGpuNoise.h; path = ../src/ofxGpuNoise.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,7 +228,6 @@
 		F6EA0DB21A1C497D003429C0 /* ofxGpuNoise */ = {
 			isa = PBXGroup;
 			children = (
-				F6EA0DB41A1C498B003429C0 /* libs */,
 				F6EA0DB31A1C4985003429C0 /* src */,
 			);
 			name = ofxGpuNoise;
@@ -255,51 +238,10 @@
 			children = (
 				F6EA0DE41A1C49C7003429C0 /* ofxGpuNoise.cpp */,
 				F6EA0DE51A1C49C7003429C0 /* ofxGpuNoise.h */,
+				4D7810551A204A9E00721FDE /* ofxGpuNoiseShaders.h */,
+				4D7810571A20545000721FDE /* ofxGpuNoiseShaders.cpp */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		F6EA0DB41A1C498B003429C0 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				F6EA0DCF1A1C49BE003429C0 /* shader */,
-			);
-			name = libs;
-			sourceTree = "<group>";
-		};
-		F6EA0DCF1A1C49BE003429C0 /* shader */ = {
-			isa = PBXGroup;
-			children = (
-				F6EA0DD01A1C49BE003429C0 /* passThru_vert.glsl */,
-				F6EA0DD11A1C49BE003429C0 /* Wombat */,
-			);
-			name = shader;
-			path = ../libs/shader;
-			sourceTree = "<group>";
-		};
-		F6EA0DD11A1C49BE003429C0 /* Wombat */ = {
-			isa = PBXGroup;
-			children = (
-				F6EA0DD21A1C49BF003429C0 /* Cellular2D.glsl */,
-				F6EA0DD31A1C49BF003429C0 /* Cellular2D_Deriv.glsl */,
-				F6EA0DD41A1C49BF003429C0 /* Cellular3D.glsl */,
-				F6EA0DD51A1C49BF003429C0 /* Cellular3D_Deriv.glsl */,
-				F6EA0DD61A1C49BF003429C0 /* Perlin2D.glsl */,
-				F6EA0DD71A1C49BF003429C0 /* Perlin2D_Deriv.glsl */,
-				F6EA0DD81A1C49BF003429C0 /* Perlin3D.glsl */,
-				F6EA0DD91A1C49BF003429C0 /* Perlin3D_Deriv.glsl */,
-				F6EA0DDA1A1C49BF003429C0 /* Perlin4D.glsl */,
-				F6EA0DDB1A1C49BF003429C0 /* SimplexPerlin2D.glsl */,
-				F6EA0DDC1A1C49BF003429C0 /* SimplexPerlin2D_Deriv.glsl */,
-				F6EA0DDD1A1C49BF003429C0 /* SimplexPerlin3D.glsl */,
-				F6EA0DDE1A1C49BF003429C0 /* SimplexPerlin3D_Deriv.glsl */,
-				F6EA0DDF1A1C49BF003429C0 /* Value2D.glsl */,
-				F6EA0DE01A1C49BF003429C0 /* Value2D_Deriv.glsl */,
-				F6EA0DE11A1C49BF003429C0 /* Value3D.glsl */,
-				F6EA0DE21A1C49BF003429C0 /* Value3D_Deriv.glsl */,
-				F6EA0DE31A1C49BF003429C0 /* Value4D.glsl */,
-			);
-			path = Wombat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,6 +333,7 @@
 			files = (
 				F6DD22C71A1D598F00FB2A3A /* ofxFastFboReader.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				4D7810581A20545000721FDE /* ofxGpuNoiseShaders.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				F6EA0DE61A1C49C7003429C0 /* ofxGpuNoise.cpp in Sources */,
 			);

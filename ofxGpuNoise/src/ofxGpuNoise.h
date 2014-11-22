@@ -21,10 +21,11 @@ public:
     ofxGpuNoise();
     ~ofxGpuNoise();
     
+    void            compileShaderFromSrc( string code , ShaderType t, ShaderDerivType dt );
     void            compileShader( string frag_name, ShaderType t, ShaderDerivType dt );
     void            create( int aValidWidth, int aValidHeight );
     
-    void            setup( string shader_file_path="../../../../../addons/ofxGpuNoise/libs/shader/");
+    void            setup();
     void            update();
     void            draw( int x, int y, float scale );
 	void			draw_samplingPointTexture( int x, int y, float scale );
@@ -77,7 +78,6 @@ private:
     float           mSamplingPointsScale;
     float           mSamplingPointsOffset;
 	
-	string			mShader_file_path;
     ofFbo           mFbo;
     ShaderType      mShaderType;
     ShaderDerivType mShaderDerivType;

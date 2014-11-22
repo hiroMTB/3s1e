@@ -39,31 +39,29 @@ public:
 		noise = gpu_noise.getNoiseData();
 		
 		gravline.setup( &cam );
-        
+		
+    };
+    
+    void update(){
+        frame = ofGetFrameNum();
+        gpu_noise.setFrame( frame *0.01 );
+		gpu_noise.update();
+		noise = gpu_noise.getNoiseData();
+        gravline.update();
+    
         ofVec2f p0(0,0);
         ofVec2f p1(-900,1000);
         ofVec2f p2(-100,800);
         ofVec2f p3(600,1200);
         ofVec2f p4(800,600);
         
-        gravline.create_line(p0, p1);
-        gravline.create_line(p0, p2);
-        gravline.create_line(p0, p3);
-        gravline.create_line(p0, p4);
-
-        gravline.create_line(p1, p2);
-        gravline.create_line(p2, p3);
-        gravline.create_line(p3, p4);
-
-        ofBackground(0);
-		
-    };
-    
-    void update(){
-		gpu_noise.setFrame( ofGetFrameNum()*0.01 );
-		gpu_noise.update();
-		noise = gpu_noise.getNoiseData();
-        gravline.update();
+        if( frame == 25*4 )     gravline.create_line(p0, p1, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*5 )     gravline.create_line(p0, p2, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*6 )     gravline.create_line(p0, p3, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*7 )    gravline.create_line(p0, p4, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*8 )    gravline.create_line(p1, p2, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*9 )    gravline.create_line(p2, p3, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 25*10 )    gravline.create_line(p3, p4, 0.1 + ofRandomuf()*0.75 );
     }
     
     void draw(){

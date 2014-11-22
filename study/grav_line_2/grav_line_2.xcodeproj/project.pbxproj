@@ -120,8 +120,6 @@
 		4D4A41E01A1F04E6006069E7 /* ad_grav_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_grav_line.h; path = ../../../module/ad_grav_line.h; sourceTree = "<group>"; };
 		4D4A41E21A1F0CBD006069E7 /* ofApp2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp2.cpp; sourceTree = "<group>"; };
 		4D4A41E31A1F0CBD006069E7 /* ofApp2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp2.h; sourceTree = "<group>"; };
-		4D4A41E51A1F23F4006069E7 /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
-		4D4A41E61A1F23F4006069E7 /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		4D78105C1A205B7300721FDE /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -211,8 +209,6 @@
 		4D09BDC519FAFE2400EA7FC8 /* module */ = {
 			isa = PBXGroup;
 			children = (
-				4D4A41E51A1F23F4006069E7 /* ofApp.cpp */,
-				4D4A41E61A1F23F4006069E7 /* ofApp.h */,
 				4D09BDC619FAFE2400EA7FC8 /* ad_image_saver.cpp */,
 				4D09BDC719FAFE2400EA7FC8 /* ad_image_saver.h */,
 				4D09BDC819FAFE2400EA7FC8 /* ad_util.cpp */,

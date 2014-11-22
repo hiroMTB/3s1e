@@ -61,7 +61,7 @@ void ad_grav_line::add_random_particle( int num ){
     }
 }
 
-void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2 ){
+void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
     
     gvline gvl(p1, p2);
 
@@ -91,7 +91,7 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2 ){
     float offset = 10;
     float length = dir.length() - offset;
     float rate = (length-offset) / length;
-    int num = length*0.5;
+    int num = length * density;
     ofVec2f adder = dir / num * rate;
     for(int i=0; i<num; i++){
         for(int d=0; d<2; d++){
@@ -152,8 +152,9 @@ void ad_grav_line::update_attrs(){
         
         for( int g=0; g<gvls.size(); g++ ){
             
-            if( ofApp2::app->getNoise(i,2) >0.7) continue;
-            
+//            if( ofApp2::app->getNoise(i,2) >0.7) continue;
+            if( g != i%gvls.size()) continue;
+                
             ofVboMesh & attrs = gvls[g].attrs;
             for( int j=0; j<attrs.getNumVertices(); j++ ){
                 
@@ -276,10 +277,10 @@ void ad_grav_line::draw(){
 	}
 	
 	for( int i=0; i<collision.size(); i++ ){
-		if( i%10 == 0){
+		if( i%3 == 0){
 			ofSetColor( 30, 150);
 			ofVec3f &p = collision[i];
-			ofCircle( p, 3 );
+			ofCircle( p, 1 );
 		}
     }
     collision.clear();
@@ -292,6 +293,6 @@ void ad_grav_line::draw(){
 }
 
 void ad_grav_line::onCollision( ofxBulletCollisionData &cdata ){
-    if(frame > 100)
+    if(frame > 30)
         collision.insert( collision.end(), cdata.worldContactPoints1.begin(), cdata.worldContactPoints1.end() );
 }

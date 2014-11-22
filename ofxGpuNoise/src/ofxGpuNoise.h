@@ -33,7 +33,7 @@ public:
     void            reset();
     void            clear();
     
-    //ofPixels      getNoiseDataPix(){}           // could be super slow because we need to retleave every pix.
+    //ofPixels      getNoiseDataPix(){}           // could be super slow because we need to retleave large amount of pixels.
     unsigned char * getNoiseData();
     ShaderType      getShaderType() const;
     ShaderDerivType getShaderDerivType() const;

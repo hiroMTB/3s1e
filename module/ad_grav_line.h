@@ -37,7 +37,7 @@ public:
     ad_grav_line();
     void setup( ofCamera * cam );
     void add_random_particle( int num );
-    void create_line( ofVec2f p1, ofVec2f p2 );
+    void create_line( ofVec2f p1, ofVec2f p2, float density=0.1 );
     void update();
     void update_lines();
     void update_points();

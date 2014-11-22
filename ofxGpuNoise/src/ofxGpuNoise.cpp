@@ -15,15 +15,15 @@ bool ofxGpuNoise::mShaderCompiled = false;
 ofxGpuNoise::ofxGpuNoise()
 :
 mFrame( 0 ),
-mFreq( 0.01 ),
+mFreq( 0.05 ),
 mOctaves( 4 ),
 mUseFastFboReader( true ),
 mDownloadNoiseData( true ),
 mPixelAllocated( false ),
 mWidth( 0 ),
 mHeight( 0 ),
-mShaderType( ofxGpuNoise::SHADER_TYPE_Perlin ),
-mShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO ),
+mShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin ),
+mShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES ),
 mSendSamplingPoints( false ),
 mSamplingPointsScale( 1 ),
 mSamplingPointsOffset(0){
@@ -201,8 +201,34 @@ void ofxGpuNoise::clear(){
 }
 
 //  Getter
+float ofxGpuNoise::getNoisef( int index, int ch ){
+	index %= mWidth * mHeight;
+	return (mNoiseDataPix.getPixels()[index*3 + ch]-128)*2.0/255.0;
+}
+
+float ofxGpuNoise::getNoiseuf( int index, int ch ){
+	index %= mWidth * mHeight;
+	return mNoiseDataPix.getPixels()[index*3 + ch]/255.0;
+}
+
+unsigned char ofxGpuNoise::getNoiseuc( int index, int ch ){
+	index %= mWidth * mHeight;
+	return mNoiseDataPix.getPixels()[index*3 + ch];
+}
+
 unsigned char * ofxGpuNoise::getNoiseData() {
     return mNoiseDataPix.getPixels();
+}
+
+string ofxGpuNoise::getNoiseParamString(){
+	stringstream ss;
+	ss << "Gpu Noise" << "\n";
+	ss << "ShaderType	   : " << mShaderType		<< "\n";
+	ss << "ShaderDerivType : " << mShaderDerivType	<< "\n";
+	ss << "Freq            : " << mFreq				<< "\n";
+	ss << "Octave          : " << mOctaves			<< "\n";
+	ss << "frame	       : " << mFrame            << "\n";
+	return ss.str();
 }
 
 ofxGpuNoise::ShaderType ofxGpuNoise::getShaderType() const {

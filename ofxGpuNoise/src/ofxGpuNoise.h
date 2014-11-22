@@ -39,10 +39,15 @@ public:
     ShaderDerivType getShaderDerivType() const;
 	ofVec2f & 		getSamplingPoints( int index );
 	
+	float			getNoisef( int index, int ch=0 );
+	float			getNoiseuf( int index, int ch=0 );
+	unsigned char	getNoiseuc( int index, int ch=0 );
+	
 	int             getWidth() const;
     int             getHeight() const;
     float           getFreq() const;
-    
+	string			getNoiseParamString();
+	
     void            setFrame( float aFrame );
     void            setOctaves( int aOctaves );
     void            setFreq( float aFreq );
@@ -54,7 +59,7 @@ public:
     void            setSamplingPoint( const ofVec2f & point, int position );
     void            setSendSamplingPoints( bool aSendSamplingPoints );
     void            toggleUseFastFboReader();
-
+	
 private:
     
     static bool     mShaderCompiled;

@@ -49,6 +49,8 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		F609DEC81A200D0800B26424 /* ofxGpuNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F609DEC31A200D0800B26424 /* ofxGpuNoise.cpp */; };
+		F609DEE21A200F5B00B26424 /* ofxFastFboReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F609DEDE1A200F5B00B26424 /* ofxFastFboReader.cpp */; };
 		F61F782219FC451B00C608CB /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F61F782019FC451B00C608CB /* ofApp.cpp */; };
 		F6601CEC1A12A8800001C4E5 /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6601CEA1A12A8800001C4E5 /* ad_util.cpp */; };
 		F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F684962C19F62C0400AFC707 /* ad_image_saver.cpp */; };
@@ -369,7 +371,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* line_flow_2Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = line_flow_2Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* line_flow_3Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = line_flow_3Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -380,6 +382,29 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		F609DEAE1A200D0800B26424 /* passThru_vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = passThru_vert.glsl; sourceTree = "<group>"; };
+		F609DEB01A200D0800B26424 /* Cellular2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular2D.glsl; sourceTree = "<group>"; };
+		F609DEB11A200D0800B26424 /* Cellular2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular2D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEB21A200D0800B26424 /* Cellular3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular3D.glsl; sourceTree = "<group>"; };
+		F609DEB31A200D0800B26424 /* Cellular3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cellular3D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEB41A200D0800B26424 /* Perlin2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin2D.glsl; sourceTree = "<group>"; };
+		F609DEB51A200D0800B26424 /* Perlin2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin2D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEB61A200D0800B26424 /* Perlin3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin3D.glsl; sourceTree = "<group>"; };
+		F609DEB71A200D0800B26424 /* Perlin3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin3D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEB81A200D0800B26424 /* Perlin4D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Perlin4D.glsl; sourceTree = "<group>"; };
+		F609DEB91A200D0800B26424 /* SimplexPerlin2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin2D.glsl; sourceTree = "<group>"; };
+		F609DEBA1A200D0800B26424 /* SimplexPerlin2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin2D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEBB1A200D0800B26424 /* SimplexPerlin3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin3D.glsl; sourceTree = "<group>"; };
+		F609DEBC1A200D0800B26424 /* SimplexPerlin3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexPerlin3D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEBD1A200D0800B26424 /* Value2D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value2D.glsl; sourceTree = "<group>"; };
+		F609DEBE1A200D0800B26424 /* Value2D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value2D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEBF1A200D0800B26424 /* Value3D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value3D.glsl; sourceTree = "<group>"; };
+		F609DEC01A200D0800B26424 /* Value3D_Deriv.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value3D_Deriv.glsl; sourceTree = "<group>"; };
+		F609DEC11A200D0800B26424 /* Value4D.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Value4D.glsl; sourceTree = "<group>"; };
+		F609DEC31A200D0800B26424 /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoise.cpp; sourceTree = "<group>"; };
+		F609DEC41A200D0800B26424 /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
+		F609DEDE1A200F5B00B26424 /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
+		F609DEDF1A200F5B00B26424 /* ofxFastFboReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
 		F61F782019FC451B00C608CB /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
 		F61F782119FC451B00C608CB /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		F6601CEA1A12A8800001C4E5 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_util.cpp; sourceTree = "<group>"; };
@@ -870,6 +895,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F609DECC1A200F5B00B26424 /* ofxFastFboReader */,
+				F609DE9C1A200D0700B26424 /* ofxGpuNoise */,
 				4DA4419B19D0702C0025C4B7 /* ofxAlembic */,
 			);
 			name = addons;
@@ -932,7 +959,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* line_flow_2Debug.app */,
+				E4B69B5B0A3A1756003C02F2 /* line_flow_3Debug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -956,6 +983,85 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
+		F609DE9C1A200D0700B26424 /* ofxGpuNoise */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEAC1A200D0800B26424 /* libs */,
+				F609DEC21A200D0800B26424 /* src */,
+			);
+			name = ofxGpuNoise;
+			path = ../../ofxGpuNoise;
+			sourceTree = "<group>";
+		};
+		F609DEAC1A200D0800B26424 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEAD1A200D0800B26424 /* shader */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		F609DEAD1A200D0800B26424 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEAE1A200D0800B26424 /* passThru_vert.glsl */,
+				F609DEAF1A200D0800B26424 /* Wombat */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
+		F609DEAF1A200D0800B26424 /* Wombat */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEB01A200D0800B26424 /* Cellular2D.glsl */,
+				F609DEB11A200D0800B26424 /* Cellular2D_Deriv.glsl */,
+				F609DEB21A200D0800B26424 /* Cellular3D.glsl */,
+				F609DEB31A200D0800B26424 /* Cellular3D_Deriv.glsl */,
+				F609DEB41A200D0800B26424 /* Perlin2D.glsl */,
+				F609DEB51A200D0800B26424 /* Perlin2D_Deriv.glsl */,
+				F609DEB61A200D0800B26424 /* Perlin3D.glsl */,
+				F609DEB71A200D0800B26424 /* Perlin3D_Deriv.glsl */,
+				F609DEB81A200D0800B26424 /* Perlin4D.glsl */,
+				F609DEB91A200D0800B26424 /* SimplexPerlin2D.glsl */,
+				F609DEBA1A200D0800B26424 /* SimplexPerlin2D_Deriv.glsl */,
+				F609DEBB1A200D0800B26424 /* SimplexPerlin3D.glsl */,
+				F609DEBC1A200D0800B26424 /* SimplexPerlin3D_Deriv.glsl */,
+				F609DEBD1A200D0800B26424 /* Value2D.glsl */,
+				F609DEBE1A200D0800B26424 /* Value2D_Deriv.glsl */,
+				F609DEBF1A200D0800B26424 /* Value3D.glsl */,
+				F609DEC01A200D0800B26424 /* Value3D_Deriv.glsl */,
+				F609DEC11A200D0800B26424 /* Value4D.glsl */,
+			);
+			path = Wombat;
+			sourceTree = "<group>";
+		};
+		F609DEC21A200D0800B26424 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEC31A200D0800B26424 /* ofxGpuNoise.cpp */,
+				F609DEC41A200D0800B26424 /* ofxGpuNoise.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		F609DECC1A200F5B00B26424 /* ofxFastFboReader */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEDD1A200F5B00B26424 /* src */,
+			);
+			name = ofxFastFboReader;
+			path = ../../../addons/ofxFastFboReader;
+			sourceTree = "<group>";
+		};
+		F609DEDD1A200F5B00B26424 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F609DEDE1A200F5B00B26424 /* ofxFastFboReader.cpp */,
+				F609DEDF1A200F5B00B26424 /* ofxFastFboReader.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		F684962B19F62C0400AFC707 /* module */ = {
 			isa = PBXGroup;
 			children = (
@@ -971,9 +1077,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* line_flow_2 */ = {
+		E4B69B5A0A3A1756003C02F2 /* line_flow_3 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "line_flow_2" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "line_flow_3" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -985,9 +1091,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = line_flow_2;
+			name = line_flow_3;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* line_flow_2Debug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* line_flow_3Debug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -997,7 +1103,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "line_flow_2" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "line_flow_3" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1018,7 +1124,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* line_flow_2 */,
+				E4B69B5A0A3A1756003C02F2 /* line_flow_3 */,
 			);
 		};
 /* End PBXProject section */
@@ -1060,8 +1166,10 @@
 				4DA4431319D070770025C4B7 /* ofxAlembicUtil.cpp in Sources */,
 				4DA4431419D070770025C4B7 /* ofxAlembicWriter.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				F609DEE21A200F5B00B26424 /* ofxFastFboReader.cpp in Sources */,
 				F6601CEC1A12A8800001C4E5 /* ad_util.cpp in Sources */,
 				F684962E19F62C0400AFC707 /* ad_image_saver.cpp in Sources */,
+				F609DEC81A200D0800B26424 /* ofxGpuNoise.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1228,7 +1336,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				PREBINDING = NO;
-				PRODUCT_NAME = line_flow_2Debug;
+				PRODUCT_NAME = line_flow_3Debug;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1323,7 +1431,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"../../../addons/ofxAlembic/libs/alembic/lib/osx\"";
 				PREBINDING = NO;
-				PRODUCT_NAME = line_flow_2;
+				PRODUCT_NAME = line_flow_3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1331,7 +1439,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "line_flow_2" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "line_flow_3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -1340,7 +1448,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "line_flow_2" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "line_flow_3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,

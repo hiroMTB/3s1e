@@ -25,7 +25,7 @@ public:
         cam.setDistance(1000);
         cam.setLensOffset( ofVec2f(0, 1.2) );
 
-		gpu_noise.setup( ofToDataPath("") + "/../../../../../apps/ofxGpuNoise/libs/shader/");
+		gpu_noise.setup();
 		gpu_noise.setOctaves( 4 );
 		gpu_noise.setFreq( 0.05 );
 		gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );

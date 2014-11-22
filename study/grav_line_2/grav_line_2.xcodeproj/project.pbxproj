@@ -24,6 +24,7 @@
 		4D0ECC5D19E7311300C27B92 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0ECC5019E730FE00C27B92 /* ofxBulletStaticPlane.cpp */; };
 		4D4A41E11A1F04E6006069E7 /* ad_grav_line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A41DF1A1F04E6006069E7 /* ad_grav_line.cpp */; };
 		4D4A41E41A1F0CBD006069E7 /* ofApp2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A41E21A1F0CBD006069E7 /* ofApp2.cpp */; };
+		4D78105D1A205B7300721FDE /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -121,6 +122,8 @@
 		4D4A41E31A1F0CBD006069E7 /* ofApp2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp2.h; sourceTree = "<group>"; };
 		4D4A41E51A1F23F4006069E7 /* ofApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		4D4A41E61A1F23F4006069E7 /* ofApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
+		4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
+		4D78105C1A205B7300721FDE /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -447,6 +450,8 @@
 		F6FB46971A1F688D00F7D98B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */,
+				4D78105C1A205B7300721FDE /* ofxGpuNoiseShaders.h */,
 				F6FB46981A1F688D00F7D98B /* ofxGpuNoise.cpp */,
 				F6FB46991A1F688D00F7D98B /* ofxGpuNoise.h */,
 			);
@@ -575,6 +580,7 @@
 				F6FB469D1A1F688D00F7D98B /* ofxGpuNoise.cpp in Sources */,
 				4D0ECC5B19E7311300C27B92 /* ofxBulletCylinder.cpp in Sources */,
 				4D0ECC5C19E7311300C27B92 /* ofxBulletSphere.cpp in Sources */,
+				4D78105D1A205B7300721FDE /* ofxGpuNoiseShaders.cpp in Sources */,
 				4D0ECC5D19E7311300C27B92 /* ofxBulletStaticPlane.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4D09BDCE19FAFE2400EA7FC8 /* ad_util.cpp in Sources */,

@@ -3,7 +3,7 @@
 void ofApp::setup(){
 
     ofSetWindowPosition( 1560, 0 );
-    code = gui.create( "my_gui.maxpat" );
+    code = gui.create( "myGuiGenereted.maxpat" );
 }
 
 void ofApp::update(){

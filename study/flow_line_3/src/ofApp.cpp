@@ -21,7 +21,7 @@ void ofApp::setup(){
 	ofEnableAntiAliasing();
 	
 	cam.setTarget( ofVec3f(0,0,0) );
-	cam.setDistance( 40 );
+	cam.setDistance( 30 );
 	
 	fov = cam.getFov();
 	cam.setNearClip( 0.00001 );
@@ -45,9 +45,9 @@ void ofApp::setup(){
 	if( !ok ) cout << "image load failer" << endl;
 	
 	gn.setup( ofToDataPath("") + "../../../../../apps/ofxGpuNoise/libs/shader/" );
-	gn.setShaderType(ofxGpuNoise::SHADER_TYPE_Value);
+	gn.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
 	gn.create( 256, 256 );
-	gn.setFreq( 0.6 );
+	gn.setFreq( 0.005 );
 	
 }
 
@@ -71,20 +71,28 @@ void ofApp::update(){
     abc.get( 0, pos );
 	
     points.clear();
-	points.addVertices( pos );
 
 	unsigned char * pix = img.getPixels();
-	for(int i=0; i<points.getNumVertices(); i++ ){
-		int index  = (i*3) % (int)(img.getWidth() * img.getHeight() );
-//		ofFloatColor c( pix[ index*3 + 0] / 255.0,
-//					    pix[ index*3 + 1] / 255.0,
-//						pix[ index*3 + 2] / 255.0
-//					   );
-		ofFloatColor c;
-		c.setHue( gn.getNoiseuf(i, 0) );
-		c.setSaturation( gn.getNoiseuf( i, 1 ) );
-		c.setBrightness( gn.getNoiseuf( i, 2 ) );
-		c.a = 1; //gn.getNoiseuf( i+1000, 2 )*0.3 + 0.3;
+	int n = pos.size();
+	
+	for(int i=0; i<n; i++ ){
+
+		// inverse walksthrough
+		int index  = (n-1-i) % (int)(img.getWidth() * img.getHeight() );
+		ofVec3f &p = pos[index];
+		points.addVertex( p );
+		
+		/*
+		 *	color animation
+		 */
+		ofFloatColor c( pix[ index*3 + 0] / 255.0,
+					    pix[ index*3 + 1] / 255.0,
+						pix[ index*3 + 2] / 255.0
+					   );
+		c.setHue( c.getHue()*0.25 + gn.getNoiseuf(index, 0)*0.6 + 0.2);
+		c.setSaturation( c.getSaturation()*0.5 + gn.getNoisef( index, 1 )*0.5 );
+		c.setBrightness( c.getBrightness()*0.5 + gn.getNoisef( index, 2 )*0.5 -0.2);
+		c.a = gn.getNoiseuf( i+1000, 2 )*0.3 + 0.5;
 
 		points.addColor( c );
 	}
@@ -99,30 +107,29 @@ void ofApp::draw(){
 	
     ofBackground( 255 );
 
-	ofPushMatrix();
-	if(bOrtho){
-		ofSetupScreenOrtho();
-		ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-		ofScale(24, -24);
-	}else{
-		cam.begin();
+	ofPushMatrix();{
+		if(!bOrtho){
+			cam.begin();
+		}else{
+			ofSetupScreenOrtho();
+			ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+			ofScale(24, -24);
+		}
 
-	}
+		ofRotateY(rot);
+		glPointSize( 1 );
+		points.draw();
+		
+		ofSetColor(0);
+		ofLine(ofPoint(0, -50, 0), ofPoint(0,50,0));
 
-	ofRotateY(rot);
-	glPointSize( 1 );
-    points.draw();
-	
-	ofSetColor(0);
-	ofLine(ofPoint(0, -50, 0), ofPoint(0,50,0));
+		ofSetColor(0, 0, 255);
+		ofLine(ofPoint(0, 0, -0.1), ofPoint(0,0,0.1));
 
-	ofSetColor(0, 0, 255);
-	ofLine(ofPoint(0, 0, -0.1), ofPoint(0,0,0.1));
-
-	if(!bOrtho){
-		cam.end();
-	}
-	ofPopMatrix();
+		if(!bOrtho){
+			cam.end();
+		}
+	}ofPopMatrix();
 	
 	saver.save();
 	
@@ -163,6 +170,8 @@ void ofApp::draw_info(){
 	ss << "d     key : toggle zero depth \n";
 	ss << "o     key : toggle ortho\n";
 	ss << "up / down key : fov +-10 \n";
+	
+	ss << "\n" << gn.getNoiseParamString() << "\n";
 	
 	ofDrawBitmapString( ss.str(), 20, 20 );
 	gn.draw( 300, 10, 1 );

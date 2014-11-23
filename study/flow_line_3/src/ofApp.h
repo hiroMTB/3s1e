@@ -36,5 +36,6 @@ public:
 	float rot;
 	
 	ofxGpuNoise gn;
-	
+
+	vector<float> rotation;
 };

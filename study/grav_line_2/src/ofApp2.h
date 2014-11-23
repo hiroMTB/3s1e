@@ -55,13 +55,15 @@ public:
         ofVec2f p3(600,1200);
         ofVec2f p4(800,600);
         
-        if( frame == 25*4 )     gravline.create_line(p0, p1, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*5 )     gravline.create_line(p0, p2, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*6 )     gravline.create_line(p0, p3, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*7 )    gravline.create_line(p0, p4, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*8 )    gravline.create_line(p1, p2, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*9 )    gravline.create_line(p2, p3, 0.1 + ofRandomuf()*0.75 );
-        if( frame == 25*10 )    gravline.create_line(p3, p4, 0.1 + ofRandomuf()*0.75 );
+        if( frame == 300){
+            gravline.create_line(p0, p1, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p0, p2, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p0, p3, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p0, p4, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p1, p2, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p2, p3, 0.1 + ofRandomuf()*0.75 );
+            gravline.create_line(p3, p4, 0.1 + ofRandomuf()*0.75 );
+        }
     }
     
     void draw(){
@@ -75,8 +77,8 @@ public:
         cam.end();
 
         saver.save();
-        draw_info();
-		gpu_noise.draw(300, 10,1);
+//        draw_info();
+//		gpu_noise.draw(300, 10,1);
 
 	}
 

@@ -1,7 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxFastFboReader.h"
+
+//#define USE_FAST_FBO_READER
+#ifdef USE_FAST_FBO_READER
+ #include "ofxFastFboReader.h"
+#endif
+
 class ofxGpuNoise {
     
 public:
@@ -89,8 +94,11 @@ private:
     vector<ofVec2f> mSamplingPoints;
     ofFloatPixels   mSamplingPointsPix;
     ofTexture       mSamplingPointsTexture;
-    ofxFastFboReader mFboReader;
     ofPixels        mNoiseDataPix;
     
     ofPlanePrimitive plane;
+    
+#ifdef USE_FAST_FBO_READER
+    ofxFastFboReader mFboReader;
+#endif
 };

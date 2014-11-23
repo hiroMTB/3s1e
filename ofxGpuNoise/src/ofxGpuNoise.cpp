@@ -164,7 +164,9 @@ void ofxGpuNoise::update() {
      */
     if( mDownloadNoiseData ) {
         if( mUseFastFboReader ){
+#ifdef USE_FAST_FBO_READER
             mFboReader.readToPixels( mFbo, mNoiseDataPix );
+#endif
         }else{
             mFbo.getTextureReference().readToPixels( mNoiseDataPix );
         }

@@ -163,13 +163,15 @@ void ofxGpuNoise::update() {
      *      Read noise data from GPU and store
      */
     if( mDownloadNoiseData ) {
-        if( mUseFastFboReader ){
+        //if( mUseFastFboReader ){
 #ifdef USE_FAST_FBO_READER
             mFboReader.readToPixels( mFbo, mNoiseDataPix );
-#endif
-        }else{
+#else
+            
+        //}else{
             mFbo.getTextureReference().readToPixels( mNoiseDataPix );
-        }
+        //}
+#endif
         mPixelAllocated = true;
     }
 }

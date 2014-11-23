@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4DF186FE1A218BA600A1D331 /* ofxGpuNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF186F71A218BA600A1D331 /* ofxGpuNoise.cpp */; };
 		4DF186FF1A218BA600A1D331 /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF186F91A218BA600A1D331 /* ofxGpuNoiseShaders.cpp */; };
+		4DF1870C1A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF187091A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp */; };
+		4DF1870D1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1870A1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm */; };
+		4DF1870E1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1870B1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp */; };
+		4DF187141A21AB1E00A1D331 /* ofxFastFboReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF187121A21AB1E00A1D331 /* ofxFastFboReader.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -65,6 +69,12 @@
 		4DF186F81A218BA600A1D331 /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
 		4DF186F91A218BA600A1D331 /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		4DF186FA1A218BA600A1D331 /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
+		4DF187081A2194D900A1D331 /* ofxModifierKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxModifierKeys.h; sourceTree = "<group>"; };
+		4DF187091A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_linux.cpp; sourceTree = "<group>"; };
+		4DF1870A1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxModifierKeys_impl_mac.mm; sourceTree = "<group>"; };
+		4DF1870B1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_win.cpp; sourceTree = "<group>"; };
+		4DF187121A21AB1E00A1D331 /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
+		4DF187131A21AB1E00A1D331 /* ofxFastFboReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -75,7 +85,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* crater_5Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crater_5Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* photoMesherDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = photoMesherDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
@@ -137,9 +147,49 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		4DF187061A2194D900A1D331 /* ofxModifierKeys */ = {
+			isa = PBXGroup;
+			children = (
+				4DF187071A2194D900A1D331 /* src */,
+			);
+			name = ofxModifierKeys;
+			sourceTree = "<group>";
+		};
+		4DF187071A2194D900A1D331 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DF187081A2194D900A1D331 /* ofxModifierKeys.h */,
+				4DF187091A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp */,
+				4DF1870A1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm */,
+				4DF1870B1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp */,
+			);
+			name = src;
+			path = ../../../addons/ofxModifierKeys/src;
+			sourceTree = "<group>";
+		};
+		4DF187101A21AB1E00A1D331 /* ofxFastFboReader */ = {
+			isa = PBXGroup;
+			children = (
+				4DF187111A21AB1E00A1D331 /* src */,
+			);
+			name = ofxFastFboReader;
+			sourceTree = "<group>";
+		};
+		4DF187111A21AB1E00A1D331 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DF187121A21AB1E00A1D331 /* ofxFastFboReader.cpp */,
+				4DF187131A21AB1E00A1D331 /* ofxFastFboReader.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxFastFboReader/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4DF187101A21AB1E00A1D331 /* ofxFastFboReader */,
+				4DF187061A2194D900A1D331 /* ofxModifierKeys */,
 				4DF186D81A218BA600A1D331 /* ofxGpuNoise */,
 			);
 			name = addons;
@@ -200,7 +250,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* crater_5Debug.app */,
+				E4B69B5B0A3A1756003C02F2 /* photoMesherDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,7 +292,7 @@
 			);
 			name = photoMesher;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* crater_5Debug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* photoMesherDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -312,6 +362,10 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4DF186FF1A218BA600A1D331 /* ofxGpuNoiseShaders.cpp in Sources */,
+				4DF187141A21AB1E00A1D331 /* ofxFastFboReader.cpp in Sources */,
+				4DF1870E1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp in Sources */,
+				4DF1870D1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm in Sources */,
+				4DF1870C1A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				4DF186FE1A218BA600A1D331 /* ofxGpuNoise.cpp in Sources */,
 			);
@@ -479,6 +533,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
 				PRODUCT_NAME = photoMesherDebug;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -564,6 +619,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
 				PRODUCT_NAME = photoMesher;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

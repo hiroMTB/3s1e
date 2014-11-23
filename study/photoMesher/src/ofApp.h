@@ -24,4 +24,5 @@ public:
     ofEasyCam cam;
     ofVboMesh mesh;
     ofxGpuNoise gn;
+    ofxGpuNoise gn2;
 };

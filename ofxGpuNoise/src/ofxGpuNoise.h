@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-//#define USE_FAST_FBO_READER
+#define USE_FAST_FBO_READER 1
 #ifdef USE_FAST_FBO_READER
  #include "ofxFastFboReader.h"
 #endif

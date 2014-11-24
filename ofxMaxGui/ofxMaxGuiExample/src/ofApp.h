@@ -4,12 +4,25 @@
 #include "ofxMaxGui.h"
 
 class ofApp : public ofBaseApp{
-	public:
-		void setup();
-		void update();
-		void draw();
-		void keyPressed(int key);
 
-    ofxMaxGui gui;
-    string code;
+public:
+	
+	void setup();
+	void update();
+	void draw();
+	void exit();
+	void keyPressed( int key );
+	void myBang1();
+	void myBang2();
+
+	bool myToggle;
+	int myInt;
+	float myFloat;
+
+	float csize;
+	ofFloatColor drawColor;
+	ofFloatColor bgColor;
+
+	ofxMaxGui gui;
+	string time_stamp;
 };

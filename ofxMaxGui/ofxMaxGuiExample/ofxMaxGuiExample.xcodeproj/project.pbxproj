@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D884C341A1EBB4300DAEB4C /* ofxJSONElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D884C2A1A1EBB4300DAEB4C /* ofxJSONElement.cpp */; };
 		4D884C351A1EBB4300DAEB4C /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D884C331A1EBB4300DAEB4C /* jsoncpp.cpp */; };
-		4D884C3A1A1EBB8900DAEB4C /* ofxMaxGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D884C381A1EBB8900DAEB4C /* ofxMaxGui.cpp */; };
+		4D884C3A1A1EBB8900DAEB4C /* ofxMaxGuiWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D884C381A1EBB8900DAEB4C /* ofxMaxGuiWriter.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -21,7 +21,6 @@
 		E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9790E8CC7DD009D7055 /* OpenGL.framework */; };
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -29,6 +28,20 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		F69766171A2310DA0086F42F /* ofxMaxGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766161A2310DA0086F42F /* ofxMaxGui.cpp */; };
+		F69766431A2313020086F42F /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697661C1A2313020086F42F /* ofxOscBundle.cpp */; };
+		F69766441A2313020086F42F /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697661E1A2313020086F42F /* ofxOscMessage.cpp */; };
+		F69766451A2313020086F42F /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766201A2313020086F42F /* ofxOscParameterSync.cpp */; };
+		F69766461A2313020086F42F /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766221A2313020086F42F /* ofxOscReceiver.cpp */; };
+		F69766471A2313020086F42F /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766241A2313020086F42F /* ofxOscSender.cpp */; };
+		F69766481A2313020086F42F /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697662A1A2313020086F42F /* IpEndpointName.cpp */; };
+		F69766491A2313020086F42F /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697662F1A2313020086F42F /* NetworkingUtils.cpp */; };
+		F697664A1A2313020086F42F /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766301A2313020086F42F /* UdpSocket.cpp */; };
+		F697664B1A2313020086F42F /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697663A1A2313020086F42F /* OscOutboundPacketStream.cpp */; };
+		F697664C1A2313020086F42F /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697663D1A2313020086F42F /* OscPrintReceivedElements.cpp */; };
+		F697664D1A2313020086F42F /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F697663F1A2313020086F42F /* OscReceivedElements.cpp */; };
+		F697664E1A2313020086F42F /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766411A2313020086F42F /* OscTypes.cpp */; };
+		F69766541A2367190086F42F /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69766531A2367190086F42F /* ofApp.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,8 +81,8 @@
 		4D884C301A1EBB4300DAEB4C /* json-forwards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
 		4D884C311A1EBB4300DAEB4C /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
 		4D884C331A1EBB4300DAEB4C /* jsoncpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
-		4D884C381A1EBB8900DAEB4C /* ofxMaxGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMaxGui.cpp; path = ../src/ofxMaxGui.cpp; sourceTree = "<group>"; };
-		4D884C391A1EBB8900DAEB4C /* ofxMaxGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxMaxGui.h; path = ../src/ofxMaxGui.h; sourceTree = "<group>"; };
+		4D884C381A1EBB8900DAEB4C /* ofxMaxGuiWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMaxGuiWriter.cpp; path = ../src/ofxMaxGuiWriter.cpp; sourceTree = "<group>"; };
+		4D884C391A1EBB8900DAEB4C /* ofxMaxGuiWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxMaxGuiWriter.h; path = ../src/ofxMaxGuiWriter.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -82,7 +95,6 @@
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E4B69B5B0A3A1756003C02F2 /* ofxMaxGuiExampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ofxMaxGuiExampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -93,6 +105,41 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		F69766151A230FDF0086F42F /* ofxMaxGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofxMaxGui.h; path = ../src/ofxMaxGui.h; sourceTree = "<group>"; };
+		F69766161A2310DA0086F42F /* ofxMaxGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMaxGui.cpp; path = ../src/ofxMaxGui.cpp; sourceTree = "<group>"; };
+		F697661A1A2313020086F42F /* ofxOsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOsc.h; sourceTree = "<group>"; };
+		F697661B1A2313020086F42F /* ofxOscArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscArg.h; sourceTree = "<group>"; };
+		F697661C1A2313020086F42F /* ofxOscBundle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscBundle.cpp; sourceTree = "<group>"; };
+		F697661D1A2313020086F42F /* ofxOscBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscBundle.h; sourceTree = "<group>"; };
+		F697661E1A2313020086F42F /* ofxOscMessage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscMessage.cpp; sourceTree = "<group>"; };
+		F697661F1A2313020086F42F /* ofxOscMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscMessage.h; sourceTree = "<group>"; };
+		F69766201A2313020086F42F /* ofxOscParameterSync.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscParameterSync.cpp; sourceTree = "<group>"; };
+		F69766211A2313020086F42F /* ofxOscParameterSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscParameterSync.h; sourceTree = "<group>"; };
+		F69766221A2313020086F42F /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscReceiver.cpp; sourceTree = "<group>"; };
+		F69766231A2313020086F42F /* ofxOscReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
+		F69766241A2313020086F42F /* ofxOscSender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
+		F69766251A2313020086F42F /* ofxOscSender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		F697662A1A2313020086F42F /* IpEndpointName.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
+		F697662B1A2313020086F42F /* IpEndpointName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
+		F697662C1A2313020086F42F /* NetworkingUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
+		F697662D1A2313020086F42F /* PacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
+		F697662F1A2313020086F42F /* NetworkingUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkingUtils.cpp; sourceTree = "<group>"; };
+		F69766301A2313020086F42F /* UdpSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSocket.cpp; sourceTree = "<group>"; };
+		F69766311A2313020086F42F /* TimerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
+		F69766321A2313020086F42F /* UdpSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
+		F69766371A2313020086F42F /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
+		F69766381A2313020086F42F /* OscException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
+		F69766391A2313020086F42F /* OscHostEndianness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
+		F697663A1A2313020086F42F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OscOutboundPacketStream.cpp; sourceTree = "<group>"; };
+		F697663B1A2313020086F42F /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
+		F697663C1A2313020086F42F /* OscPacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
+		F697663D1A2313020086F42F /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OscPrintReceivedElements.cpp; sourceTree = "<group>"; };
+		F697663E1A2313020086F42F /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
+		F697663F1A2313020086F42F /* OscReceivedElements.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OscReceivedElements.cpp; sourceTree = "<group>"; };
+		F69766401A2313020086F42F /* OscReceivedElements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
+		F69766411A2313020086F42F /* OscTypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OscTypes.cpp; sourceTree = "<group>"; };
+		F69766421A2313020086F42F /* OscTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
+		F69766531A2367190086F42F /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,8 +243,10 @@
 		4D884C371A1EBB6B00DAEB4C /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4D884C381A1EBB8900DAEB4C /* ofxMaxGui.cpp */,
-				4D884C391A1EBB8900DAEB4C /* ofxMaxGui.h */,
+				F69766151A230FDF0086F42F /* ofxMaxGui.h */,
+				F69766161A2310DA0086F42F /* ofxMaxGui.cpp */,
+				4D884C381A1EBB8900DAEB4C /* ofxMaxGuiWriter.cpp */,
+				4D884C391A1EBB8900DAEB4C /* ofxMaxGuiWriter.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -205,6 +254,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F69766181A2313020086F42F /* ofxOsc */,
 				4D884C361A1EBB6300DAEB4C /* ofxMaxGui */,
 				4D884C271A1EBB4300DAEB4C /* ofxJSON */,
 			);
@@ -274,8 +324,8 @@
 			isa = PBXGroup;
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				F69766531A2367190086F42F /* ofApp.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -287,6 +337,103 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		F69766181A2313020086F42F /* ofxOsc */ = {
+			isa = PBXGroup;
+			children = (
+				F69766191A2313020086F42F /* src */,
+				F69766261A2313020086F42F /* libs */,
+			);
+			name = ofxOsc;
+			sourceTree = "<group>";
+		};
+		F69766191A2313020086F42F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F697661A1A2313020086F42F /* ofxOsc.h */,
+				F697661B1A2313020086F42F /* ofxOscArg.h */,
+				F697661C1A2313020086F42F /* ofxOscBundle.cpp */,
+				F697661D1A2313020086F42F /* ofxOscBundle.h */,
+				F697661E1A2313020086F42F /* ofxOscMessage.cpp */,
+				F697661F1A2313020086F42F /* ofxOscMessage.h */,
+				F69766201A2313020086F42F /* ofxOscParameterSync.cpp */,
+				F69766211A2313020086F42F /* ofxOscParameterSync.h */,
+				F69766221A2313020086F42F /* ofxOscReceiver.cpp */,
+				F69766231A2313020086F42F /* ofxOscReceiver.h */,
+				F69766241A2313020086F42F /* ofxOscSender.cpp */,
+				F69766251A2313020086F42F /* ofxOscSender.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxOsc/src;
+			sourceTree = "<group>";
+		};
+		F69766261A2313020086F42F /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F69766271A2313020086F42F /* oscpack */,
+			);
+			name = libs;
+			path = ../../../addons/ofxOsc/libs;
+			sourceTree = "<group>";
+		};
+		F69766271A2313020086F42F /* oscpack */ = {
+			isa = PBXGroup;
+			children = (
+				F69766281A2313020086F42F /* src */,
+			);
+			path = oscpack;
+			sourceTree = "<group>";
+		};
+		F69766281A2313020086F42F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F69766291A2313020086F42F /* ip */,
+				F69766361A2313020086F42F /* osc */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		F69766291A2313020086F42F /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				F697662A1A2313020086F42F /* IpEndpointName.cpp */,
+				F697662B1A2313020086F42F /* IpEndpointName.h */,
+				F697662C1A2313020086F42F /* NetworkingUtils.h */,
+				F697662D1A2313020086F42F /* PacketListener.h */,
+				F697662E1A2313020086F42F /* posix */,
+				F69766311A2313020086F42F /* TimerListener.h */,
+				F69766321A2313020086F42F /* UdpSocket.h */,
+			);
+			path = ip;
+			sourceTree = "<group>";
+		};
+		F697662E1A2313020086F42F /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				F697662F1A2313020086F42F /* NetworkingUtils.cpp */,
+				F69766301A2313020086F42F /* UdpSocket.cpp */,
+			);
+			path = posix;
+			sourceTree = "<group>";
+		};
+		F69766361A2313020086F42F /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				F69766371A2313020086F42F /* MessageMappingOscPacketListener.h */,
+				F69766381A2313020086F42F /* OscException.h */,
+				F69766391A2313020086F42F /* OscHostEndianness.h */,
+				F697663A1A2313020086F42F /* OscOutboundPacketStream.cpp */,
+				F697663B1A2313020086F42F /* OscOutboundPacketStream.h */,
+				F697663C1A2313020086F42F /* OscPacketListener.h */,
+				F697663D1A2313020086F42F /* OscPrintReceivedElements.cpp */,
+				F697663E1A2313020086F42F /* OscPrintReceivedElements.h */,
+				F697663F1A2313020086F42F /* OscReceivedElements.cpp */,
+				F69766401A2313020086F42F /* OscReceivedElements.h */,
+				F69766411A2313020086F42F /* OscTypes.cpp */,
+				F69766421A2313020086F42F /* OscTypes.h */,
+			);
+			path = osc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,10 +524,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				F69766441A2313020086F42F /* ofxOscMessage.cpp in Sources */,
+				F69766171A2310DA0086F42F /* ofxMaxGui.cpp in Sources */,
+				F697664C1A2313020086F42F /* OscPrintReceivedElements.cpp in Sources */,
+				F69766451A2313020086F42F /* ofxOscParameterSync.cpp in Sources */,
+				F69766471A2313020086F42F /* ofxOscSender.cpp in Sources */,
 				4D884C351A1EBB4300DAEB4C /* jsoncpp.cpp in Sources */,
-				4D884C3A1A1EBB8900DAEB4C /* ofxMaxGui.cpp in Sources */,
-				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				F697664A1A2313020086F42F /* UdpSocket.cpp in Sources */,
+				4D884C3A1A1EBB8900DAEB4C /* ofxMaxGuiWriter.cpp in Sources */,
+				F69766491A2313020086F42F /* NetworkingUtils.cpp in Sources */,
+				F69766461A2313020086F42F /* ofxOscReceiver.cpp in Sources */,
+				F697664D1A2313020086F42F /* OscReceivedElements.cpp in Sources */,
 				4D884C341A1EBB4300DAEB4C /* ofxJSONElement.cpp in Sources */,
+				F697664B1A2313020086F42F /* OscOutboundPacketStream.cpp in Sources */,
+				F697664E1A2313020086F42F /* OscTypes.cpp in Sources */,
+				F69766481A2313020086F42F /* IpEndpointName.cpp in Sources */,
+				F69766541A2367190086F42F /* ofApp.cpp in Sources */,
+				F69766431A2313020086F42F /* ofxOscBundle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +706,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
 				PRODUCT_NAME = ofxMaxGuiExampleDebug;
-				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxJSON/libs/jsoncpp/include/;
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxOsc/libs/oscpack/src/ ../../../addons/ofxJSON/libs/jsoncpp/include/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -632,7 +792,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
 				PRODUCT_NAME = ofxMaxGuiExample;
-				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxJSON/libs/jsoncpp/include/;
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxOsc/libs/oscpack/src/ ../../../addons/ofxJSON/libs/jsoncpp/include/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -7,10 +7,11 @@
 			"revision" : 9
 		}
 ,
-		"rect" : [ 0.0, 0.0, 400.0, 100.0 ],
-        "bglocked" : 0,
+		"rect" : [ 1024.0, 45.0, 328.0, 217.0 ],
+		"bglocked" : 0,
+		"defrect" : [ 1024.0, 45.0, 328.0, 217.0 ],
 		"openrect" : [ 0.0, 0.0, 0.0, 0.0 ],
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -27,28 +28,24 @@
 				"box" : 				{
 					"maxclass" : "newobj",
 					"text" : "OpenSoundControl",
-					"fontsize" : 12.0,
-					"presentation_rect" : [ 0.0, 30.0, 113.0, 20.0 ],
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"patching_rect" : [ 0.0, 30.0, 113.0, 20.0 ],
-					"presentation" : 1,
+					"outlettype" : [ "", "", "OSCTimeTag" ],
 					"id" : "obj-3",
 					"fontname" : "Arial",
-					"outlettype" : [ "", "", "OSCTimeTag" ]
+					"fontsize" : 12.0,
+					"patching_rect" : [ 0.0, 30.0, 113.0, 20.0 ],
+					"numinlets" : 1,
+					"numoutlets" : 3
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"maxclass" : "button",
-					"presentation_rect" : [ 120.0, 30.0, 20.0, 20.0 ],
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"patching_rect" : [ 120.0, 30.0, 20.0, 20.0 ],
-					"presentation" : 1,
+					"outlettype" : [ "bang" ],
 					"id" : "obj-4",
-					"outlettype" : [ "bang" ]
+					"patching_rect" : [ 120.0, 30.0, 20.0, 20.0 ],
+					"numinlets" : 1,
+					"numoutlets" : 1
 				}
 
 			}
@@ -56,15 +53,13 @@
 				"box" : 				{
 					"maxclass" : "newobj",
 					"text" : "r osc_out",
-					"fontsize" : 12.0,
-					"presentation_rect" : [ 0.0, 0.0, 60.0, 20.0 ],
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"patching_rect" : [ 0.0, 0.0, 60.0, 20.0 ],
-					"presentation" : 1,
+					"outlettype" : [ "" ],
 					"id" : "obj-122",
 					"fontname" : "Arial",
-					"outlettype" : [ "" ]
+					"fontsize" : 12.0,
+					"patching_rect" : [ 0.0, 0.0, 60.0, 20.0 ],
+					"numinlets" : 0,
+					"numoutlets" : 1
 				}
 
 			}
@@ -72,14 +67,14 @@
 				"box" : 				{
 					"maxclass" : "newobj",
 					"text" : "udpsend localhost #1",
-					"fontsize" : 12.0,
-					"presentation_rect" : [ 0.0, 60.0, 124.0, 20.0 ],
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 0.0, 60.0, 124.0, 20.0 ],
-					"presentation" : 1,
 					"id" : "obj-121",
-					"fontname" : "Arial"
+					"fontname" : "Arial",
+					"presentation_rect" : [ 0.0, 0.0, 124.0, 20.0 ],
+					"fontsize" : 12.0,
+					"patching_rect" : [ 0.0, 60.0, 124.0, 20.0 ],
+					"numinlets" : 1,
+					"presentation" : 1,
+					"numoutlets" : 0
 				}
 
 			}

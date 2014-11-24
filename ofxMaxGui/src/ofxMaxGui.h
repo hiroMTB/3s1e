@@ -1,252 +1,89 @@
-//
-//  ofxMaxGui.h
-//  ofxMaxGuiSample
-//
-//  Created by hiroshi matoba on 10/2/14.
-//
-//
-
 #pragma once
 
+#include <iostream>
+#include <string>
+#include <map>
+
+#include "ofxMaxGuiWriter.h"
+#include "ofxOsc.h"
+
 #include "ofMain.h"
-#include "ofxJSON.h"
 
 class ofxMaxGui{
-    
+
 public:
-    ofxMaxGui(){};
-    ~ofxMaxGui(){};
-    
-    string file_name;
-    
-    string create( string _file_name){
-        file_name = _file_name;
-        
-        Json::Value root;
-        root["patcher"]["fileversion"] = 1;
-        root["patcher"]["appversion"]["major"] = 5;
-        root["patcher"]["appversion"]["minor"] = 1;
-        root["patcher"]["appversion"]["revision"] = 9;
+	
+	ofxMaxGui(){};
+	~ofxMaxGui();
+	
+	void setup( string file_name, float x, float y, float w, float h, int osc_receive_port=12345 );
+	void write();
+	void update();
+	void open();
+	void close();
+	
+	void addToggle	( string name, float x, float y, bool * toggle );
+	void addInt		( string name, float x, float y, int * i );
+	void addFloat	( string name, float x, float y, float * f );
+	void addColor	( string name, float x, float y, ofFloatColor * color );
+	void addComment ( float x, float y, float w, float h, string text);
+	//void addMessage ( float x, float y, float w, float h, string text);
 
-        root["patcher"]["rect"][0] = 1280.0;
-        root["patcher"]["rect"][1] = 44.0;
-        root["patcher"]["rect"][2] = 1280.0;
-        root["patcher"]["rect"][3] = 1366.0;
-        
-        
+	template<class ListenerClass, typename ListenerMethod>
+	void addBang ( string name, float x, float y, ListenerClass *listener, ListenerMethod method){
+		Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "_bang.maxpat");
+		obj["box"]["args"] = name;
+		writer.addObject( obj );
+		bangs.insert( pair<string, ofEvent<void> > (name, ofEvent<void>()) );
+		ofAddListener( bangs[name], listener, method );
+	}
+	
+	string getCode();
+	int getOscReceivePort();
+private:
 
-        {
-            //
-            //  Load : _oscOut.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 30.0;
-            box["box"]["presentation_rect"][2] = 150.0;
-            box["box"]["presentation_rect"][3] = 90.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = 9999;
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 30.0;
-            box["box"]["patching_rect"][2] = 150.0;
-            box["box"]["patching_rect"][3] = 90.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-1";
-            box["box"]["name"] = "_oscOut.maxpat";
-            root["patcher"]["boxes"][0] = box;
-        }
-        
-        {
-            //
-            //  Load : _oscInTester.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 225.0;
-            box["box"]["presentation_rect"][1] = 30.0;
-            box["box"]["presentation_rect"][2] = 300.0;
-            box["box"]["presentation_rect"][3] = 90.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = 9999;
-            box["box"]["patching_rect"][0] = 225.0;
-            box["box"]["patching_rect"][1] = 30.0;
-            box["box"]["patching_rect"][2] = 300.0;
-            box["box"]["patching_rect"][3] = 90.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-2";
-            box["box"]["name"] = "_oscInTester.maxpat";
-            root["patcher"]["boxes"][1] = box;
-        }
-        
-        
-        {
-            //
-            //  Load : _bang.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 135.0;
-            box["box"]["presentation_rect"][2] = 160.0;
-            box["box"]["presentation_rect"][3] = 20.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = "bang1";
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 135.0;
-            box["box"]["patching_rect"][2] = 160.0;
-            box["box"]["patching_rect"][3] = 20.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-3";
-            box["box"]["name"] = "_bang.maxpat";
-            root["patcher"]["boxes"][2] = box;
-        }
-        
-        {
-            //
-            //  Load : _toggle.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 165.0;
-            box["box"]["presentation_rect"][2] = 160.0;
-            box["box"]["presentation_rect"][3] = 20.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = "toggle1";
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 165.0;
-            box["box"]["patching_rect"][2] = 160.0;
-            box["box"]["patching_rect"][3] = 20.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-4";
-            box["box"]["name"] = "_toggle.maxpat";
-            root["patcher"]["boxes"][3] = box;
-        }
-        
-        
-        {
-            //
-            //  Load : _int.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 195.0;
-            box["box"]["presentation_rect"][2] = 350.0;
-            box["box"]["presentation_rect"][3] = 20.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = "int1";
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 195.0;
-            box["box"]["patching_rect"][2] = 350.0;
-            box["box"]["patching_rect"][3] = 20.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-5";
-            box["box"]["name"] = "_int.maxpat";
-            root["patcher"]["boxes"][4] = box;
-        }
-        
-        {
-            //
-            //  Load : _float.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 225.0;
-            box["box"]["presentation_rect"][2] = 350.0;
-            box["box"]["presentation_rect"][3] = 20.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = "float1";
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 225.0;
-            box["box"]["patching_rect"][2] = 350.0;
-            box["box"]["patching_rect"][3] = 20.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-6";
-            box["box"]["name"] = "_float.maxpat";
-            root["patcher"]["boxes"][5] = box;
-        }
-        
-        {
-            //
-            //  Load : _color.maxpat
-            //
-            Json::Value box;
-            box["box"]["maxclass"] = "bpatcher";
-            box["box"]["presentation_rect"][0] = 45.0;
-            box["box"]["presentation_rect"][1] = 255.0;
-            box["box"]["presentation_rect"][2] = 350.0;
-            box["box"]["presentation_rect"][3] = 60.0;
-            box["box"]["numinlets"] = 0;
-            box["box"]["numoutlets"] = 0;
-            box["box"]["args"] = "color1";
-            box["box"]["patching_rect"][0] = 45.0;
-            box["box"]["patching_rect"][1] = 255.0;
-            box["box"]["patching_rect"][2] = 350.0;
-            box["box"]["patching_rect"][3] = 60.0;
-            box["box"]["presentation"] = 1;
-            box["box"]["id"] = "obj-7";
-            box["box"]["name"] = "_colorf.maxpat";
-            root["patcher"]["boxes"][6] = box;
-        }
-        
-        
-        /*
-         *  write
-         */
-        ofFile file;
-        Json::StyledWriter writer;
-        file.open( file_name, ofFile::WriteOnly );
-        file << writer.write( root ) << endl;
-        file.close();
-        
-        /*
-         *      get result string
-         */
-        ofFile reader( file_name );
-        ofBuffer buf = reader.readToBuffer();
-        string code = buf.getText();
-        reader.close();
-        
-        return code;
-    }
-    
-    void open(){
-        ofFile file;
-        file.open( file_name, ofFile::ReadOnly );
-
-        if( file.isFile() ){
-            string command = "open " + ofToDataPath( file.getFileName(), true );
-            system( command.c_str() );
-        }
-    }
-    
-    
-    void make_msgBox(){
-        // message box test
-        for( int i=0; i<100; i++ ){
-            Json::Value box;
-            box["box"]["maxclass"] = "message";
-            box["box"]["text"] = "num " + ofToString( i );
-            box["box"]["numinlets"] = 2;
-            box["box"]["numoutlets"] = 1;
-            box["box"]["patching_rect"][0] = 210.0 + i%10*100;
-            box["box"]["patching_rect"][1] = 210.0 + i/10*100;
-            box["box"]["patching_rect"][2] = 50.0;
-            box["box"]["patching_rect"][3] = 18.0;
-            box["box"]["id"] = "obj-1";
-            box["box"]["fontname"] = "Arial";
-            box["box"]["outlettype"] = "";
-            box["box"]["fontsize"] = 12;
-            //root["patcher"]["boxes"][i] = box;
-        }
-    }
+	static const int def_w = 350;
+	static const int def_h = 20;
+	static const int def_h_long = 60;
+	
+	int osc_receive_port;
+	string file_name;
+	string code;
+	
+	map<string, ofEvent<void> > bangs;
+	map<string, bool*>	toggles;
+	map<string, int*>	intValues;
+	map<string, float*>	floatValues;
+	map<string, ofFloatColor*> colors;
+	
+	ofxMaxGuiWriter writer;
+	ofxOscReceiver oscr;
 };
+
+
+/*
+	TODO
+ 
+	Now message object does nothing.
+	Nice to send string value to ofApp.
+	
+	1. make _string.maxpat
+	2. add map<string, ofEvent<string> > strings;
+	3. handle osc messages in updat loop
+
+	Q. 
+		We need callback? or jujst string pointer?
+	    We should handle user push event.
+ */
+
+/*
+	Noitce
+	Poco::priorityEvent can not copy (private copy constructor, =operarot lock).
+	So ofEvent also can not copy (actually you can but lose callback info)
+	First insert ofEvent to std::map	and then call ofAddListener.
+
+	Bad example
+	ofEvent<void> event;
+	ofAddListener(event, listener, method);
+	myMap.insert( pair<string, ofEvent<void> > (name, event) );
+*/

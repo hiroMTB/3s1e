@@ -8,98 +8,102 @@
       "boxes" : [
          {
             "box" : {
-               "args" : 9999,
-               "id" : "obj-1",
+               "args" : 12345,
                "maxclass" : "bpatcher",
                "name" : "_oscOut.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 30, 150, 90 ],
+               "patching_rect" : [ 45, 30, 150, 20 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 30, 150, 90 ]
+               "presentation_rect" : [ 45, 30, 150, 20 ]
             }
          },
          {
             "box" : {
-               "args" : 9999,
-               "id" : "obj-2",
-               "maxclass" : "bpatcher",
-               "name" : "_oscInTester.maxpat",
-               "numinlets" : 0,
-               "numoutlets" : 0,
-               "patching_rect" : [ 225, 30, 300, 90 ],
-               "presentation" : 1,
-               "presentation_rect" : [ 225, 30, 300, 90 ]
-            }
-         },
-         {
-            "box" : {
-               "args" : "bang1",
-               "id" : "obj-3",
+               "args" : "myBang",
                "maxclass" : "bpatcher",
                "name" : "_bang.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 135, 160, 20 ],
+               "patching_rect" : [ 45, 80, 350, 20 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 135, 160, 20 ]
+               "presentation_rect" : [ 45, 80, 350, 20 ]
             }
          },
          {
             "box" : {
-               "args" : "toggle1",
-               "id" : "obj-4",
+               "args" : "myToggle",
                "maxclass" : "bpatcher",
                "name" : "_toggle.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 165, 160, 20 ],
+               "patching_rect" : [ 45, 110, 350, 20 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 165, 160, 20 ]
+               "presentation_rect" : [ 45, 110, 350, 20 ]
             }
          },
          {
             "box" : {
-               "args" : "int1",
-               "id" : "obj-5",
+               "args" : "myInt",
                "maxclass" : "bpatcher",
                "name" : "_int.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 195, 350, 20 ],
+               "patching_rect" : [ 45, 140, 350, 20 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 195, 350, 20 ]
+               "presentation_rect" : [ 45, 140, 350, 20 ]
             }
          },
          {
             "box" : {
-               "args" : "float1",
-               "id" : "obj-6",
+               "args" : "myFloat",
                "maxclass" : "bpatcher",
                "name" : "_float.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 225, 350, 20 ],
+               "patching_rect" : [ 45, 170, 350, 20 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 225, 350, 20 ]
+               "presentation_rect" : [ 45, 170, 350, 20 ]
             }
          },
          {
             "box" : {
-               "args" : "color1",
-               "id" : "obj-7",
+               "args" : "drawColor",
                "maxclass" : "bpatcher",
                "name" : "_colorf.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
-               "patching_rect" : [ 45, 255, 350, 60 ],
+               "patching_rect" : [ 45, 200, 350, 60 ],
                "presentation" : 1,
-               "presentation_rect" : [ 45, 255, 350, 60 ]
+               "presentation_rect" : [ 45, 200, 350, 60 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "bgColor",
+               "maxclass" : "bpatcher",
+               "name" : "_colorf.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 270, 350, 60 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 270, 350, 60 ]
+            }
+         },
+         {
+            "box" : {
+               "linecount" : 1,
+               "maxclass" : "comment",
+               "numinlets" : 1,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 440, 300, 20 ],
+               "presentation_rect" : [ 45, 440, 300, 20 ],
+               "text" : "Generated                     2014-11-24-17-08-46-396"
             }
          }
       ],
       "fileversion" : 1,
-      "rect" : [ 1280, 44, 1280, 1366 ]
+      "rect" : [ 500, 0, 500, 475 ]
    }
 }
 

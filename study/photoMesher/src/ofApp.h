@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGpuNoise.h"
+#include "ofxMaxGui.h"
 
 class ofApp : public ofBaseApp{
 	
@@ -25,4 +26,6 @@ public:
     ofVboMesh mesh;
     ofxGpuNoise gn;
     ofxGpuNoise gn2;
+
+	ofxMaxGui gui;
 };

@@ -29,6 +29,14 @@ void ofApp::setup(){
     gn2.setFreq( 0.0033 );
     gn2.setOctaves( 2 );
 
+	
+	// gui
+	gui.setup( 12345 );
+	gui.addPatcher(0, 0);
+	gui.addOscOut(45, 10);
+	gui.addFloat("extrusion", 45, 100, &extrusion);
+	gui.write( "_gui_main.maxpat" );
+	gui.open( "_gui_main.maxpat" );
 }
 
 void ofApp::dragEvent( ofDragInfo info ){
@@ -78,8 +86,9 @@ void ofApp::load_mesh( ofFloatImage &img ){
     }
 }
 
-
 void ofApp::update(){
+	gui.update();
+	
     if( bMove ){
         gn.setFrame( ofGetFrameNum()*0.001 );
         gn.update();
@@ -199,6 +208,9 @@ void ofApp::keyPressed( int key ){
                 }
             case ' ':
                 bMove = !bMove;
+				
+			case 'u':
+				load_mesh( img );
                 break;
         }
     }

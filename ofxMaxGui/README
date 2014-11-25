@@ -1,41 +1,58 @@
 USAGE
 
-+++ Write Max patch +++
+	ofxMaxGui gui;
+	bool myToggle;
+	int port = 12345;
 
-ofxMaxGui gui;
-bool myToggle;
+	void setup(){
+		gui.setup(port);
+		gui.addPatcher(0, 0);
+		gui.addOscOut(10, 10);
+		gui.addToggle( "myToggle", 10, 30, *myToggle);
+		gui.write("gui.maxpat")
+		gui.open();
+	}
 
-void setup(){
-	gui.addPatcher(0, 0);
-	gui.addOscOut(10, 10);
-	gui.addToggle( "myToggle", 10, 30, *myToggle);
-	gui.write("gui.maxpat")
-	gui.open();
-}
-
-void update(){
-	gui.update()
-}
-
-
-**** Only need update() ( and opnen() if you need ) if you dont want to change max patch
-
-
-TODO
-Now message object does nothing.
-Nice to send string value to ofApp?
-Need ro store callback? or just string pointer?
-We should handle user push event.
-But if so, we need all event callback for all guiparts( int/float/toggle/color).
-Its must be messy. ummm...
+	void update(){
+		gui.update()
+	}
 
 
 NOTICE
-We can no copy Poco::priorityEvent copy (copy constructor, =operator is locked).
-So ofEvent also can not copy (actually you can but lose callback info).
-First insert ofEvent to std::map and then call ofAddListener.
 
-Bad example
-ofEvent<void> event;
-ofAddListener(event, listener, method);
-myMap.insert( pair<string, ofEvent<void> > (name, event) );
+	Load only use
+		After you write Max patch, you only need setup() and update() to communicate with Max.
+
+
+	OSC adadress syntax
+		Do not use some special character for "name" parameter of gui parts as as it is used for OSC address. Charactors of space, conmma, #, *, /, ?, [, ], {, } are not allowed.
+
+		e.g.
+			Bad		addToggle("my toggle", 10, 10);
+			Good	addToggle("my_toggle", 10, 10);
+
+	Duplicate Max patch/Osc message
+		Max patch remain open if you dont close manually.
+		These remainded, old max patch keep sending osc message to your new ofApp.
+		Dont forget to close previous patch.
+
+
+Durther development
+
+	ofEvent copy limitation
+		We can no copy Poco::priorityEvent copy (copy constructor, =operator is locked).
+		So ofEvent also can not copy (actually you can but lose callback info).
+		First insert ofEvent to std::map and then call ofAddListener.
+
+		Bad example
+		ofEvent<void> event;
+		ofAddListener(event, listener, method);
+		myMap.insert( pair<string, ofEvent<void> > (name, event) );
+
+
+	Message object
+		Nice to send string value to ofApp?
+		Need ro store callback? or just string pointer?
+		We should handle user push event.
+		But if so, we need all event callback for all guiparts( int/float/toggle/color).
+		Its must be messy. ummm...

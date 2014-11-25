@@ -99,7 +99,7 @@
                "patching_rect" : [ 45, 440, 300, 20 ],
                "presentation" : 1,
                "presentation_rect" : [ 45, 440, 300, 20 ],
-               "text" : "Generated                     2014-11-25-11-41-59-299"
+               "text" : "Generated                     2014-11-25-20-40-26-752"
             }
          }
       ],

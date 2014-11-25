@@ -27,10 +27,16 @@ mShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES ),
 mSendSamplingPoints( false ),
 mSamplingPointsScale( 1 ),
 mSamplingPointsOffset(0){
+    setup();
 }
 
 ofxGpuNoise::~ofxGpuNoise(){
     reset();
+    for(int i=0; i<mShaderTypeNum; i++ ){
+        for(int j=0; j<mShaderDerivTypeNum; j++ ){
+            mShaders[i][j].unload();
+        }
+    }
 }
 
 void ofxGpuNoise::setup(){

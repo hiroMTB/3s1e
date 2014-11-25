@@ -2,28 +2,34 @@
 
 void ofApp::setup(){
 
-	bgColor.set(0.8);
-	drawColor.set(0.1);
-	
 	ofSetWindowPosition( 0, 0 );
 	ofSetWindowShape( 500, 500 );
-	gui.setup( "myGuiGenereted.maxpat", 500, 0, 500, 500-25 );
 	
-	int x = 45;
-	int y = 50;
+	bgColor.set(0.8);
+	drawColor.set(0.1);
+	timeStamp = ofGetTimestampString();
+	guiName = "_gui_main.maxpat";
+	int oscPort = 12345;
+	gui.setup( oscPort );
 	
-	gui.addBang("myBang", x, y+=30, this, &ofApp::myBang1);
-	gui.addToggle("myToggle", x, y+=30, &myToggle);
-	gui.addInt("myInt", x, y+=30, &myInt);
-	gui.addFloat("myFloat", x, y+=30, &myFloat);
-	gui.addColor("drawColor", x, y+=30, &drawColor);
-	gui.addColor("bgColor", x, y+=70, &bgColor);
+	bool bReGenerateGui = true;
+	if( bReGenerateGui ){
+		int x = 45;
+		int y = 50;
+		gui.addPatcher(500, 0, 500, 500);
+		gui.addOscOut( x, 30 );
+		gui.addBang("myBang", x, y+=30, this, &ofApp::myBang);
+		gui.addToggle("myToggle", x, y+=30, &myToggle);
+		gui.addInt("myInt", x, y+=30, &myInt);
+		gui.addFloat("myFloat", x, y+=30, &myFloat);
+		gui.addColor("drawColor", x, y+=30, &drawColor);
+		gui.addColor("bgColor", x, y+=70, &bgColor);
+		gui.addComment(x, 500-60, 300, 20, "Generated                     " + timeStamp );
+		gui.write( guiName );
+	}
+	
 
-	time_stamp = ofGetTimestampString();
-	gui.addComment(x, 500-60, 300, 20, "Generated                     " + time_stamp );
-
-	gui.write();
-	gui.open();
+	gui.open( guiName );
 }
 
 void ofApp::update(){
@@ -34,7 +40,7 @@ void ofApp::draw(){
 	
 	ofBackground( bgColor );
 	ofSetColor( drawColor );
-	ofDrawBitmapString("OSC Port       " + ofToString(gui.getOscReceivePort()), 50, 45);
+	ofDrawBitmapString("OSC Port       " + ofToString(gui.getPort()), 50, 45);
 	
 	ofSetColor(255, 0, 0);
 	ofFill();
@@ -53,25 +59,25 @@ void ofApp::draw(){
 	ofSetColor( drawColor );
 	ofRect(170, 195, 200, 60);
 	
-	ofDrawBitmapString("Compiled      " + time_stamp, 50, 500-45);
+	ofDrawBitmapString("Compiled      " + timeStamp, 50, 500-45);
 
 }
 
-void ofApp::myBang1(){
-	cout << "bang 1" << endl;
+void ofApp::myBang(){
+	cout << "bang" << endl;
 	csize = 10;
 }
 
 
 void ofApp::exit(){
-	gui.close();
+	gui.close( guiName );
 }
 
 void ofApp::keyPressed( int key ){
 	
 	switch ( key) {
 		case ' ':
-			gui.open();
+			gui.open( guiName );
 			break;
 			
 		default:

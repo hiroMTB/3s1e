@@ -140,6 +140,7 @@
 		F69766411A2313020086F42F /* OscTypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OscTypes.cpp; sourceTree = "<group>"; };
 		F69766421A2313020086F42F /* OscTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
 		F69766531A2367190086F42F /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
+		F6B204701A248EB9001B2D0A /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				4D884C371A1EBB6B00DAEB4C /* src */,
+				F6B204701A248EB9001B2D0A /* README */,
 			);
 			name = ofxMaxGui;
 			sourceTree = "<group>";

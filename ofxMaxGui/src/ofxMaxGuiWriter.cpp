@@ -34,6 +34,7 @@ Json::Value ofxMaxGuiWriter::create_comment(float x, float y, float w, float h, 
 	comment["box"]["patching_rect"] = rect(x, y, w, h);
 	comment["box"]["numinlets"] = 1;
 	comment["box"]["numoutlets"] = 0;
+	comment["box"]["presentation"] = 1;
 	comment["box"]["text"] =  text;
 	comment["box"]["linecount"] = (int)ofSplitString(text, "\n").size();
 	return comment;
@@ -46,6 +47,7 @@ Json::Value ofxMaxGuiWriter::create_message( float x, float y, float w, float h,
 	message["box"]["patching_rect"] = rect(x, y, w, h);
 	message["box"]["numinlets"] = 2;
 	message["box"]["numoutlets"] = 1;
+	message["box"]["presentation"] = 1;
 	message["box"]["text"] =  text;
 	return message;
 }

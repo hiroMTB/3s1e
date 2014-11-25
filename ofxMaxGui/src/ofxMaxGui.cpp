@@ -1,43 +1,44 @@
 #include "ofxMaxGui.h"
 #include "ofxJSON.h"
 
-void ofxMaxGui::setup( string _file_name, float x, float y, float w, float h, int _osc_receive_port ){
-	file_name = _file_name;
-	osc_receive_port = _osc_receive_port;
-	writer.create_patcher(x, y, w, h);
-	Json::Value out = writer.create_bpatcher(45, 30, 150, 20, "_oscOut.maxpat" );
-	out["box"]["args"] = osc_receive_port;
-	writer.addObject( out );
-	oscr.setup(osc_receive_port);
+void ofxMaxGui::setup( int _port ){
+	port = _port;
+	oscr.setup(port);
 }
 
-void ofxMaxGui::write(){
-	code = writer.write(file_name);
+void ofxMaxGui::addPatcher ( float win_x, float win_y, float win_w, float win_h){
+	writer.create_patcher( win_x, win_y, win_w, win_h );
+}
+
+void ofxMaxGui::addOscOut( float x, float y ){
+	Json::Value oscOut = writer.create_bpatcher(x, y, 150, def_h, "sOscOut.maxpat" );
+	oscOut["box"]["args"] = port;
+	writer.addObject( oscOut );
 }
 
 void ofxMaxGui::addToggle ( string name, float x, float y, bool * toggle ){
-	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "_toggle.maxpat");
+	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "sToggle.maxpat");
 	obj["box"]["args"] = name;
 	writer.addObject( obj );
 	toggles.insert(pair<string, bool*>(name, toggle));
 }
 
 void ofxMaxGui::addInt ( string name, float x, float y, int * i ){
-	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "_int.maxpat");
+	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "sInt.maxpat");
 	obj["box"]["args"] = name;
 	writer.addObject( obj );
 	intValues.insert(pair<string, int*>(name, i));
 }
 
 void ofxMaxGui::addFloat ( string name, float x, float y, float * f ){
-	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "_float.maxpat");
+	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "sFloat.maxpat");
 	obj["box"]["args"] = name;
 	writer.addObject( obj );
 	floatValues.insert(pair<string, float*>(name, f));
 }
 
 void ofxMaxGui::addColor ( string name, float x, float y, ofFloatColor * color ){
-	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h_long, "_colorf.maxpat");
+	Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h_long, "sColor.maxpat");
 	obj["box"]["args"] = name;
 	writer.addObject( obj );
 	colors.insert(pair<string, ofFloatColor*>(name, color));
@@ -48,10 +49,17 @@ void ofxMaxGui::addComment(float x, float y, float w, float h, string text){
 	writer.addObject(obj);
 }
 
-/*void ofxMaxGui::addMessage(float x, float y, float w, float h, string text){
+/*
+//  This works collectly but don't send any Osc. Comment out to avoid confusing.
+void ofxMaxGui::addMessage(float x, float y, float w, float h, string text){
 	Json::Value obj = writer.create_message(x, y, w, h, text);
 	writer.addObject(obj);
-}*/
+}
+*/
+
+void ofxMaxGui::write( string file_name ){
+	code = writer.write(file_name);
+}
 
 void ofxMaxGui::update(){
 	while ( oscr.hasWaitingMessages() ) {
@@ -60,7 +68,7 @@ void ofxMaxGui::update(){
 			vector<string> adrs = ofSplitString(m.getAddress(), "/");
 
 			/*
-			 *	OSC message format
+			 *	OSC address format (split)
 			 *	adrs[0] = ""
 			 *	adrs[1] = fromMax
 			 *	adrs[2] = bang/toggle/int/float/color
@@ -94,7 +102,7 @@ void ofxMaxGui::update(){
 	}
 }
 
-void ofxMaxGui::open(){
+void ofxMaxGui::open( string file_name ){
 	ofFile file;
 	file.open( file_name, ofFile::ReadOnly );
 	
@@ -104,7 +112,7 @@ void ofxMaxGui::open(){
 	}
 }
 
-void ofxMaxGui::close(){
+void ofxMaxGui::close( string file_name ){
 	ofFile file;
 	file.open( file_name, ofFile::ReadOnly );
 	
@@ -118,12 +126,12 @@ string ofxMaxGui::getCode(){
 	return code;
 }
 
-int ofxMaxGui::getOscReceivePort(){
-	return osc_receive_port;
+int ofxMaxGui::getPort(){
+	return port;
 }
 
 ofxMaxGui::~ofxMaxGui(){
-	
+
 	map<string, ofEvent<void> >::iterator itr = bangs.begin();
 	for(; itr!=bangs.end(); itr++){
 		//ofRemoveListener( itr->second, ?, ?);

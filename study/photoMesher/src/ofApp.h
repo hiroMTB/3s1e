@@ -21,11 +21,10 @@ public:
     float extrusion;
     float threthold;
 
-    ofFloatImage img;
+    ofFloatImage img, mask;
     ofEasyCam cam;
     ofVboMesh mesh;
     ofxGpuNoise gn;
-    ofxGpuNoise gn2;
 
 	ofxMaxGui gui;
 };

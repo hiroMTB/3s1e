@@ -34,25 +34,40 @@ void ofApp::setup(){
 	units[3].set( -10,  -90, 0 ); units[3].normalize();
     units[4].set( 162, -2, 0 );  units[4].normalize();
     units[5].set( 145,  -30, 0 ); units[5].normalize();
-    
-    int size = 256;
-    gn1.create( size, size );
+
+    int n = 12;
+    int numv = n*n*n*n*n*n;
+    int size = ceil( sqrt(numv) );
+    gn1.create(size, size );
     gn1.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
     gn1.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
     gn1.setFreq( 0.003 );
-//    gn1.setSendSamplingPoints( true );
 
     gn2.create( size, size );
     gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
     gn2.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
     gn2.setFreq( 0.001 );
 
-    for( int i=0; i<size*size; i++){
-        ofVec3f u = units[i%6];
-        ofVec3f v = u * (i/6.0);
-//        v += u * ofRandomf();// * 600.0;
-        v *= 0.1;
-        mesh.addVertex( v );
+    for( int a0=0; a0<n; a0++){
+        for( int a1=0; a1<n; a1++){
+            for( int a2=0; a2<n; a2++){
+                for( int a3=0; a3<n; a3++){
+                    for( int a4=0; a4<n; a4++){
+                        for( int a5=0; a5<n; a5++){
+
+                            ofVec3f v(0,0,0);
+                            v += units[0] * a0;
+                            v += units[1] * a1;
+                            v += units[2] * a2;
+                            v += units[3] * a3;
+                            v += units[4] * a4;
+                            v += units[5] * a5;
+                            mesh.addVertex( v * 40.0 );
+                        }
+                    }
+                }
+            }
+        }
     }
 
     vector<ofVec3f> vs;
@@ -61,15 +76,15 @@ void ofApp::setup(){
     speed = vs;
     
     vector<ofFloatColor> cs;
-    cs.assign(size*size, ofFloatColor(0, 0.5) );
+    cs.assign(size*size, ofFloatColor(0.2, 0.5) );
     mesh.addColors( cs );
 }
 
 
 void ofApp::update(){
     float frame = ofGetFrameNum();
-    gn1.setFrame( frame * 0.06 );
-    gn2.setFrame( frame * 0.3 );
+    gn1.setFrame( frame * 0.0006 );
+    gn2.setFrame( frame * 0.003 );
     
     gn1.update();
     gn2.update();
@@ -87,14 +102,14 @@ void ofApp::update(){
         float g2 = noise2[index + 1]/255.0 - 0.5;
         float b2 = noise2[index + 2]/255.0 - 0.5;
         
-        int me = i%6;
-        accel[i] = units[ofNoise(accel[i].x, accel[i].y, frame*0.01)*5.5] * r1 * 0.1 * (vs.size()-i/6.0)*0.00001;
-//        accel[i] += units[(me+2)%6] * g1 * 0.01;
-//        accel[i] += units[(me+3)%6] * b1 * 0.01;
-//        accel[i] += units[(me+4)%6] * r2 * 0.01;
-//        accel[i] += units[(me+5)%6] * g2 * 0.01;
+        accel[i] =  units[0] * r1;
+        accel[i] += units[1] * g1;
+        accel[i] += units[2] * b1;
+        accel[i] += units[3] * r2;
+        accel[i] += units[4] * g2;
+        accel[i] += units[5] * b2;
 
-        speed[i] += accel[i];
+        speed[i] = accel[i];
         vs[i] += speed[i];
         
         cs[i].r += r1 * 0.01;

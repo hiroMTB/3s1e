@@ -32,7 +32,7 @@ public:
     
     void            setup();
     void            update();
-    void            draw( int x, int y, float scale );
+    void            draw( int x, int y, float scale=1.0 );
 	void			draw_samplingPointTexture( int x, int y, float scale );
     
     void            reset();
@@ -44,13 +44,13 @@ public:
     ShaderDerivType getShaderDerivType() const;
 	ofVec2f & 		getSamplingPoints( int index );
 	
-	float			getNoisef( int index, int ch=0 );
-	float			getNoiseuf( int index, int ch=0 );
-	unsigned char	getNoiseuc( int index, int ch=0 );
+	float			getNoisef( int index, int ch );
+	float			getNoiseuf( int index, int ch );
+	unsigned char	getNoiseuc( int index, int ch );
 
-    float			getNoisef( int x, int y, int ch=0 );
-    float			getNoiseuf( int x, int y, int ch=0 );
-    unsigned char	getNoiseuc( int x, int y, int ch=0 );
+    float			getNoisef( int x, int y, int ch );
+    float			getNoiseuf( int x, int y, int ch );
+    unsigned char	getNoiseuc( int x, int y, int ch );
 
 	int             getWidth() const;
     int             getHeight() const;

@@ -5,8 +5,8 @@ void ofApp::setup(){
 	ofSetWindowTitle( "ofxGpuPerlinSample" );
 	ofSetFrameRate( 60 );
 	
-	w = 200;
-	h = 200;
+	w = 256;
+	h = 256;
 	
 	noise1.setup();
 	noise1.setOctaves( 1 );
@@ -121,8 +121,8 @@ void ofApp::draw(){
 		ofTranslate(20, 40 );
 		
 		ofPushMatrix(); {
-			noise1.draw( 0, 0, 0.5 );
-			noise2.draw( noise1.getWidth()*0.5 + 20, 0, 0.5 );
+			noise1.draw( 0, 0, 1 );
+			noise2.draw( noise1.getWidth()+ 20, 0, 1 );
 		} ofPopMatrix();
 		
 		ofPushMatrix(); {
@@ -134,7 +134,7 @@ void ofApp::draw(){
 			ofTranslate( 20, ofGetHeight()/2 - 100 );
 			ofSetColor( 255 );
 			glPointSize( 1 );
-			mesh1.draw();
+            mesh1.draw();
 		}ofPopMatrix();
 
 		ofPushMatrix();{

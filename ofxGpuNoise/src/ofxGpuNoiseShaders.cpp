@@ -97,8 +97,8 @@ string getNoise3D_Deriv_Main(){
                              amp *= 0.5;
                          }
                          
-                         gl_FragColor.rgba = result.xyzw*0.5 + 0.5;
-                         //gl_FragColor.a = 1.0;
+                         gl_FragColor.rgb = result.xyz*0.5 + 0.5;
+                         gl_FragColor.a = 1.0;
                      }
                );
 }
@@ -441,6 +441,10 @@ string getCellular3D(){
                         d1 = min(d1, d2);
                         d1.xy = min(d1.xy, d1.wz);
                         return min(d1.x, d1.y) * ( 9.0 / 12.0 ); // return a value scaled to 0.0->1.0
+                       
+                       // ???
+                       //float temp = min(d1.x, d1.y) * ( 9.0 / 12.0 );
+                       //return (temp * 2.0) - 1.0;
                     }
     
                    );
@@ -499,8 +503,12 @@ string getCellular3D_Deriv(){
                         vec4 t1 = r1.x < r2.x ? r1 : r2;
                         vec4 t2 = r3.x < r4.x ? r3 : r4;
                         return ( t1.x < t2.x ? t1 : t2 ) * vec4( 1.0, vec3( 2.0 ) ) * ( 9.0 / 12.0 ); // return a value scaled to 0.0->1.0
+
+                       //vec4 temp = ( t1.x < t2.x ? t1 : t2 ) * vec4( 1.0, vec3( 2.0 ) ) * ( 9.0 / 12.0 );
+                       //return (temp * 2.0) - vec4(1.0, 1.0, 1.0, 1.0);
                     }
                    );
+    
     return n + getNoise3D_Deriv_Main();
 }
 

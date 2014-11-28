@@ -27,4 +27,7 @@ public:
     ofxGpuNoise gn;
 
 	ofxMaxGui gui;
+    
+    vector<ofVec3f> speed, accel;
+    
 };

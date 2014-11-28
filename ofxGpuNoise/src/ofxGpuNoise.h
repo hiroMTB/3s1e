@@ -47,7 +47,11 @@ public:
 	float			getNoisef( int index, int ch=0 );
 	float			getNoiseuf( int index, int ch=0 );
 	unsigned char	getNoiseuc( int index, int ch=0 );
-	
+
+    float			getNoisef( int x, int y, int ch=0 );
+    float			getNoiseuf( int x, int y, int ch=0 );
+    unsigned char	getNoiseuc( int x, int y, int ch=0 );
+
 	int             getWidth() const;
     int             getHeight() const;
     float           getFreq() const;

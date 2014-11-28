@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D8339D51A277CA9006F1837 /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D8339D31A277CA9006F1837 /* ad_util.cpp */; };
 		4DF186FE1A218BA600A1D331 /* ofxGpuNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF186F71A218BA600A1D331 /* ofxGpuNoise.cpp */; };
 		4DF186FF1A218BA600A1D331 /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF186F91A218BA600A1D331 /* ofxGpuNoiseShaders.cpp */; };
 		4DF1870C1A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF187091A2194D900A1D331 /* ofxModifierKeys_impl_linux.cpp */; };
@@ -81,6 +82,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D8339D31A277CA9006F1837 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_util.cpp; path = ../../../module/ad_util.cpp; sourceTree = "<group>"; };
+		4D8339D41A277CA9006F1837 /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_util.h; path = ../../../module/ad_util.h; sourceTree = "<group>"; };
 		4DF186F71A218BA600A1D331 /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoise.cpp; sourceTree = "<group>"; };
 		4DF186F81A218BA600A1D331 /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
 		4DF186F91A218BA600A1D331 /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
@@ -318,6 +321,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4D8339D31A277CA9006F1837 /* ad_util.cpp */,
+				4D8339D41A277CA9006F1837 /* ad_util.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -612,6 +617,7 @@
 				4DF1870E1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp in Sources */,
 				F6ECA4871A23916A0064611B /* ofxOscParameterSync.cpp in Sources */,
 				F6ECA48C1A23916A0064611B /* UdpSocket.cpp in Sources */,
+				4D8339D51A277CA9006F1837 /* ad_util.cpp in Sources */,
 				F6ECA48F1A23916A0064611B /* OscReceivedElements.cpp in Sources */,
 				F6ECA4891A23916A0064611B /* ofxOscSender.cpp in Sources */,
 				F6ECA4851A23916A0064611B /* ofxOscBundle.cpp in Sources */,

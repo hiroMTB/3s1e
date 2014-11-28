@@ -226,6 +226,21 @@ unsigned char ofxGpuNoise::getNoiseuc( int index, int ch ){
 	return mNoiseDataPix.getPixels()[index*3 + ch];
 }
 
+float ofxGpuNoise::getNoisef( int x, int y, int ch ){
+    int index = x + y*mWidth;
+    return getNoisef( index );
+}
+
+float ofxGpuNoise::getNoiseuf( int x, int y, int ch ){
+    int index = x + y*mWidth;
+    return getNoiseuf(index);
+}
+
+unsigned char ofxGpuNoise::getNoiseuc( int x, int y, int ch ){
+    int index = x + y*mWidth;
+    return getNoiseuc(index);
+}
+
 unsigned char * ofxGpuNoise::getNoiseData() {
     return mNoiseDataPix.getPixels();
 }

@@ -97,8 +97,8 @@ string getNoise3D_Deriv_Main(){
                              amp *= 0.5;
                          }
                          
-                         gl_FragColor.rgb = result.xyz*0.5 + 0.5;
-                         gl_FragColor.a = 1.0;
+                         gl_FragColor.rgba = result.xyzw*0.5 + 0.5;
+                         //gl_FragColor.a = 1.0;
                      }
                );
 }

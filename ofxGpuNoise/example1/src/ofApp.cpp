@@ -35,16 +35,19 @@ void ofApp::update(){
     vector<ofVec3f> &vs = mesh.getVertices();
     vector<ofFloatColor> &cs = mesh.getColors();
     unsigned char * pix = noise.getNoiseData();
-    int index = 0;
 
     /*
      *      this loop could be around 262,144( when you use 512*512 noise)
      *      Be carefull how to get/set all pixel data
      */
+	int index = 0;
     for( int y=0; y<h; y++ ){
         for( int x=0; x<w; x++ ){
-            unsigned char r = pix[index*3 + 0];
-            vs[index].set(x, r+128+y-h,0);
+			unsigned char r = pix[index*3 + 0];
+			unsigned char g = pix[index*3 + 1];
+			unsigned char b = pix[index*3 + 2];
+			unsigned char avg = (r + g + b) / 3.0;
+			vs[index].set(x, avg+128+y-h,0);
 			ofVec2f &sp = noise.getSamplingPoints( index );
             cs[index].set( sp.x, sp.y, 0 );
             index++;

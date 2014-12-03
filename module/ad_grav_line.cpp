@@ -7,7 +7,7 @@
 //
 
 #include "ad_grav_line.h"
-#include "ofApp2.h"
+#include "ofApp.h"
 
 ad_grav_line::ad_grav_line()
 :bInitPhysics(false)
@@ -21,8 +21,10 @@ void ad_grav_line::setup( ofCamera *cam ){
         world.enableCollisionEvents();
         ofAddListener(world.COLLISION_EVENT, this, &ad_grav_line::onCollision);
         
-        for( int i=1; i<=10; i++ ){
-            sphereShapes.push_back( ofBtGetSphereCollisionShape( 1.0 + i*i*i*i*0.0008) );
+        for( int i=1; i<=30; i++ ){
+            float size = 0.1 + i*i*i*0.0008;
+            sphereShapes.push_back( ofBtGetSphereCollisionShape( size ) );
+            cout << "sphereShape[" << i << "], size = " << size << endl;
         }
         
         bInitPhysics = true;
@@ -33,23 +35,21 @@ void ad_grav_line::setup( ofCamera *cam ){
     
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
-    
-    add_random_particle( 100 );
 }
 
 void ad_grav_line::add_random_particle( int num ){
     for(int i=0; i<num; i++){
         ofVec3f pos( ofRandomf(), ofRandomuf(), 0 );
-        pos.x *= 800;
-        pos.y *= 700;
-        pos.y += 500;
+        pos.x *= 3000;
+        pos.y *= 1300;
+        pos.y += 0;
         ofxBulletSphere * s= new ofxBulletSphere();
         
-		float size = ofApp2::app->getNoise(i) * 10.0;
-        size = ofMap(size, 0, 10.0, 1, 9);
-		float mass = 5.0 - ofApp2::app->getNoise(i) * 3.0;
-        if( ofRandomuf() < 0.1) mass = 0;
-		float friction = ofApp2::app->getNoise(i+100) * 10.0;
+		float size = ofApp::app->getNoise(i) * 32.0;
+        size = ofMap(size, 0, 32.0, 0, 29);
+		float mass = 5.0 - ofApp::app->getNoise(i) * 2.0;
+        if( ofRandomuf() < 0.05) mass = 0;
+		float friction = ofApp::app->getNoise(i+100) * 10.0;
         s->init( sphereShapes[(int)size] );
         s->create( world.world, pos, mass );
         s->setFriction( friction );
@@ -83,6 +83,8 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
             gvl.attrs.addColor( ofFloatColor(1,0,0) );
         }
         gvls.push_back( gvl );
+        
+        add_random_particle(30);
     }
     
     /*
@@ -97,17 +99,20 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
         for(int d=0; d<2; d++){
             ofVec3f pos = p1 + adder*i;
             pos += adder * offset;
-            pos += adder*ofApp2::app->getSignedNoise(i*10);
+            pos += adder * (ofSignedNoise( i*0.02 ) + ofSignedNoise( i*0.3 )) * (300.0 + i*0.1);
+            pos += gvl.norm * (ofSignedNoise( i*0.01 ) + ofSignedNoise( i*0.3 ) + ofRandomf() ) * 3.0;
+            
             ofxBulletSphere * s= new ofxBulletSphere();
             
-			float mass = 5.0 - ofApp2::app->getNoise(i,1) * 3.0;
-            float size = ofApp2::app->getNoise(i+300,2) * 10.0 + i*0.001;
-            size = ofMap(size, 0, 10.0, 1, 9, true);
+			float mass = 5.0 - ofNoise(i, pos.y) * 2.0;
+            float size = ofNoise(i+300*d,mass)*30.0 + i*0.001;
+            size = ofMap(size, 0, 30.0, 0, 29, true);
+            cout << (int)size << " ";
 
-            if( ofRandomuf() < 0.011)
+            if( ofRandomuf() < 0.02)
                 mass = 0;
 
-            float friction = ofApp2::app->getNoise(i+400,2) * 10.0;
+            float friction = ofApp::app->getNoise(i+400,2) * 10.0;
             s->init( sphereShapes[(int)size] );
             s->create( world.world, pos, mass );
             s->setFriction( friction );
@@ -118,6 +123,8 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
             points.addColor( ofFloatColor(0) );
         }
     }
+    
+    cout << endl;
 }
 
 void ad_grav_line::update(){
@@ -152,7 +159,7 @@ void ad_grav_line::update_attrs(){
         
         for( int g=0; g<gvls.size(); g++ ){
             
-//            if( ofApp2::app->getNoise(i,2) >0.7) continue;
+//            if( ofApp::app->getNoise(i,2) >0.7) continue;
             if( g != i%gvls.size()) continue;
                 
             ofVboMesh & attrs = gvls[g].attrs;
@@ -162,7 +169,7 @@ void ad_grav_line::update_attrs(){
                 float dist2 = diff.lengthSquared();
                 if(dist2>10){
                     float power = (1.0/dist2) * 1000000.0;
-                    force += diff.normalized() * (power * ofApp2::app->getNoise(i*2) );
+                    force += diff.normalized() * (power * ofApp::app->getNoise(i*2) );
                 }
             }
             
@@ -189,7 +196,7 @@ void ad_grav_line::update_lines(){
 		btVector3 &bpos = trans.getOrigin();
 		ofVec3f pos1( bpos.x(), bpos.y(), bpos.z() );
 		
-        float noise = ofApp2::app->getNoise(i);
+        float noise = ofApp::app->getNoise(i);
         int num_line = 3; // + noise*noise*8.0;
         bool bStatic1 = objs[i]->isStaticObject();
         if( bStatic1 ) num_line = 1;
@@ -239,12 +246,12 @@ void ad_grav_line::update_lines(){
             lines.addVertex( pos2 );
 
 			ofFloatColor c;
-			 c.setHsb(  ofApp2::app->getNoise(i,0)*0.3	+ 0.6,
-						ofApp2::app->getNoise(i,1)*0.3	+ 0.1,
-						ofApp2::app->getNoise(i,2)*0.3	+ 0.3
+			 c.setHsb(  ofApp::app->getNoise(i,0)*0.3	+ 0.6,
+						ofApp::app->getNoise(i,1)*0.3	+ 0.1,
+						ofApp::app->getNoise(i,2)*0.3	+ 0.3
                      );
 			
-			c.a = ofApp2::app->getNoise(i+1000)*0.8 + 0.2;
+			c.a = ofApp::app->getNoise(i+1000)*0.8 + 0.2;
             lines.addColor( c );
             lines.addColor( c );
         }
@@ -256,12 +263,12 @@ void ad_grav_line::update_points(){
         ofVec3f sp = shapes[i]->getPosition();
         ofVec3f pp(sp);
         sp *= 0.01;
-		pp.y += ofApp2::app->getSignedNoise(i+100, 2);
+		pp.y += ofApp::app->getSignedNoise(i+100, 2);
         pp.y += sp.y;
         points.setVertex( i, pp );
         ofFloatColor c;
-        c.setHsb( ofApp2::app->getNoise(i+3000,2)*0.4+0.55, ofRandom(0.1,0.8), ofApp2::app->getNoise(i*4,2)*0.4+0.4);
-        c.a = ofApp2::app->getNoise(i+3300)*0.8 + 0.2;
+        c.setHsb( ofApp::app->getNoise(i+3000,2)*0.4+0.55, ofRandom(0.1,0.8), ofApp::app->getNoise(i*4,2)*0.4+0.4);
+        c.a = ofApp::app->getNoise(i+3300)*0.8 + 0.2;
         points.setColor( i, c);
     }
 }
@@ -278,9 +285,9 @@ void ad_grav_line::draw(){
 	
 	for( int i=0; i<collision.size(); i++ ){
 		if( i%3 == 0){
-			ofSetColor( 30, 150);
+			ofSetColor( 30, 120);
 			ofVec3f &p = collision[i];
-			ofCircle( p, 1 );
+            ofCircle( p, ofApp::app->gpu_noise.getNoiseuf(i, 0)*5.0 );
 		}
     }
     collision.clear();

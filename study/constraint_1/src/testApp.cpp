@@ -1,9 +1,5 @@
 #include "testApp.h"
 
-#ifndef round
-#define round(x) (x<0?ceil((x)-0.5):floor((x)+0.5))
-#endif
-
 void testApp::setup() {
 	ofBackground( 0 );
 	
@@ -13,13 +9,12 @@ void testApp::setup() {
 	world.setup();
     world.setGravity( ofVec3f(0,0,0) );
     world.setCamera(&camera);
-    //world.world->getBroadphase()->
     
     points.setUsage( GL_DYNAMIC_DRAW );
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
     
-    int n = 1400;
+    int n = 400;
     for( int d=0; d<2; d++ ){
         for( int i=0; i<n; i++ ){
             
@@ -49,9 +44,9 @@ void testApp::setup() {
             }
             
             // Constraint
-            lines.addVertex( pos );
+            lines.addVertex( pos ); // i*2
             pos.y = 0;
-            lines.addVertex( pos );
+            lines.addVertex( pos ); // i*2+1
             {
                 ofFloatColor col(1, 0, 0, ofNoise(pos.x*0.1, index*0.01)*0.4+0.3);
                 col.setBrightness( ofNoise(pos.x*0.2, pos.y*0.02, index*0.024)*0.4 + 0.3);
@@ -99,24 +94,26 @@ void testApp::update() {
         for(int i=0; i<shapes.size(); i++ ){
             ofVec3f p = shapes[i]->getPosition();
 
-//            if( ofGetFrameNum() < 120 ){
-
-                // pull
-                ofVec3f dir = (attrs[a].pos - p);
-                float dist2 = dir.lengthSquared();
-                
-                if( dist2 < 30 || 1000000 < dist2) continue;
-                ofVec3f impl = dir.normalized() * (attrs[a].power / (dist2+0.0000000001) );
-                shapes[i]->getRigidBody()->applyCentralImpulse( btVector3(impl.x, impl.y, impl.z) );
-//            }
+            // pull
+            ofVec3f dir = (attrs[a].pos - p);
+            float dist2 = dir.lengthSquared();
+            
+            if( dist2 < 30 || 1000000 < dist2) continue;
+            ofVec3f impl = dir.normalized() * (attrs[a].power / (dist2+0.0000000001) );
+            shapes[i]->getRigidBody()->applyCentralImpulse( btVector3(impl.x, impl.y, impl.z) );
             // p.z = 0;
             vecp[i] = p;
             linep[i*2] = p;
-            //linep[i*2 +1] = p;
         }
     }
+    
+    for (int i=0; i<shapes.size(); i++) {
+        // Move Pivot
+        ofVec3f &pivot = linep[i*2 +1];
+        pivot.y -= 1;
+        joints[i]->updatePivotPos(pivot, 1);
+    }
 }
-
 
 void testApp::draw() {
 
@@ -175,33 +172,3 @@ void testApp::keyPressed(int key) {
 			break;
 	}
 }
-
-void testApp::mousePressed(int x, int y, int button) {
-	
-//	float rsize = 0.1;
-//	
-//	ofVec3f diff;
-//	if(shapes.size() < 2) {
-//		diff = mousePos - shapes[0]->getPosition();
-//	} else {
-//		diff = shapes[0]->getPosition() - shapes[shapes.size()-1]->getPosition();
-//	}
-//	diff.normalize();
-//	if(shapes.size() < 2) {
-//		diff *= -(jointLength*2.f);
-//	} else {
-//		diff *= -jointLength;
-//	}
-//	diff += shapes[shapes.size()-1]->getPosition();
-//	
-//	shapes.push_back( new ofxBulletSphere() );
-//	((ofxBulletSphere*)shapes[shapes.size()-1])->create( world.world, diff, .8, rsize );
-//	shapes[shapes.size()-1]->add();
-//	
-//	joints.push_back( new ofxBulletJoint() );
-////	joints[joints.size()-1]->create(world.world, shapes[shapes.size()-1], shapes[shapes.size()-2]->getPosition());
-//    joints[joints.size()-1]->create(world.world, shapes[shapes.size()-1], shapes[0]->getPosition());
-//
-//    joints[joints.size()-1]->add();
-}
-

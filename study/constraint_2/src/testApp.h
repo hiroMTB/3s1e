@@ -2,8 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-
 #include "ofxBulletP2PConstraint.h"
+#include "constraint_line.h"
+
 
 class Attr{
     
@@ -28,23 +29,17 @@ public:
 	void update();
 	void draw();
 	void keyPressed  (int key);
-
 	
 	ofxBulletWorldRigid			world;
-	
-	vector<ofxBulletBaseShape*> shapes;
-	vector<ofxBulletJoint*>		joints;
-    vector<ofxBulletP2PConstraint*>	p2ps;
-	
+		
 	bool						bDrawDebug;	
 	float						jointLength;
 	
 	ofCamera					camera;
 	ofLight						light;
-	ofVec3f						mousePos;
 
     vector<Attr> attrs;
 
 
-    ofVboMesh points, lines;
+    constraint_line *cline1, *cline2, *cline3;
 };

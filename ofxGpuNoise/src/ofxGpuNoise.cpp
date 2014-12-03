@@ -228,17 +228,17 @@ unsigned char ofxGpuNoise::getNoiseuc( int index, int ch ){
 
 float ofxGpuNoise::getNoisef( int x, int y, int ch ){
     int index = x + y*mWidth;
-    return getNoisef( index );
+    return getNoisef( index, ch );
 }
 
 float ofxGpuNoise::getNoiseuf( int x, int y, int ch ){
     int index = x + y*mWidth;
-    return getNoiseuf(index);
+    return getNoiseuf(index, ch );
 }
 
 unsigned char ofxGpuNoise::getNoiseuc( int x, int y, int ch ){
     int index = x + y*mWidth;
-    return getNoiseuc(index);
+    return getNoiseuc(index, ch);
 }
 
 unsigned char * ofxGpuNoise::getNoiseData() {
@@ -248,11 +248,11 @@ unsigned char * ofxGpuNoise::getNoiseData() {
 string ofxGpuNoise::getNoiseParamString(){
 	stringstream ss;
 	ss << "Gpu Noise" << "\n";
-	ss << "ShaderType	   : " << mShaderType		<< "\n";
+	ss << "ShaderType      : " << mShaderType		<< "\n";
 	ss << "ShaderDerivType : " << mShaderDerivType	<< "\n";
 	ss << "Freq            : " << mFreq				<< "\n";
 	ss << "Octave          : " << mOctaves			<< "\n";
-	ss << "frame	       : " << mFrame            << "\n";
+	ss << "frame           : " << mFrame            << "\n";
 	return ss.str();
 }
 

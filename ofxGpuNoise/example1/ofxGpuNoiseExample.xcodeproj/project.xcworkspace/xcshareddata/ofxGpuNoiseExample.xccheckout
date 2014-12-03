@@ -14,7 +14,7 @@
 		<string>https://github.com/hiroMTB/3s1e.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ofxGpuNoise/example/ofxGpuNoiseExample.xcodeproj</string>
+	<string>ofxGpuNoise/example1/ofxGpuNoiseExample.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>C7605D8CA64AA4AEC1AF700C7938C1ABBA327296</string>
 			<key>IDESourceControlWCCName</key>
-			<string>app</string>
+			<string>apps</string>
 		</dict>
 	</array>
 </dict>

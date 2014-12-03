@@ -23,7 +23,7 @@
 		4D0ECC5C19E7311300C27B92 /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0ECC4E19E730FE00C27B92 /* ofxBulletSphere.cpp */; };
 		4D0ECC5D19E7311300C27B92 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D0ECC5019E730FE00C27B92 /* ofxBulletStaticPlane.cpp */; };
 		4D4A41E11A1F04E6006069E7 /* ad_grav_line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A41DF1A1F04E6006069E7 /* ad_grav_line.cpp */; };
-		4D4A41E41A1F0CBD006069E7 /* ofApp2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A41E21A1F0CBD006069E7 /* ofApp2.cpp */; };
+		4D4A41E41A1F0CBD006069E7 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4A41E21A1F0CBD006069E7 /* ofApp.cpp */; };
 		4D78105D1A205B7300721FDE /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -116,10 +116,10 @@
 		4D0ECC4F19E730FE00C27B92 /* ofxBulletSphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
 		4D0ECC5019E730FE00C27B92 /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
 		4D0ECC5119E730FE00C27B92 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
-		4D4A41DF1A1F04E6006069E7 /* ad_grav_line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_grav_line.cpp; path = ../../../module/ad_grav_line.cpp; sourceTree = "<group>"; };
+		4D4A41DF1A1F04E6006069E7 /* ad_grav_line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = ad_grav_line.cpp; path = ../../../module/ad_grav_line.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		4D4A41E01A1F04E6006069E7 /* ad_grav_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_grav_line.h; path = ../../../module/ad_grav_line.h; sourceTree = "<group>"; };
-		4D4A41E21A1F0CBD006069E7 /* ofApp2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp2.cpp; sourceTree = "<group>"; };
-		4D4A41E31A1F0CBD006069E7 /* ofApp2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp2.h; sourceTree = "<group>"; };
+		4D4A41E21A1F0CBD006069E7 /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ofApp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		4D4A41E31A1F0CBD006069E7 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ofApp.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		4D78105C1A205B7300721FDE /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E4B69B5B0A3A1756003C02F2 /* grav_line_2Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = grav_line_2Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -374,8 +374,8 @@
 			children = (
 				4D09BDC519FAFE2400EA7FC8 /* module */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				4D4A41E21A1F0CBD006069E7 /* ofApp2.cpp */,
-				4D4A41E31A1F0CBD006069E7 /* ofApp2.h */,
+				4D4A41E21A1F0CBD006069E7 /* ofApp.cpp */,
+				4D4A41E31A1F0CBD006069E7 /* ofApp.h */,
 				4D4A41DF1A1F04E6006069E7 /* ad_grav_line.cpp */,
 				4D4A41E01A1F04E6006069E7 /* ad_grav_line.h */,
 			);
@@ -563,7 +563,7 @@
 				4D0ECC5319E7311300C27B92 /* ofxBulletWorldRigid.cpp in Sources */,
 				4D09BDCD19FAFE2400EA7FC8 /* ad_image_saver.cpp in Sources */,
 				4D0ECC5419E7311300C27B92 /* GLDebugDrawer.cpp in Sources */,
-				4D4A41E41A1F0CBD006069E7 /* ofApp2.cpp in Sources */,
+				4D4A41E41A1F0CBD006069E7 /* ofApp.cpp in Sources */,
 				4D0ECC5519E7311300C27B92 /* ofxBulletBaseShape.cpp in Sources */,
 				F6FB46A51A1F699700F7D98B /* ofxFastFboReader.cpp in Sources */,
 				4D0ECC5619E7311300C27B92 /* ofxBulletBox.cpp in Sources */,

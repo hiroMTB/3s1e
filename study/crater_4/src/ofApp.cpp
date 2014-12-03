@@ -54,7 +54,7 @@ void ofApp::set_indices(){
 void ofApp::make_random_mesh(){
 
     ofDirectory dir;
-    int dir_num = dir.listDir( ad_util::data_path + "img/crater_mosaic" );
+    int dir_num = dir.listDir( ad_util::data_path + "img/crater_Moon" );
     if( dir_num>0 ){
         int level = floor( ofRandom(0, dir_num) );
         string dir_path = dir.getPath( level );

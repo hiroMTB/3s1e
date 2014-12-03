@@ -5,6 +5,7 @@
 #include "ad_image_saver.h"
 #include "ofxVectorGraphics.h"
 #include "ofxGpuNoise.h"
+#include "ofxExportImageSequence.h"
 
 class LineAgent {
 public:		
@@ -180,4 +181,6 @@ public:
     ad_image_saver saver;
     ofVboMesh connection_between_pivot;
 	ofxGpuNoise noise;
+    
+    ofxExportImageSequence exporter;
 };

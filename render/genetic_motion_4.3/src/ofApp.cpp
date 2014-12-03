@@ -18,15 +18,13 @@ ofApp::ofApp(){
     sequencial_add_speed = 1;
     center.set( 0, 0, 0 );
 
-	string shader_path = ofToDataPath("") + "../../../../../app/ofxGpuNoise/libs/shader/";
-	noise.setup( shader_path );
 	noise.setOctaves( 4 );
 	noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
 	noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO );
 	noise.setSendSamplingPoints( false );
 	noise.setSamplingPointsScale( 0.001 );
 	noise.create( 512, 512 );
-}
+    }
 
 void ofApp::setup(){
 
@@ -51,6 +49,10 @@ void ofApp::setup(){
     glGetIntegerv( GL_SAMPLES, &sbuf );
     cout << "Number of sample buffers is " + ofToString( buf ) << endl;
     cout << "Number of samples is " + ofToString( sbuf ) << endl;
+    
+    
+    exporter.setup(3800, 2000, 30);
+    exporter.setOverwriteSequence(true);
 }
 
 void ofApp::update(){
@@ -197,6 +199,8 @@ void ofApp::update(){
 
 void ofApp::draw(){
 	
+    exporter.begin();
+    
     ofEnableAlphaBlending();
     ofEnableSmoothing();
     ofEnableAntiAliasing();
@@ -208,7 +212,7 @@ void ofApp::draw(){
     }
     
     ofPushMatrix();
-    ofTranslate( ofGetWidth()/2, ofGetHeight()-100 );
+    ofTranslate( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()-100 );
     if( bRotate ){
         ofRotate( ofGetFrameNum()*0.1, 1, 0, 0 );
     }
@@ -240,7 +244,10 @@ void ofApp::draw(){
     
     ofPopMatrix();
     
-    saver.save();
+//    saver.save();
+    
+    exporter.end();
+    exporter.draw(0, 0);
     
     draw_info();
 
@@ -285,7 +292,7 @@ void ofApp::draw_vector_graphics(){
 
 void ofApp::change_settings(){
 
-    initial_radius = ofRandom(100, 500) + 400;
+    initial_radius = ofRandom(100, 500) + 600;
     sequencial_add_speed = ofRandom( 200, 300 );
     current_setting_start_frame = ofGetFrameNum();
     
@@ -370,7 +377,8 @@ void ofApp::keyPressed( int key ){
             break;
 
         case 'S':
-            saver.start( ofGetTimestampString(), "gm2.1_", 500 );
+            //saver.start( ofGetTimestampString(), "gm2.1_", 500 );
+            exporter.startExport();
             break;
             
         default:

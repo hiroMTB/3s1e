@@ -5,15 +5,16 @@
 void ofApp::setup(){
 
     bMove = false;
-    res = 4;
-    extrusion =150;
+	
+    res = 8;
+    extrusion = -300;
     threthold = 8;
 
 	ofSetVerticalSync( true );
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
     
-    cam.setDistance( 1870 );
+    cam.setDistance( 3000 );
     cam.setFov( 40 );
 
     gn.setup();
@@ -23,6 +24,13 @@ void ofApp::setup(){
     gn.setFreq( 0.001 );
     gn.setOctaves( 4 );
 
+
+	gn2.setup();
+	gn2.create( 2428,1378 );
+	gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
+	gn2.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+	gn2.setFreq( 0.0001 );
+	gn2.setOctaves( 2 );
 	
     if ( !mask.loadImage( ad_util::data_path + "img/crater_Marculy/mMask4.jpg" ) ){
 		cout << "can not load mask" << endl;
@@ -32,7 +40,8 @@ void ofApp::setup(){
 	gui.setup( 12345 );
 	gui.addPatcher(0, 0);
 	gui.addOscOut(45, 10);
-	gui.addFloat("extrusion", 45, 100, &extrusion);
+	gui.addToggle("useMask", 45, 100, &bUseMask);
+	gui.addFloat("extrusion", 45, 130, &extrusion);
 	gui.write( "_gui_main.maxpat" );
 	gui.open( "_gui_main.maxpat" );
 	
@@ -69,9 +78,7 @@ void ofApp::load_mesh( ofFloatImage &img ){
             index++;
         }
     }
-    
-
-    
+	
     for( int y=0; y<h-1; y++ ){
         for( int x=0; x<w-1; x++ ){
             mesh.addIndex(x+y*w);				// 0
@@ -96,6 +103,9 @@ void ofApp::update(){
         gn.setFrame( ofGetFrameNum()*0.01 );
         gn.update();
 
+		gn2.setFrame( ofGetFrameNum()*0.02 );
+		gn2.update();
+
         int n = mesh.getNumVertices();
         if( 0 < n ){
             
@@ -119,38 +129,53 @@ void ofApp::update(){
                     
                     int real_index = x*res + y*res*img.getWidth();
 					int index = x + y*w;
-					int maskIndex = x*res + y*res*mask.getWidth();
-                    if( mw<=x || mh<=y )
-                        continue;
-                    
-					float r =  maskf[ maskIndex*3 + 0];
-					float g =  maskf[ maskIndex*3 + 1];
-					float b =  maskf[ maskIndex*3 + 2];
-					float avg = (r + g + b) * 0.3333;
-
-                    float rate = avg + 0.1;
-                    
-                    float nR = gn.getNoisef( x, y, 0);
+					float rate = 1;
+					
+					if( bUseMask ){
+						int maskIndex = x*res + y*res*mask.getWidth();
+						if( mw<=x || mh<=y )
+							continue;
+						
+						float r =  maskf[ maskIndex*3 + 0];
+						float g =  maskf[ maskIndex*3 + 1];
+						float b =  maskf[ maskIndex*3 + 2];
+						float avg = (r + g + b) * 0.3333;
+						
+						rate = avg + 0.1;
+					}else{
+						
+						float r = cols[index].r;
+						float g = cols[index].g;
+						float b = cols[index].b;
+						
+						rate = (r+g+b) * 0.333;
+					}
+					
+					float nR = gn.getNoisef( x, y, 0);
                     float nG = gn.getNoisef( x, y, 1);
                     float nB = gn.getNoisef( x, y, 2);
-                    
+
+					float nR2 = gn2.getNoisef( x, y, 0);
+					float nG2 = gn2.getNoisef( x, y, 1);
+					float nB2 = gn2.getNoisef( x, y, 2);
+					
+					nR *= nR2;
+					nG *= nG2;
+					nB *= nB2;
+					
                     accel[index].x = nR * rate * 0.3;
                     accel[index].y = nG * rate * 0.3;
                     accel[index].z = nB * rate;
-
+					
                     speed[index] += accel[index];
                     vs[index] += speed[index];
+					
+					vs[index] += ofVec3f( ofRandomf(),ofRandomf(),ofRandomf() );
                     
-                    rate *= 0.01;
+                    rate *= 0.003;
                     cols[index].r += (nR * rate);
                     cols[index].g += (nG * rate);
                     cols[index].b += (nB * rate);
-
-//                    cols[index].a = abs(vs[index].z)>300 ? 0 : 1;
-//                    if( cols[index].a == 0){
-//                        cols.erase(citr);
-//                        vs.erase(vitr);
-//                    }
 				}
 			}
         }
@@ -243,6 +268,7 @@ void ofApp::keyPressed( int key ){
                 }
             case ' ':
                 bMove = !bMove;
+				break;
 				
 			case 'u':
 				load_mesh( img );

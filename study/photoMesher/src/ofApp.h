@@ -16,7 +16,7 @@ public:
     void set_indices();
     void dragEvent( ofDragInfo info );
     
-    bool bMove;
+    bool bMove, bUseMask;
     int res;
     float extrusion;
     float threthold;
@@ -25,7 +25,8 @@ public:
     ofEasyCam cam;
     ofVboMesh mesh;
     ofxGpuNoise gn;
-
+    ofxGpuNoise gn2;
+	
 	ofxMaxGui gui;
     
     vector<ofVec3f> speed, accel;

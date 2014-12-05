@@ -20,14 +20,26 @@
          },
          {
             "box" : {
-               "args" : "extrusion",
+               "args" : "useMask",
                "maxclass" : "bpatcher",
-               "name" : "sFloat.maxpat",
+               "name" : "sToggle.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
                "patching_rect" : [ 45, 100, 350, 20 ],
                "presentation" : 1,
                "presentation_rect" : [ 45, 100, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "extrusion",
+               "maxclass" : "bpatcher",
+               "name" : "sFloat.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 130, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 130, 350, 20 ]
             }
          }
       ],

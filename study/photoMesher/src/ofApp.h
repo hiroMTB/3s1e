@@ -16,19 +16,32 @@ public:
     void set_indices();
     void dragEvent( ofDragInfo info );
     
-    bool bMove, bUseMask;
-    int res;
+	bool bMove;
+	bool bUseMask;
+	bool bDrawLineMesh;
+	bool bDrawMesh;
+	bool bThruAccel;
+	bool bThruSpeed;
+
+	int res;
     float extrusion;
+	float friction;
     float threthold;
+	float animSpeed;
+	
+	float camDist;
 
     ofFloatImage img, mask;
     ofEasyCam cam;
     ofVboMesh mesh;
-    ofxGpuNoise gn;
+	ofVboMesh lines;
+	
+	ofxGpuNoise gn;
     ofxGpuNoise gn2;
 	
 	ofxMaxGui gui;
     
     vector<ofVec3f> speed, accel;
-    
+
+	ofFloatColor bg;
 };

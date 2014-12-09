@@ -1,4 +1,5 @@
 #include "testApp.h"
+#include "ad_util.h"
 
 void testApp::setup() {
 	ofBackground( 0 );
@@ -10,6 +11,10 @@ void testApp::setup() {
     world.setGravity( ofVec3f(0,10,0) );
     world.setCamera(&camera);
     
+    svg.load( ad_util::data_path + "svg/ABC.svg" );
+    for (int i=0; i<; i++) {
+        
+    }
     
     ofVec3f start1(-500, 0, 0);
     ofVec3f end1(-300, 120, 0);
@@ -37,7 +42,6 @@ void testApp::setup() {
 void testApp::update() {
 	world.update(1/30.0, 10);
 
-    
     cline1->update();
     cline2->update();
     cline3->update();

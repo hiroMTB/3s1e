@@ -14,7 +14,7 @@ void testApp::setup() {
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
     
-    int n = 400;
+    int n = 1400;
     for( int d=0; d<2; d++ ){
         for( int i=0; i<n; i++ ){
             

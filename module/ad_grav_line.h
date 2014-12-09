@@ -13,15 +13,20 @@
 
 struct gvline{
     
+private:
+    gvline();
+    
 public:
     gvline( ofVec2f _p1, ofVec2f _p2)
     :p1(_p1), p2(_p2){
         attrs.setUsage( GL_DYNAMIC_DRAW );
         attrs.setMode( OF_PRIMITIVE_POINTS );
+        inited = true;
     };
     
     bool bNegativeGrav;
     bool bGrav;
+    bool inited;
     ofVec2f p1;
     ofVec2f p2;
     ofVec2f norm;
@@ -43,6 +48,7 @@ public:
     void update_points();
     void update_attrs();
     void draw();
+    void draw_attr();
     void onCollision( ofxBulletCollisionData& cdata );
 
     bool bInitPhysics;
@@ -51,11 +57,17 @@ public:
     ofxBulletWorldRigid world;
     vector<btSphereShape*> sphereShapes;
     vector<ofxBulletBaseShape*>	shapes;
+    vector<ofVec3f> pivots;
+    
     vector<ofVec3f> collision;
+    vector<ofxBulletJoint*>	joints;
+//    vector<ofxBulletJoint*>	joints;
     
     ofVboMesh points;
     ofVboMesh lines;
+    ofVboMesh prep_lines;
     
-    vector<gvline> gvls;
+    vector<gvline*> gvls;
+  
     
 };

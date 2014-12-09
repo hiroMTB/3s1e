@@ -7,16 +7,15 @@ void ofApp::setup(){
 }
 
 void ofApp::setRandom(){
-	p0.set( ofRandomf(), ofRandomf(), ofRandomf() );
 	p1.set( ofRandomf(), ofRandomf(), ofRandomf() );
 	p2.set( ofRandomf(), ofRandomf(), ofRandomf() );
 
-	p0 *= 200;
 	p1 *= 200;
 	p2 *= 200;
 
-	if( b2dTest )
-		p0.z = p1.z = p2.z = 0;
+    for (int i=0; i<30; i++) {
+        points.push_back(ofVec3f(ofRandomf(), ofRandomf(), ofRandomf()) *200 );
+    }
 }
 
 
@@ -36,9 +35,14 @@ void ofApp::draw(){
 	ofLine( p1, p2 );
 	
 	ofFill();
-	ofSetColor(255,0,0);
-	ofCircle(p0, 10);
-
+	ofSetColor(0);
+    for (int i=0; i<points.size(); i++) {
+        glPointSize(2);
+        glBegin(GL_POINTS);
+        glVertex3f(points[i].x, points[i].y, points[i].z);
+        glEnd();
+    }
+    
 	ofSetColor(0,255,0);
 	ofCircle(p1, 5);
 	
@@ -46,11 +50,13 @@ void ofApp::draw(){
 	ofCircle(p2, 5);
 	
 	// test1
-	ofVec3f v = ad_geom_util::vec_pl(p0, p1, p2);
-	ofSetLineWidth( 3 );
-	ofSetColor(20, 2, 111);
-	ofLine(p0, p0+v);
-	
+    for (int i=0; i<points.size(); i++) {
+        ofVec3f v = ad_geom_util::vec_pl(points[i], p1, p2);
+        ofSetLineWidth( 1 );
+        ofSetColor(20, 2, 111);
+        ofLine(points[i], points[i]+v);
+    }
+    
 	if(!b2dTest){
 		cam.end();
 	}
@@ -65,10 +71,10 @@ void ofApp::draw(){
 		ofDrawBitmapString("m key to change 2d - 3d Mode", 20, 40);
 		
 		// test2
-		float d1 = v.length();
-		float d2 = ad_geom_util::dist_pl(p0, p1, p2);
-		ofDrawBitmapString("distant via vec_pl : " + ofToString(d1), 20, 80 );
-		ofDrawBitmapString("distant via dist_pl : " + ofToString(d2), 20, 100 );
+		//float d1 = v.length();
+		//float d2 = ad_geom_util::dist_pl(p0, p1, p2);
+		//ofDrawBitmapString("distant via vec_pl : " + ofToString(d1), 20, 80 );
+		//ofDrawBitmapString("distant via dist_pl : " + ofToString(d2), 20, 100 );
 	} ofPopMatrix();
 }
 

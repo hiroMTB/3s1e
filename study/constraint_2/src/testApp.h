@@ -4,7 +4,7 @@
 #include "ofxBullet.h"
 #include "ofxBulletP2PConstraint.h"
 #include "constraint_line.h"
-
+#include "ofxSvg.h"
 
 class Attr{
     
@@ -20,6 +20,8 @@ public:
         ofCircle( pos, 3 );
     }
 };
+
+
 
 
 class testApp : public ofBaseApp{
@@ -40,6 +42,7 @@ public:
 
     vector<Attr> attrs;
 
-
     constraint_line *cline1, *cline2, *cline3;
+    
+    ofxSVG svg;
 };

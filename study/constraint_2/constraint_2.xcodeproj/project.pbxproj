@@ -21,6 +21,12 @@
 		4D35E3551A2B884500FD0C57 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E12B1A2B884400FD0C57 /* ofxBulletStaticPlane.cpp */; };
 		4D35E41C1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E41A1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp */; };
 		4DAC98161A2F4B3F00486C72 /* constraint_line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DAC98141A2F4B3F00486C72 /* constraint_line.cpp */; };
+		4DDF9C701A36AE7300F56DEB /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C651A36AE7300F56DEB /* ofxSvg.cpp */; };
+		4DDF9C711A36AE7300F56DEB /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C6A1A36AE7300F56DEB /* src_colors.cpp */; };
+		4DDF9C721A36AE7300F56DEB /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C6B1A36AE7300F56DEB /* svgtiny.cpp */; };
+		4DDF9C731A36AE7300F56DEB /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C6D1A36AE7300F56DEB /* svgtiny_gradient.cpp */; };
+		4DDF9C741A36AE7300F56DEB /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C6F1A36AE7300F56DEB /* svgtiny_list.cpp */; };
+		4DDF9C771A36AECD00F56DEB /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C751A36AECD00F56DEB /* ad_util.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -109,6 +115,16 @@
 		4D35E41B1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletP2PConstraint.h; sourceTree = "<group>"; };
 		4DAC98141A2F4B3F00486C72 /* constraint_line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constraint_line.cpp; sourceTree = "<group>"; };
 		4DAC98151A2F4B3F00486C72 /* constraint_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constraint_line.h; sourceTree = "<group>"; };
+		4DDF9C651A36AE7300F56DEB /* ofxSvg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSvg.cpp; sourceTree = "<group>"; };
+		4DDF9C661A36AE7300F56DEB /* ofxSvg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSvg.h; sourceTree = "<group>"; };
+		4DDF9C6A1A36AE7300F56DEB /* src_colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
+		4DDF9C6B1A36AE7300F56DEB /* svgtiny.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
+		4DDF9C6C1A36AE7300F56DEB /* svgtiny.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
+		4DDF9C6D1A36AE7300F56DEB /* svgtiny_gradient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_gradient.cpp; sourceTree = "<group>"; };
+		4DDF9C6E1A36AE7300F56DEB /* svgtiny_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny_internal.h; sourceTree = "<group>"; };
+		4DDF9C6F1A36AE7300F56DEB /* svgtiny_list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
+		4DDF9C751A36AECD00F56DEB /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_util.cpp; path = ../../../module/ad_util.cpp; sourceTree = "<group>"; };
+		4DDF9C761A36AECD00F56DEB /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_util.h; path = ../../../module/ad_util.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -244,9 +260,59 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		4DDF9C631A36AE7300F56DEB /* ofxSvg */ = {
+			isa = PBXGroup;
+			children = (
+				4DDF9C641A36AE7300F56DEB /* src */,
+				4DDF9C671A36AE7300F56DEB /* libs */,
+			);
+			name = ofxSvg;
+			sourceTree = "<group>";
+		};
+		4DDF9C641A36AE7300F56DEB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DDF9C651A36AE7300F56DEB /* ofxSvg.cpp */,
+				4DDF9C661A36AE7300F56DEB /* ofxSvg.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxSvg/src;
+			sourceTree = "<group>";
+		};
+		4DDF9C671A36AE7300F56DEB /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				4DDF9C681A36AE7300F56DEB /* svgTiny */,
+			);
+			name = libs;
+			path = ../../../addons/ofxSvg/libs;
+			sourceTree = "<group>";
+		};
+		4DDF9C681A36AE7300F56DEB /* svgTiny */ = {
+			isa = PBXGroup;
+			children = (
+				4DDF9C691A36AE7300F56DEB /* src */,
+			);
+			path = svgTiny;
+			sourceTree = "<group>";
+		};
+		4DDF9C691A36AE7300F56DEB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DDF9C6A1A36AE7300F56DEB /* src_colors.cpp */,
+				4DDF9C6B1A36AE7300F56DEB /* svgtiny.cpp */,
+				4DDF9C6C1A36AE7300F56DEB /* svgtiny.h */,
+				4DDF9C6D1A36AE7300F56DEB /* svgtiny_gradient.cpp */,
+				4DDF9C6E1A36AE7300F56DEB /* svgtiny_internal.h */,
+				4DDF9C6F1A36AE7300F56DEB /* svgtiny_list.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4DDF9C631A36AE7300F56DEB /* ofxSvg */,
 				4D35E1081A2B884400FD0C57 /* ofxBullet */,
 			);
 			name = addons;
@@ -315,6 +381,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4DDF9C751A36AECD00F56DEB /* ad_util.cpp */,
+				4DDF9C761A36AECD00F56DEB /* ad_util.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
@@ -422,8 +490,10 @@
 			files = (
 				4DAC98161A2F4B3F00486C72 /* constraint_line.cpp in Sources */,
 				4D35E34E1A2B884500FD0C57 /* ofxBulletBox.cpp in Sources */,
+				4DDF9C731A36AE7300F56DEB /* svgtiny_gradient.cpp in Sources */,
 				4D35E3501A2B884500FD0C57 /* ofxBulletCone.cpp in Sources */,
 				4D35E34D1A2B884500FD0C57 /* ofxBulletBaseShape.cpp in Sources */,
+				4DDF9C711A36AE7300F56DEB /* src_colors.cpp in Sources */,
 				4D35E34B1A2B884500FD0C57 /* ofxBulletWorldRigid.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4D35E3521A2B884500FD0C57 /* ofxBulletCustomShape.cpp in Sources */,
@@ -432,9 +502,13 @@
 				4D35E3551A2B884500FD0C57 /* ofxBulletStaticPlane.cpp in Sources */,
 				4D35E34C1A2B884500FD0C57 /* GLDebugDrawer.cpp in Sources */,
 				4D35E3541A2B884500FD0C57 /* ofxBulletSphere.cpp in Sources */,
+				4DDF9C721A36AE7300F56DEB /* svgtiny.cpp in Sources */,
 				4D35E3531A2B884500FD0C57 /* ofxBulletCylinder.cpp in Sources */,
+				4DDF9C771A36AECD00F56DEB /* ad_util.cpp in Sources */,
 				4D35E34A1A2B884500FD0C57 /* ofxBulletJoint.cpp in Sources */,
+				4DDF9C701A36AE7300F56DEB /* ofxSvg.cpp in Sources */,
 				4D35E41C1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp in Sources */,
+				4DDF9C741A36AE7300F56DEB /* svgtiny_list.cpp in Sources */,
 				4D35E34F1A2B884500FD0C57 /* ofxBulletCapsule.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

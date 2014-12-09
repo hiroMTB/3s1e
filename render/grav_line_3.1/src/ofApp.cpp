@@ -15,12 +15,12 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( "ABC.svg" );
+    sABC.load( ad_util::data_path +  "svg/v1/FGH.svg" );
     ofSetCircleResolution( 6 );
 
     gpu_noise.setup();
     gpu_noise.setOctaves( 4 );
-    gpu_noise.setFreq( 0.002 );
+    gpu_noise.setFreq( 0.0021 );
     gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
     gpu_noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
     
@@ -46,20 +46,23 @@ void ofApp::setup(){
             ofPoint end = ( lines[j].getVertices()[1]);
             
             for(int k=0; k<1; k++)
-                gravline.create_line(st, end, 0.15 );
+                gravline.create_line(st, end, 0.4 );
             
             cout << "crate line" << endl;
         }
     }
     
     ofSetVerticalSync(true);
-    int w = sABC.getWidth();
-    int h = sABC.getHeight();
-    exporter.setFrameRange(1, 6000);
+    float w = sABC.getWidth()  + 1;
+    float h = sABC.getHeight() + 1;
+    canvas.set(0, 0, w, h);
+    exporter.setOutputDir( "ex2" );
+    exporter.setFrameRange(1, 1600);
     exporter.setup(w, h, 30, GL_RGBA, 8);
     exporter.setAutoExit(true);
 
-    //exporter.startExport();
+    ofSetWindowShape(w/2, h/2);
+//    exporter.startExport();
 };
 
 void ofApp::update(){
@@ -81,20 +84,20 @@ void ofApp::draw(){
         ofEnableAntiAliasing();
         ofEnableSmoothing();
 
-        ofBackground( 255 );
+        ofBackground( 255, 255, 255, 255 );
         gravline.draw();
-            if(!exporter.isExporting())
-                gravline.draw_attr();
+        if(!exporter.isExporting()) gravline.draw_attr();
+        
     }exporter.end();
 
     ofPushMatrix();{
-        ofBackground(0);
+        ofBackground(0,0,0,255);
         ofSetColor(255);
         ofSetupScreenOrtho();
         exporter.draw(0, 0);
 
         draw_info();
-        gpu_noise.draw(300, 10, 0.2);
+//        gpu_noise.draw(300, 10, 0.2);
     }ofPopMatrix();
 }
 
@@ -115,7 +118,7 @@ void ofApp::draw_info(){
     ss << "joints    : " << gravline.joints.size() << "\n";
     
     ofSetColor( 0 );
-    ofDrawBitmapString( ss.str(), 10, 20 );
+    ofDrawBitmapString( ss.str(), 10, 40 );
 };
 
 void ofApp::keyPressed( int key ){

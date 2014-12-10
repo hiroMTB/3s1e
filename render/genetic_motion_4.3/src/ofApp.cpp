@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+ofApp * ofApp::app = NULL;
+
 ofApp::ofApp(){
 	
 	//ofSetLogLevel( OF_LOG_VERBOSE );
@@ -17,14 +19,9 @@ ofApp::ofApp(){
     current_setting_start_frame = 0;
     sequencial_add_speed = 1;
     center.set( 0, 0, 0 );
-
-	noise.setOctaves( 4 );
-	noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
-	noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_NO );
-	noise.setSendSamplingPoints( false );
-	noise.setSamplingPointsScale( 0.001 );
-	noise.create( 512, 512 );
-    }
+	frameFromStart = 0;
+	current_group = 0;
+}
 
 void ofApp::setup(){
 
@@ -35,6 +32,10 @@ void ofApp::setup(){
     connection_between_agent.setUsage( GL_DYNAMIC_DRAW );
 
     connection_between_pivot.setMode( OF_PRIMITIVE_LINES );
+	
+	
+	
+	
     connection_between_pivot.setUsage( GL_DYNAMIC_DRAW );
 
 	ofSetFrameRate( 60 );
@@ -49,15 +50,25 @@ void ofApp::setup(){
     glGetIntegerv( GL_SAMPLES, &sbuf );
     cout << "Number of sample buffers is " + ofToString( buf ) << endl;
     cout << "Number of samples is " + ofToString( sbuf ) << endl;
-    
-    
-    exporter.setup(3800, 2000, 30);
+	
+	int exW = 5000;
+	int exH = 2500;
+    exporter.setup(exW, exH, 30, GL_RGBA, 4);
     exporter.setOverwriteSequence(true);
+	
+	noise.setOctaves( 4 );
+	noise.setFreq( 0.12 );
+	noise.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
+	noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+	noise.create( 255, 255 );
+
+//    bStart = true;
+//    exporter.startExport();
 }
 
 void ofApp::update(){
 	
-	noise.setFrame( ofGetFrameNum() * 0.03 );
+	noise.setFrame( ofGetFrameNum() * 0.01 );
 	noise.update();
 	
     float step = ofGetFrameNum() - current_setting_start_frame;
@@ -68,22 +79,42 @@ void ofApp::update(){
     float now_angle = in_angle + step_angle*step;
     if( now_angle > out_angle ){
         change_settings();
+		current_group++;
     }
-    
-    //if( la.size() < num_agent){
-        LineAgent l;
+
+	float pastr = initial_radius;
+	if( ofRandomuf() > 0.94 ){
+		if(ofRandomuf()>0.9){
+			initial_radius += ofRandomuf() * 600 + 300;
+		}else{
+			initial_radius -= (ofRandomuf()*600 + 300);
+		}
+	}
+
+	int n;
+	
+	if( frameFromStart < 300)
+		n = ofNoise(1.2345+ofGetFrameNum()*0.00251) + 1;
+	else
+		n = ofNoise(ofRandomuf(), ofGetFrameNum()*0.003173) * 100 + 1;
+	
+    for( int i=0; i<n; i++){
+		
+		LineAgent l;
         if( bSequencial_add){
-            l.setup( now_angle, initial_radius );
+            l.setup( now_angle, initial_radius, current_group );
         }else{
-            l.setup( ofRandom(in_angle, out_angle), initial_radius );
+            l.setup( ofRandom(in_angle, out_angle), initial_radius, current_group );
         }
         la.push_back( l );
-    //}
-    
+	}
+
+	if(ofRandomuf() < 0.999)
+		initial_radius = pastr;
+
+
     if( bStart ){
-        
-//        if( step > 100)
-//            change_settings();
+		frameFromStart++;
         
         for ( int i=0; i<la.size(); i++ ) {
             if( ofGetKeyPressed() || ofRandom(1.0)<0.3 ||i==la.size()-1 ){
@@ -99,15 +130,16 @@ void ofApp::update(){
             
             if( bAnimate ){
                 la[i].animate();
-//                la[i].animate_noise( i );
+//                 la[i].animate_noise( i );
             }
         }
         
         if( bDraw_connection_between_agnet ){
-            connection_between_agent.clear();
+			
+			connection_between_agent.clear();
             connection_between_pivot.clear();
 
-                int num_line = 2000;
+                int num_line = 3000;
             
                 for( int i=0; i<num_line; i++ ){
                 
@@ -126,22 +158,32 @@ void ofApp::update(){
                 ofVec3f p2 = la[agent2].trail.getVertex( index2 );
                 
                 float d = p1.distance( p2 );
-                if( 100<d && d<150 ){
+                if( 50<d && d<200 ){
                     connection_between_agent.addVertex( p1 );
                     connection_between_agent.addVertex( p2 );
-                    connection_between_agent.addColor( la[agent1].trail.getColor( index1 ) );
-                    connection_between_agent.addColor( la[agent2].trail.getColor( index2 ) );
-                
-                    if( ofRandom(1.0) > 0.9 ){
-                        // pivot
-                        connection_between_pivot.addVertex( center );
-                        connection_between_pivot.addVertex( p1 );
-                        connection_between_pivot.addColor( la[agent1].trail.getColor( index1 ) );
-                        connection_between_pivot.addColor( la[agent2].trail.getColor( index2 ) );
-                    }
-                }
+                    connection_between_agent.addColor( la[agent1].trail.getColor( index1 )*1.1 );
+                    connection_between_agent.addColor( la[agent2].trail.getColor( index2 )*1.1 );
+				}else if( d<500 ){
+					if( la[agent1].group != la[agent2].group ){
+						connection_between_agent.addVertex( p1 );
+						connection_between_agent.addVertex( p2 );
+						ofFloatColor c(0.6);
+						c.setHue(ofNoise(ofGetFrameNum()*0.01)*0.1 + 0.5);
+						connection_between_agent.addColor( c );
+						connection_between_agent.addColor( c );
+					}
+				}
+					
+				if( ofRandom(1.0) > 0.9 ){
+					// pivot
+					connection_between_pivot.addVertex( center );
+					connection_between_pivot.addVertex( p1 );
+					connection_between_pivot.addColor( la[agent1].trail.getColor( index1 ) );
+					connection_between_pivot.addColor( la[agent2].trail.getColor( index2 ) );
+				}
+
             }
-            
+			
             vector<ofVec3f> test_point;
             test_point.push_back( center );
             for( int i=0; i<la.size(); i++ ){
@@ -212,7 +254,7 @@ void ofApp::draw(){
     }
     
     ofPushMatrix();
-    ofTranslate( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()-100 );
+    ofTranslate( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight() );
     if( bRotate ){
         ofRotate( ofGetFrameNum()*0.1, 1, 0, 0 );
     }
@@ -240,22 +282,24 @@ void ofApp::draw(){
         }
 	}
     
-//    draw_vector_graphics();
-    
+    //draw_vector_graphics();
+	
     ofPopMatrix();
     
-//    saver.save();
-    
     exporter.end();
-    exporter.draw(0, 0);
+	
+	ofBackground(0);
+	exporter.draw(0, 0);
     
     draw_info();
-
-	noise.draw(5, 5, 0.5 );
+	noise.draw( 5, ofGetHeight()-150,  0.2);
 }
 
 void ofApp::draw_vector_graphics(){
-    
+	
+	ofPushMatrix();
+	ofPushStyle();
+	
     if( la.size() < 300 )
         return;
     
@@ -288,25 +332,40 @@ void ofApp::draw_vector_graphics(){
             vg.endShape();
         }
     }
+	
+	ofPopMatrix();
+	ofPopStyle();
 }
 
 void ofApp::change_settings(){
 
-    initial_radius = ofRandom(100, 500) + 600;
-    sequencial_add_speed = ofRandom( 200, 300 );
-    current_setting_start_frame = ofGetFrameNum();
-    
-    center.set( 0, 0 );
+	
+	center.set( 0, 0 );
+	if( ofRandom(1.0)>0.5 ) {
+		in_angle = 0;
+		out_angle = -180;
+	}else{
+		in_angle = -180;
+		out_angle = 0;
+	}
 
-    if( ofRandom(1.0)>0.5 ) {
-        in_angle = -20;
-        out_angle = -160;
-    }else{
-        in_angle = -160;
-        out_angle = -20;
-    }
-    
-    bSequencial_add = 1;
+
+	bSequencial_add = 1;
+	current_setting_start_frame = ofGetFrameNum();
+	
+	float max_length = exporter.getFbo().getWidth()*0.5 * 1.48; // sqrt(2) -> 1.5
+	
+	if( frameFromStart < 30){
+		initial_radius = ofRandom(400, 800);
+	}else{
+		initial_radius = ofRandom(400, max_length-500);
+	}
+
+	if(initial_radius < 800){
+		sequencial_add_speed = ofRandom( 20, 60 );
+	}else{
+		sequencial_add_speed = ofRandom( 100, 200 );
+	}
 }
 
 void ofApp::draw_info(){

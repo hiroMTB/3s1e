@@ -9,7 +9,8 @@ void ofApp::setup(){
 	bThruSpeed = false;
 	bDrawMesh = false;
 	bDrawLineMesh = true;
-	
+    bBaseMove = false;
+    
     res = 16;
     extrusion = 300;
 	friction = 0.99;
@@ -20,7 +21,7 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
 	ofBackground( 0 );
 
-	camDist = 6000;
+	camDist = 2500;
     cam.setPosition(0, 0, camDist);
 	cam.lookAt(ofVec3f(0,0,0), ofVec3f(0,1,0));
 //    cam.setFov( 40 );
@@ -98,12 +99,14 @@ void ofApp::load_mesh( ofFloatImage &img ){
             c.a = 0.7;
             float z = c.getBrightness() * extrusion;
 			ofVec3f pos( startx + sampling_point.x, starty + sampling_point.y, z);
+            pos.x *= 5.0;
+
 			mesh.addVertex( pos  );
             mesh.addColor( c );
 			
 			// create Line mesh
-			lines.addVertex( pos );
-			pos.z = 0;
+            lines.addVertex( pos );
+            pos.z = 0;
 			lines.addVertex( pos );
 			
 			lines.addColor( c );
@@ -127,17 +130,19 @@ void ofApp::load_mesh( ofFloatImage &img ){
     
     speed.assign(w*h, ofVec3f(0,0,0) );
     accel.assign(w*h, ofVec3f(0,0,0) );
-    
+ 
+    speed_b.assign(w*h, ofVec3f(0,0,0) );
+    accel_b.assign(w*h, ofVec3f(0,0,0) );
 }
 
 void ofApp::update(){
 	gui.update();
 	
     if( bMove ){
-        gn.setFrame( ofGetFrameNum()*0.01 * animSpeed );
+        gn.setFrame( ofGetFrameNum()*0.03 * animSpeed );
         gn.update();
 
-		gn2.setFrame( ofGetFrameNum()*0.005 * animSpeed );
+		gn2.setFrame( ofGetFrameNum()*0.01 * animSpeed );
 		gn2.update();
 
         int n = mesh.getNumVertices();
@@ -153,13 +158,11 @@ void ofApp::update(){
             vector<ofVec3f> &vs = mesh.getVertices();
             vector<ofFloatColor> &cols = mesh.getColors();
 
-            vector<ofVec3f>::iterator vitr = vs.begin();
-            vector<ofFloatColor>::iterator citr = cols.begin();
-            
+            vector<ofVec3f> &lvs = lines.getVertices();
+            vector<ofFloatColor> &lcols = lines.getColors();
+
             for( int y=0; y<h; y++){
 				for( int x=0; x<w; x++){
-                    vitr++;
-                    citr++;
                     
                     int real_index = x*res + y*res*img.getWidth();
 					int index = x + y*w;
@@ -184,57 +187,79 @@ void ofApp::update(){
 						rate = (r+g+b) * 0.333;
 					}
 					
-					float nR = gn.getNoisef( x, y, 0);
-                    float nG = gn.getNoisef( x, y, 1);
-                    float nB = gn.getNoisef( x, y, 2);
+					float nR1 = gn.getNoisef( x, y, 0);
+                    float nG1 = gn.getNoisef( x, y, 1);
+                    float nB1 = gn.getNoisef( x, y, 2);
 
 					float nR2 = gn2.getNoisef( x, y, 0);
 					float nG2 = gn2.getNoisef( x, y, 1);
 					float nB2 = gn2.getNoisef( x, y, 2);
 					
-					nR *= nR2;
-					nG *= nG2;
-					nB *= nB2;
-					
-					if( !bThruAccel ){
-						accel[index].x = nR * rate * 0.3;
-						accel[index].y = nG * rate * 0.3;
-						accel[index].z = nB * rate;
-						speed[index] += accel[index];
-					}else{
-						speed[index].x = nR * rate * 100.0;
-						speed[index].y = nG * rate * 100.0;
-						speed[index].z = nB * rate * 100.0;
-					}
-					
-					speed[index] *= friction;
-					
-                    vs[index] += speed[index];
-					
-					if( abs(vs[index].z) > extrusion*5 ){
-						if( vs[index].z < 0 )
-							vs[index].z = -extrusion*5;
-						else
-							vs[index].z = extrusion*5;
-						
-						accel[index] *= 0.8;
-						speed[index] *= 0.8;
-					}
-					
-					//vs[index] += ofVec3f( ofRandomf(),ofRandomf(),ofRandomf() );
-					
-					lines.setVertex(index*2, vs[index] );
-					
-                    rate *= 0.005;
-                    cols[index].r += (nR * rate);
-                    cols[index].g += (nG * rate);
-                    cols[index].b += (nB * rate);
-					cols[index].a += (nR+nG+nB) * rate * 0.333 * 0.5;
-					
-					ofFloatColor lc =  ofFloatColor(1) - cols[index];
-					lines.setColor(index*2, lc);
-					lines.setColor(index*2+1, lc);
-				}
+                    {
+                        float nR = nR1*nR2;
+                        float nG = nG1*nG2;
+                        float nB = nB1*nB2;
+                        
+                        if( !bThruAccel ){
+                            accel[index].x = nR * rate * 0.2;
+                            accel[index].y = nG * rate * 0.2;
+                            accel[index].z = nB * rate * 0.1;
+                            speed[index] += accel[index];
+                        }else{
+                            speed[index].x = nR * rate * 100.0;
+                            speed[index].y = nG * rate * 100.0;
+                            speed[index].z = nB * rate * 100.0;
+                        }
+                        
+                        speed[index] *= friction;
+                        
+                        vs[index] += speed[index];
+                    
+                        
+                        if( abs(vs[index].z) > extrusion*5 ){
+                            if( vs[index].z < 0 )
+                                vs[index].z = -extrusion*5;
+                            else
+                                vs[index].z = extrusion*5;
+                            
+                            accel[index] *= 0.8;
+                            speed[index] *= 0.8;
+                        }
+                        
+                        //vs[index] += ofVec3f( ofRandomf(),ofRandomf(),ofRandomf() );
+                        
+                        lvs[index*2] = vs[index];
+                    }
+                    
+                    
+                    if( bBaseMove ){
+                    
+                        float nR = nR1*nB2;
+                        float nG = nG1*nR2;
+                        float nB = nB1*nG2;
+                        
+                        speed_b[index].x += nR * rate * 0.2;
+                        speed_b[index].y += nG * rate * 0.2;
+                        speed_b[index].z += nB * rate * 0.1;
+                        lvs[index*2 + 1] += speed_b[index];
+                    }
+                    
+                    {
+                        float nR = nR1*nG2;
+                        float nG = nG1*nB2;
+                        float nB = nB1*nR2;
+                        
+                        rate *= 0.005;
+                        cols[index].r += (nR * rate);
+                        cols[index].g += (nG * rate);
+                        cols[index].b += (nB * rate);
+                        cols[index].a += (nR+nG+nB) * rate * 0.333 * 0.5;
+                        
+                        ofFloatColor lc =  ofFloatColor(1) - cols[index];
+                        lcols[index*2] = lc;
+                        lcols[index*2+1] = lc;
+                    }
+                }
 			}
         }
     }
@@ -250,7 +275,8 @@ void ofApp::draw(){
     int h = img.getHeight();
 
     cam.begin(); {
-		
+//        cam.enableOrtho();
+        
         //ofTranslate( -w/2, h/2 );
         //ofScale( 1, -1, -1);
 		
@@ -351,7 +377,15 @@ void ofApp::keyPressed( int key ){
 			case 'l':
 				bDrawLineMesh = ! bDrawLineMesh;
 				break;
+
+            case 'm':
+                bDrawMesh = !bDrawMesh;
+                break;
 				
+            case 'b':
+                bBaseMove = !bBaseMove;
+                break;
+                
             case 'f':
                 ofToggleFullscreen();
                 break;

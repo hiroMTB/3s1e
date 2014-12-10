@@ -22,6 +22,7 @@ public:
 	bool bDrawMesh;
 	bool bThruAccel;
 	bool bThruSpeed;
+    bool bBaseMove;
 
 	int res;
     float extrusion;
@@ -42,6 +43,7 @@ public:
 	ofxMaxGui gui;
     
     vector<ofVec3f> speed, accel;
+    vector<ofVec3f> speed_b, accel_b;
 
 	ofFloatColor bg;
 };

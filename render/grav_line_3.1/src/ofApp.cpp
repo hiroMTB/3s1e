@@ -15,7 +15,7 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( ad_util::data_path +  "svg/v1/ABC.svg" );
+    sABC.load( /*ad_util::data_path +*/ "svg/v2/ABC.svg" );
     ofSetCircleResolution( 6 );
 
     gpu_noise.setup();
@@ -44,21 +44,26 @@ void ofApp::setup(){
             ofPoint st = ( lines[j].getVertices()[0] );
             ofPoint end = ( lines[j].getVertices()[1]);
             
-            gravline.create_line(st, end, 0.4 );
+            gravline.create_line(st, end, 0.5 );
+            
+            cout << "grav line from " << st << "  ->  " << end << endl;
         }
     }
     
+    ofSetFrameRate(60);
     ofSetVerticalSync(true);
     float w = sABC.getWidth()  + 1;
     float h = sABC.getHeight() + 1;
     canvas.set(0, 0, w, h);
     exporter.setOutputDir( "ex2" );
-//    exporter.setFrameRange(1, 1600);
-    exporter.setup(w, h, 30, GL_RGBA, 8);
+    exporter.setFrameRange(1, 3000);
+    exporter.setAutoExit(true);
+    exporter.setup(w, h, 25, GL_RGB, 8);
 
+    cout << "canvas size : " << w << ", " << h << endl;
+    ofSetWindowShape(w*0.75, h*0.75);
 
-    ofSetWindowShape(w/2, h/2);
-//    exporter.startExport();
+    //exporter.startExport();
 };
 
 void ofApp::update(){
@@ -76,6 +81,7 @@ void ofApp::draw(){
         ofEnableAntiAliasing();
         ofEnableSmoothing();
 
+        ofSetupScreenOrtho();
         ofBackground( 255, 255, 255, 255 );
         gravline.draw();
         if(!exporter.isExporting()) gravline.draw_attr();
@@ -85,7 +91,6 @@ void ofApp::draw(){
     ofPushMatrix();{
         ofBackground(0,0,0,255);
         ofSetColor(255);
-        ofSetupScreenOrtho();
         exporter.draw(0, 0);
 
         draw_info();

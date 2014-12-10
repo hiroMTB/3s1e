@@ -75,8 +75,7 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
     ofVec2f dir = p2 - p1;
     gvl->norm = dir.rotated(90, ofVec3f(0,0,1)).normalize();
     int step = 70;
-    float dist = 100 + ofRandomuf()*100;
-//    dist = -dist;
+    float dist = 300 + ofRandomuf()*100;
     {
         ofVec2f adder( dir.x/step, dir.y/step);
         for( int i=0; i<step; i++ ){
@@ -125,7 +124,7 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
             s->create( world.world, pos, mass );
             s->setFriction( friction );
             s->setActivationState( DISABLE_DEACTIVATION );
-            s->add();
+            s->add( 1, 0);
             s->getRigidBody()->setUserPointer( gvl );
             shapes.push_back( s );
             points.addVertex( pos );
@@ -136,13 +135,13 @@ void ad_grav_line::create_line( ofVec2f p1, ofVec2f p2, float density ){
             int sn = shapes.size();
             if( sn > 31){
                 ofxBulletJoint * joint1 = new ofxBulletJoint();
-                joint1->create(world.world, s, shapes[sn-15]);
+                joint1->create(world.world, s, shapes[sn-5]);
                 joint1->add();
                 joint1->setSTOP_CFM(0.1);
                 joint1->setSTOP_ERP(0.1);
 
                 ofxBulletJoint * joint2 = new ofxBulletJoint();
-                joint2->create(world.world, s, shapes[sn-30]);
+                joint2->create(world.world, s, shapes[sn-10]);
                 joint2->add();
                 joint2->setSTOP_CFM(0.1);
                 joint2->setSTOP_ERP(0.1);
@@ -203,7 +202,7 @@ void ad_grav_line::update_attrs(){
                 float dist2 = diff.lengthSquared();
                 if(dist2>300){
                     float power = (1.0/dist2) * 1000000.0;
-                    force += diff.normalized() * power * 8 + ofGetFrameNum()*0.1;
+                    force += diff.normalized() * power * 10;
                 }
             }
             shapes[i]->applyCentralForce( force );
@@ -230,7 +229,6 @@ void ad_grav_line::update_attrs(){
             joints[i]->add();
             joints[i]->setSTOP_CFM(0.01);
             joints[i]->setSTOP_ERP(0.01);
-            cout << "make joint" << endl;
         }
     }
 }
@@ -242,12 +240,21 @@ void ad_grav_line::update_lines(){
     
 	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
 	for( int i=0; i<objs.size(); i++ ){
+        
+        ofFloatColor c(1);
+        c.setHsb(  ofApp::app->getNoise(i,0)*0.25	+ 0.6,
+                 ofApp::app->getNoise(i,1)*0.3	+ 0.1,
+                 ofApp::app->getNoise(i,2)*0.3	+ 0.1
+                 );
+        
+        c.a = ofApp::app->getNoise(i+1000)*0.5 + 0.8;
+        
 		btTransform &trans = objs[i]->getWorldTransform();
 		btVector3 &bpos = trans.getOrigin();
 		ofVec3f pos1( bpos.x(), bpos.y(), bpos.z() );
         pos1.z = 0;
         float noise = ofApp::app->getNoise(i);
-        int num_line = 3; // + noise*noise*8.0;
+        int num_line = 5 + noise*noise*10.0;
         bool bStatic1 = objs[i]->isStaticObject();
         if( bStatic1 ) num_line = 1;
         
@@ -280,16 +287,24 @@ void ad_grav_line::update_lines(){
                 multimap<float, ofVec3f>::iterator end = near_p.end();
                 near_p.erase( --end );
             }
+            
+            if( 1500< pos2.y && pos2.y<1700 ){
+                if( ofRandomuf() > 0.9995){
+                    ofVec3f dir = pos2-pos1;
+                    float angle = dir.angle(ofVec3f(0,1,0));
+                    if( angle < 30 ){
+                        lines.addVertex( pos1 );
+                        lines.addVertex( pos2 );
+                        float b = c.b;
+                        c.b *= 1.5;
+                        lines.addColor( c );
+                        lines.addColor( c );
+                        c.b = b;
+                    }
+                }
+            }
         }
         multimap<float, ofVec3f>::iterator itr = near_p.begin();
-        
-        ofFloatColor c(1);
-        c.setHsb(  ofApp::app->getNoise(i,0)*0.25	+ 0.6,
-                 ofApp::app->getNoise(i,1)*0.3	+ 0.1,
-                 ofApp::app->getNoise(i,2)*0.3	+ 0.1
-                 );
-        
-        c.a = ofApp::app->getNoise(i+1000)*0.5 + 0.8;
         
         for(; itr!=near_p.end(); itr++ ){
             ofVec3f &pos2 = itr->second;
@@ -315,10 +330,17 @@ void ad_grav_line::update_lines(){
             gvline * gl = static_cast<gvline*>(objs[i]->getUserPointer());
             if( gl != NULL){
                 ofVec3f toline = ad_geom_util::vec_pl(pos1, gl->p1, gl->p2);
-                prep_lines.addVertex(pos1);
-                prep_lines.addVertex(pos1+toline);
-                prep_lines.addColor( c );
-                prep_lines.addColor( c );
+                ofVec3f onLine = pos1 + toline;
+                
+                ofRectangle area( gl->p1, gl->p2 );
+                if( area.inside(onLine) ){
+                    prep_lines.addVertex(pos1);
+                    prep_lines.addVertex(onLine);
+
+                    c.a *= 0.7;
+                    prep_lines.addColor( c );
+                    prep_lines.addColor( c );
+                }
             }
         }
     }
@@ -334,8 +356,10 @@ void ad_grav_line::update_points(){
         ofVec3f p = shapes[i]->getPosition();
         p.z = 0;
         verts[i] = p;
-        float hue = cols[i].getHue();
-        cols[i].setHsb( hue + ofApp::app->getNoise(i+3000,2)*0.4+0.55, ofRandom(0.1,0.8), ofApp::app->getNoise(i*4,2)*0.01);
+
+        cols[i].r += ofApp::app->gpu_noise.getNoisef(i, 1) * 0.0002;
+        cols[i].g += ofApp::app->gpu_noise.getNoisef(i, 2) * 0.0002;
+        cols[i].b += ofApp::app->gpu_noise.getNoisef(i, 3) * 0.0002;
     }
 }
 
@@ -346,23 +370,13 @@ void ad_grav_line::draw(){
 		ofSetColor( 0 );
 		ofLine( gvls[i]->p1, gvls[i]->p2 );
 	}
-	
-//	for( int i=0; i<collision.size(); i++ ){
-//		if( i%3 == 0){
-//			ofSetColor( 30, 120);
-//			ofVec3f &p = collision[i];
-//            ofCircle( p, ofApp::app->gpu_noise.getNoiseuf(i, 0)*5.0 );
-//		}
-//    }
-//    collision.clear();
 
-    glPointSize( 1 );
+    glPointSize( 3 );
     points.draw();
 
     glLineWidth( 1 );
     lines.draw();
 
-    glLineWidth( 1 );
     prep_lines.draw();
 }
 

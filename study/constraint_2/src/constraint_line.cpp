@@ -17,8 +17,6 @@ num(_num),
 length(_length),
 random_factor(_random_factor)
 {
-
-
     ofVec3f dir = end - start;
     ofVec3f adder = dir / (float)num;
     norm = dir.cross(ofVec3f(20,20,1110) ).normalized();

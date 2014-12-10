@@ -19,7 +19,6 @@
 		4D35E3531A2B884500FD0C57 /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E1271A2B884400FD0C57 /* ofxBulletCylinder.cpp */; };
 		4D35E3541A2B884500FD0C57 /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E1291A2B884400FD0C57 /* ofxBulletSphere.cpp */; };
 		4D35E3551A2B884500FD0C57 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E12B1A2B884400FD0C57 /* ofxBulletStaticPlane.cpp */; };
-		4D35E41C1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D35E41A1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp */; };
 		4DAC98161A2F4B3F00486C72 /* constraint_line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DAC98141A2F4B3F00486C72 /* constraint_line.cpp */; };
 		4DDF9C701A36AE7300F56DEB /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C651A36AE7300F56DEB /* ofxSvg.cpp */; };
 		4DDF9C711A36AE7300F56DEB /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DDF9C6A1A36AE7300F56DEB /* src_colors.cpp */; };
@@ -47,6 +46,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		F6B4E5501A382B85001EB04A /* ad_attractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B4E54E1A382B85001EB04A /* ad_attractor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,8 +111,6 @@
 		4D35E12A1A2B884400FD0C57 /* ofxBulletSphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
 		4D35E12B1A2B884400FD0C57 /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
 		4D35E12C1A2B884400FD0C57 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
-		4D35E41A1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletP2PConstraint.cpp; sourceTree = "<group>"; };
-		4D35E41B1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletP2PConstraint.h; sourceTree = "<group>"; };
 		4DAC98141A2F4B3F00486C72 /* constraint_line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constraint_line.cpp; sourceTree = "<group>"; };
 		4DAC98151A2F4B3F00486C72 /* constraint_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constraint_line.h; sourceTree = "<group>"; };
 		4DDF9C651A36AE7300F56DEB /* ofxSvg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSvg.cpp; sourceTree = "<group>"; };
@@ -149,6 +147,9 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		F6B4E54D1A3827D4001EB04A /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
+		F6B4E54E1A382B85001EB04A /* ad_attractor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_attractor.cpp; path = ../../../module/ad_attractor.cpp; sourceTree = "<group>"; };
+		F6B4E54F1A382B85001EB04A /* ad_attractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_attractor.h; path = ../../../module/ad_attractor.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,8 +221,6 @@
 			children = (
 				4D35E10F1A2B884400FD0C57 /* ofxBulletJoint.cpp */,
 				4D35E1101A2B884400FD0C57 /* ofxBulletJoint.h */,
-				4D35E41A1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp */,
-				4D35E41B1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.h */,
 			);
 			path = joints;
 			sourceTree = "<group>";
@@ -312,6 +311,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F6B4E54B1A3827D3001EB04A /* ofxExportImageSequence */,
 				4DDF9C631A36AE7300F56DEB /* ofxSvg */,
 				4D35E1081A2B884400FD0C57 /* ofxBullet */,
 			);
@@ -385,6 +385,8 @@
 				4DDF9C761A36AECD00F56DEB /* ad_util.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
+				F6B4E54E1A382B85001EB04A /* ad_attractor.cpp */,
+				F6B4E54F1A382B85001EB04A /* ad_attractor.h */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				4DAC98141A2F4B3F00486C72 /* constraint_line.cpp */,
 				4DAC98151A2F4B3F00486C72 /* constraint_line.h */,
@@ -399,6 +401,23 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		F6B4E54B1A3827D3001EB04A /* ofxExportImageSequence */ = {
+			isa = PBXGroup;
+			children = (
+				F6B4E54C1A3827D4001EB04A /* src */,
+			);
+			name = ofxExportImageSequence;
+			sourceTree = "<group>";
+		};
+		F6B4E54C1A3827D4001EB04A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F6B4E54D1A3827D4001EB04A /* ofxExportImageSequence.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxExportImageSequence/src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,7 +526,7 @@
 				4DDF9C771A36AECD00F56DEB /* ad_util.cpp in Sources */,
 				4D35E34A1A2B884500FD0C57 /* ofxBulletJoint.cpp in Sources */,
 				4DDF9C701A36AE7300F56DEB /* ofxSvg.cpp in Sources */,
-				4D35E41C1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp in Sources */,
+				F6B4E5501A382B85001EB04A /* ad_attractor.cpp in Sources */,
 				4DDF9C741A36AE7300F56DEB /* svgtiny_list.cpp in Sources */,
 				4D35E34F1A2B884500FD0C57 /* ofxBulletCapsule.cpp in Sources */,
 			);

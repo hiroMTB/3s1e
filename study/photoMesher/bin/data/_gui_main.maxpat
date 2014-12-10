@@ -32,14 +32,86 @@
          },
          {
             "box" : {
-               "args" : "extrusion",
+               "args" : "draw_mesh",
                "maxclass" : "bpatcher",
-               "name" : "sFloat.maxpat",
+               "name" : "sToggle.maxpat",
                "numinlets" : 0,
                "numoutlets" : 0,
                "patching_rect" : [ 45, 130, 350, 20 ],
                "presentation" : 1,
                "presentation_rect" : [ 45, 130, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "draw_line_mesh",
+               "maxclass" : "bpatcher",
+               "name" : "sToggle.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 160, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 160, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "thruAccel",
+               "maxclass" : "bpatcher",
+               "name" : "sToggle.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 190, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 190, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "extrusion",
+               "maxclass" : "bpatcher",
+               "name" : "sFloat.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 220, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 220, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "friction",
+               "maxclass" : "bpatcher",
+               "name" : "sFloat.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 250, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 250, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "speed",
+               "maxclass" : "bpatcher",
+               "name" : "sFloat.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 280, 350, 20 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 280, 350, 20 ]
+            }
+         },
+         {
+            "box" : {
+               "args" : "background",
+               "maxclass" : "bpatcher",
+               "name" : "sColor.maxpat",
+               "numinlets" : 0,
+               "numoutlets" : 0,
+               "patching_rect" : [ 45, 310, 350, 60 ],
+               "presentation" : 1,
+               "presentation_rect" : [ 45, 310, 350, 60 ]
             }
          }
       ],

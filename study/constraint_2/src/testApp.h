@@ -2,27 +2,11 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-#include "ofxBulletP2PConstraint.h"
+//#include "ofxBulletP2PConstraint.h"
 #include "constraint_line.h"
 #include "ofxSvg.h"
-
-class Attr{
-    
-public:
-    Attr(){};
-    Attr( ofVec3f _pos, float _power, float _speed): pos(_pos), power(_power), speed(_speed){}
-    ofVec3f pos;
-    float power;
-    float speed;
-    
-    void draw(){
-        ofSetColor(0,255,0);
-        ofCircle( pos, 3 );
-    }
-};
-
-
-
+#include "ofxExportImageSequence.h"
+#include "ad_attractor.h"
 
 class testApp : public ofBaseApp{
 
@@ -40,9 +24,11 @@ public:
 	ofCamera					camera;
 	ofLight						light;
 
-    vector<Attr> attrs;
+    vector<ad_attractor> attrs;
 
-    constraint_line *cline1, *cline2, *cline3;
+    vector<constraint_line> clines;
     
     ofxSVG svg;
+	
+	ofxExportImageSequence exporter;
 };

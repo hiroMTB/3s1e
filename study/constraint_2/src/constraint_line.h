@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
+#include "ad_attractor.h"
 
 class constraint_line{
     
@@ -40,5 +41,6 @@ private:
   
     ofVboMesh points;
     ofVboMesh lines;
-    
+	
+	vector<ad_attractor> attr;
 };

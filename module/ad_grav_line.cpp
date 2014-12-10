@@ -20,7 +20,7 @@ void ad_grav_line::setup( ofCamera *cam ){
         world.setCamera( cam );
         world.setGravity( ofVec3f(0, -10, 0) );
         world.enableCollisionEvents();
-        ofAddListener(world.COLLISION_EVENT, this, &ad_grav_line::onCollision);
+        //ofAddListener(world.COLLISION_EVENT, this, &ad_grav_line::onCollision);
         
         for( int i=1; i<=30; i++ ){
             float size = 0.1 + i*i*i*0.00015;
@@ -230,6 +230,7 @@ void ad_grav_line::update_attrs(){
             joints[i]->add();
             joints[i]->setSTOP_CFM(0.01);
             joints[i]->setSTOP_ERP(0.01);
+            cout << "make joint" << endl;
         }
     }
 }

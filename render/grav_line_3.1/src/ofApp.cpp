@@ -15,7 +15,7 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( ad_util::data_path +  "svg/v1/FGH.svg" );
+    sABC.load( ad_util::data_path +  "svg/v1/ABC.svg" );
     ofSetCircleResolution( 6 );
 
     gpu_noise.setup();
@@ -39,16 +39,12 @@ void ofApp::setup(){
         ofPath &p = sABC.getPathAt(i);
         ofFloatColor c = p.getStrokeColor();
         
-//        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = p.getOutline();
         for(int j=0;j<(int)lines.size();j++){
             ofPoint st = ( lines[j].getVertices()[0] );
             ofPoint end = ( lines[j].getVertices()[1]);
             
-            for(int k=0; k<1; k++)
-                gravline.create_line(st, end, 0.4 );
-            
-            cout << "crate line" << endl;
+            gravline.create_line(st, end, 0.4 );
         }
     }
     
@@ -57,9 +53,9 @@ void ofApp::setup(){
     float h = sABC.getHeight() + 1;
     canvas.set(0, 0, w, h);
     exporter.setOutputDir( "ex2" );
-    exporter.setFrameRange(1, 1600);
+//    exporter.setFrameRange(1, 1600);
     exporter.setup(w, h, 30, GL_RGBA, 8);
-    exporter.setAutoExit(true);
+
 
     ofSetWindowShape(w/2, h/2);
 //    exporter.startExport();
@@ -72,10 +68,6 @@ void ofApp::update(){
     gpu_noise.update();
     noise = gpu_noise.getNoiseData();
     gravline.update();
-    
-    if( frame != 0 && (int)frame%8 == 0) {
-//        gravline.add_random_particle( 3 );
-    }
 }
 
 void ofApp::draw(){

@@ -23,6 +23,8 @@ public:
 	static ofApp * init(){ app = new ofApp(); return app; }
 	
     void setup();
+    void setup_svg();
+    void setup_noise();
     void update();
     void draw();
     void draw_info();
@@ -41,7 +43,9 @@ public:
     bool bStart;
     bool bInit;
     bool bDraw_info;
+    
     float frame;
+    float density;
     
     ofEasyCam cam;
     ad_grav_line gravline;
@@ -51,8 +55,8 @@ public:
 	int noise_size;
 	unsigned char * noise;
     
-    ofxSVG sABC;
+    ofxSVG svg;
     ofxExportImageSequence exporter;
 
-    ofRectangle canvas;
+    ofVec2f canvas;    
 };

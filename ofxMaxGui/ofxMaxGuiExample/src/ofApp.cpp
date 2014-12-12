@@ -18,6 +18,7 @@ void ofApp::setup(){
 		int y = 50;
 		gui.addPatcher(500, 0, 500, 500);
 		gui.addOscOut( x, 30 );
+		gui.addOscIn( x, y+=30 );
 		gui.addBang("myBang", x, y+=30, this, &ofApp::myBang);
 		gui.addToggle("myToggle", x, y+=30, &myToggle);
 		gui.addInt("myInt", x, y+=30, &myInt);
@@ -40,7 +41,7 @@ void ofApp::draw(){
 	
 	ofBackground( bgColor );
 	ofSetColor( drawColor );
-	ofDrawBitmapString("OSC Port       " + ofToString(gui.getPort()), 50, 45);
+	ofDrawBitmapString("OSC Port       " + ofToString(gui.getPortOF()), 50, 45);
 	
 	ofSetColor(255, 0, 0);
 	ofFill();

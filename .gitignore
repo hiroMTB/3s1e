@@ -61,6 +61,8 @@ xcuserdata/
 _settings.xml
 #.gitignore#
 
-
 #binary file
 *.bin
+
+#max
+*.maxpat

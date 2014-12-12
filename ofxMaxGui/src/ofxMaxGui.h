@@ -12,11 +12,13 @@ public:
 	ofxMaxGui(){};
 	~ofxMaxGui();
 
-	void setup		( int port );
+	void setup		( int portMAxMsp=1111, int portOF=2222 );
 	void update		( void );
 
 	void addPatcher ( float win_x, float win_y, float win_w=500, float win_h=500 );
 	void addOscOut	( float x, float y );
+	void addOscIn	( float x, float y );
+
 	template<class ListenerClass, typename ListenerMethod>
 	void addBang	( string name, float x, float y, ListenerClass *listener, ListenerMethod method ){
 		Json::Value obj = writer.create_bpatcher(x, y, def_w, def_h, "sBang.maxpat");
@@ -37,14 +39,16 @@ public:
 	void close		( string file_name );
 
 	string getCode	( void );
-	int	 getPort	();
-	
+	int	 getPortOF	( void );
+	int	 getPortMax	( void );
 private:
 
 	static const int def_w = 350;
 	static const int def_h = 20;
 	static const int def_h_long = 60;
-	int port;
+	int portMax;
+	int portOF;
+
 	string code;
 	
 	map<string, ofEvent<void> > bangs;
@@ -55,4 +59,5 @@ private:
 	
 	ofxMaxGuiWriter writer;
 	ofxOscReceiver	oscr;
+	ofxOscSender	oscs;
 };

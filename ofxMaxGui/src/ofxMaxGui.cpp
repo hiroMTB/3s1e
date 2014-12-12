@@ -1,9 +1,11 @@
 #include "ofxMaxGui.h"
 #include "ofxJSON.h"
 
-void ofxMaxGui::setup( int _port ){
-	port = _port;
-	oscr.setup(port);
+void ofxMaxGui::setup( int _portOF, int _portMax ){
+	portOF = _portOF;
+	portMax = _portMax;
+	oscr.setup( portOF );
+	oscs.setup( "localhost", portMax );
 }
 
 void ofxMaxGui::addPatcher ( float win_x, float win_y, float win_w, float win_h){
@@ -12,8 +14,14 @@ void ofxMaxGui::addPatcher ( float win_x, float win_y, float win_w, float win_h)
 
 void ofxMaxGui::addOscOut( float x, float y ){
 	Json::Value oscOut = writer.create_bpatcher(x, y, 150, def_h, "sOscOut.maxpat" );
-	oscOut["box"]["args"] = port;
+	oscOut["box"]["args"] = portOF;
 	writer.addObject( oscOut );
+}
+
+void ofxMaxGui::addOscIn( float x, float y ){
+	Json::Value oscIn = writer.create_bpatcher(x, y, 150, def_h, "sOscIn.maxpat" );
+	oscIn["box"]["args"] = portMax;
+	writer.addObject( oscIn );
 }
 
 void ofxMaxGui::addToggle ( string name, float x, float y, bool * toggle ){
@@ -96,7 +104,7 @@ void ofxMaxGui::update(){
 					ofLogNotice("strange Osc msg type : " + type);
 				}
 			}else{
-				ofLogNotice("strange Osc msg: top address : " + top);
+				ofLogNotice("strange Osc msg address : " + top);
 			}
 		}
 	}
@@ -113,21 +121,21 @@ void ofxMaxGui::open( string file_name ){
 }
 
 void ofxMaxGui::close( string file_name ){
-	ofFile file;
-	file.open( file_name, ofFile::ReadOnly );
-	
-	if( file.isFile() ){
-		string command = "close " + ofToDataPath( file.getFileName(), true );
-		system( command.c_str() );
-	}
+//	ofFile file;
+//	file.open( file_name, ofFile::ReadOnly );
+//	
+//	if( file.isFile() ){
+//		string command = "close " + ofToDataPath( file.getFileName(), true );
+//		system( command.c_str() );
+//	}
 }
 
 string ofxMaxGui::getCode(){
 	return code;
 }
 
-int ofxMaxGui::getPort(){
-	return port;
+int ofxMaxGui::getPortOF(){
+	return portOF;
 }
 
 ofxMaxGui::~ofxMaxGui(){

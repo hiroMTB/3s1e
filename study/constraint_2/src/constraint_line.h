@@ -10,7 +10,6 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-#include "ad_attractor.h"
 
 class constraint_line{
     
@@ -19,11 +18,9 @@ public:
     constraint_line( ofxBulletWorldRigid * world, ofVec3f start, ofVec3f end, int num, float length, float random_factor );
     
     void update();
-    
-    void  draw();
+    void draw();
     
     int num;
-    float length;
     float random_factor;
     
     ofVec3f start, end;
@@ -32,15 +29,11 @@ public:
     vector<ofVec3f> particle_pos;
     vector<ofVec3f> pivot_pos;
     
-    
-private:
+
     ofVec3f norm;
     vector<ofxBulletBaseShape*> shapes;
     vector<ofxBulletJoint*>		joints;
     
-  
     ofVboMesh points;
     ofVboMesh lines;
-	
-	vector<ad_attractor> attr;
 };

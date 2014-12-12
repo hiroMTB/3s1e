@@ -14,13 +14,12 @@ world(_world),
 start(_start),
 end(_end),
 num(_num),
-length(_length),
 random_factor(_random_factor)
 {
     ofVec3f dir = end - start;
     ofVec3f adder = dir / (float)num;
-    norm = dir.cross(ofVec3f(20,20,1110) ).normalized();
-    //norm.set(0, 1, 0);
+    norm = dir.getCrossed(ofVec3f(20,20,1110) );
+    norm.normalize();
     
     for (int i=0; i<num; i++) {
         
@@ -28,8 +27,11 @@ random_factor(_random_factor)
         ofVec3f pivot = start + adder*i;
         pivot_pos.push_back( pivot );
         
-        ofVec3f particle = pivot + norm*length;
-//        particle.rotate( 90, dir.normalized() );
+        float length = _length * (0.5+ofRandomuf());
+        ofVec3f particle = norm * length;
+        particle.rotate( ofSignedNoise(norm.x, norm.y, i)*360, dir.normalized());
+        particle += pivot;
+
         particle_pos.push_back( particle );
         
         // collision shape
@@ -37,16 +39,25 @@ random_factor(_random_factor)
         float size = ofRandom(1, 3);
         ofxBulletSphere * s = new ofxBulletSphere();
         s->create(world->world, particle, mass, size);
-        s->add();
+        s->setActivationState( DISABLE_DEACTIVATION );
+        s->add(1, 0);
         shapes.push_back( s );
         
         // constraint
-        ofxBulletJoint * j = new ofxBulletJoint();
-        j->create(world->world, s, pivot );
-        j->add();
-        joints.push_back( j );
+        ofxBulletJoint * j1 = new ofxBulletJoint();
+        j1->create(world->world, s, pivot );
+        j1->add();
+        j1->setSTOP_CFM(0.01);
+        j1->setSTOP_ERP(0.01);
+        joints.push_back( j1 );
+
+        ofxBulletJoint * j2 = new ofxBulletJoint();
+        j2->create(world->world, s, pivot-adder );
+        j2->add();
+        j2->setSTOP_CFM(0.01);
+        j2->setSTOP_ERP(0.01);
+        joints.push_back( j2 );
     }
-    
 }
 
 void constraint_line::update(){
@@ -54,11 +65,15 @@ void constraint_line::update(){
     for (int i=0; i<num; i++) {
         ofVec3f p = shapes[i]->getPosition();
         particle_pos[i] = p;
+        
+        //p.z = 0;
+        //points.setVertex(i, p);
+        //lines.setVertex(i, p);
+        
         // pivot_pos[i] = ??
         //joints[i]->updatePivotPos( pivot_pos[i], 1);
     }
     
-
     // drawer
     points.clear();
     points.setUsage(GL_DYNAMIC_DRAW);

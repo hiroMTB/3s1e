@@ -106,6 +106,7 @@
 		4D35E12C1A2B884400FD0C57 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
 		4D35E41A1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletP2PConstraint.cpp; sourceTree = "<group>"; };
 		4D35E41B1A2B9C1100FD0C57 /* ofxBulletP2PConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletP2PConstraint.h; sourceTree = "<group>"; };
+		4DDDEF261A3981AC001586B8 /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -241,9 +242,27 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		4DDDEF241A3981AC001586B8 /* ofxExportImageSequence */ = {
+			isa = PBXGroup;
+			children = (
+				4DDDEF251A3981AC001586B8 /* src */,
+			);
+			name = ofxExportImageSequence;
+			sourceTree = "<group>";
+		};
+		4DDDEF251A3981AC001586B8 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DDDEF261A3981AC001586B8 /* ofxExportImageSequence.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxExportImageSequence/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4DDDEF241A3981AC001586B8 /* ofxExportImageSequence */,
 				4D35E1081A2B884400FD0C57 /* ofxBullet */,
 			);
 			name = addons;

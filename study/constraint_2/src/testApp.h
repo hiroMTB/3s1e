@@ -2,11 +2,11 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-//#include "ofxBulletP2PConstraint.h"
 #include "constraint_line.h"
+#include "ad_attract_line.h"
 #include "ofxSvg.h"
 #include "ofxExportImageSequence.h"
-#include "ad_attractor.h"
+#include "ad_attract_line.h"
 
 class testApp : public ofBaseApp{
 
@@ -24,9 +24,8 @@ public:
 	ofCamera					camera;
 	ofLight						light;
 
-    vector<ad_attractor> attrs;
-
-    vector<constraint_line> clines;
+    vector<ad_attract_line*> attrs;
+    vector<constraint_line*> clines;
     
     ofxSVG svg;
 	

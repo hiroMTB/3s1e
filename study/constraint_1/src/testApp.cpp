@@ -2,8 +2,10 @@
 
 void testApp::setup() {
 	ofBackground( 0 );
-	
-	camera.setPosition(ofVec3f(0, 0, -1600.f));
+
+    bStart = false;
+    
+	camera.setPosition(ofVec3f(0, 0, -1700.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
 	
 	world.setup();
@@ -14,7 +16,15 @@ void testApp::setup() {
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
     
-    int n = 1400;
+    int w = 5000;
+    int h = 2500;
+    exporter.setup( w, h, 25, GL_RGB, 4);
+    exporter.setFrameRange(1, 3000);
+    exporter.setOutputDir( ofGetTimestampString() );
+    ofSetWindowShape( w/2, h/2 );
+    ofSetWindowPosition(0, 0);
+    
+    int n = 1500;
     for( int d=0; d<2; d++ ){
         for( int i=0; i<n; i++ ){
             
@@ -27,13 +37,13 @@ void testApp::setup() {
             pos *= 2.0;
             pos.y = ofRandomuf() * ofNoise(pos.x*0.01, index*0.001 ) * ((d+1)*150) ;
             pos.y += 10.0;
-            pos.x += ofSignedNoise(pos.x*0.1, i*0.011, index*0.01) * 100;
+            pos.x += ofSignedNoise(pos.x*0.1, i*0.011, index*0.03) * 100;
 //            pos.rotate(ofRandomf()*360, ofVec3f(1,0,0) );
             
             // Sphere
             shapes.push_back( new ofxBulletSphere() );
             ((ofxBulletSphere*)shapes[index])->create( world.world, pos, mass, size );
-            shapes[index]->add();
+            shapes[index]->add(1,0);
             points.addVertex( pos );
             {
                 ofFloatColor col(1, 0, 0, ofNoise(pos.x*0.1, index*0.01)*0.7+0.4);
@@ -81,7 +91,9 @@ void testApp::setup() {
 }
 
 void testApp::update() {
-	world.update(1/30.0, 10);
+    if(!bStart ) return;
+    
+	world.update();
 
     vector<ofVec3f> &vecp = points.getVertices();
     vector<ofVec3f> &linep = lines.getVertices();
@@ -107,43 +119,29 @@ void testApp::update() {
         }
     }
     
-    for (int i=0; i<shapes.size(); i++) {
-        // Move Pivot
-        ofVec3f &pivot = linep[i*2 +1];
-        pivot.y -= 1;
-        joints[i]->updatePivotPos(pivot, 1);
-    }
+//    for (int i=0; i<shapes.size(); i++) {
+//        // Move Pivot
+//        ofVec3f &pivot = linep[i*2 +1];
+//        pivot.y -= 1;
+//        joints[i]->updatePivotPos(pivot, 1);
+//    }
 }
 
 void testApp::draw() {
 
+    exporter.begin( camera );
     ofEnableAlphaBlending();
     ofEnableAntiAliasing();
     ofEnableSmoothing();
-    
+    ofBackground( 255 );
     
     glPointSize(1);
     glLineWidth(1);
     ofFill();
-    
-    camera.begin();
-	
 	if(bDrawDebug) world.drawDebug();
 		
     points.drawVertices();
     lines.draw();
-    
-//	for(int i = 0; i < shapes.size(); i++) {
-//        ofCircle(shapes[i]->getPosition(), 1);
-//	}
-//    
-//	for(int i = 0; i < joints.size(); i++) {
-//		joints[i]->draw();
-//	}
-//
-//    for(int i = 0; i < p2ps.size(); i++) {
-//        p2ps[i]->draw();
-//    }
     
     if( bDrawDebug ){
         for( int i=0; i<attrs.size(); i++){
@@ -151,21 +149,35 @@ void testApp::draw() {
         }
     }
 	
-	camera.end();
-	
-	ofSetColor(255, 255, 255);
+    exporter.end();
+    
+    ofBackground(0);
+    ofSetColor(255);
+    exporter.draw(0, 0);
+    
+	ofSetColor( 0 );
 	stringstream ss;
-	ss << "framerate      : " << ofGetFrameRate() << endl;
-    ss << "frame          : " << ofGetFrameNum() << endl;
+	ss << "fps            : " << ofGetFrameRate() << endl;
+    ss << "export frame   : " << exporter.getFrameNum() << endl;
     ss << "num shapes     : " << (shapes.size()) << endl;
-	ss << "draw debug (d) : " << ofToString(bDrawDebug, 0) << endl;
-    ss << "mouse pos      : " << mousePos.x << " , " << mousePos.y << endl;
-	ofDrawBitmapString(ss.str().c_str(), 10, 10);
+	ofDrawBitmapString(ss.str().c_str(), 40, 40);
 }
 
 void testApp::keyPressed(int key) {
 	switch (key) {
-		case 'd':
+
+        case ' ':
+            bStart = !bStart;
+            break;
+            
+        case 'S':
+            bStart = true;
+            exporter.startExport();
+            ofSetWindowShape(exporter.getFbo().getWidth()/4, exporter.getFbo().getHeight()/4);
+            ofSetWindowPosition(0, 0);
+            break;
+            
+        case 'd':
 			bDrawDebug = !bDrawDebug;
 			break;
 		default:

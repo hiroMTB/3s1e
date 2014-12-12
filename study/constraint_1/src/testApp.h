@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxBullet.h"
 
+#include "ofxExportImageSequence.h"
 #include "ofxBulletP2PConstraint.h"
 
 class Attr{
@@ -36,8 +37,10 @@ public:
 	vector<ofxBulletJoint*>		joints;
     vector<ofxBulletP2PConstraint*>	p2ps;
 	
-	bool						bDrawDebug;	
-	float						jointLength;
+	bool bDrawDebug;
+    bool bStart;
+    
+    float jointLength;
 	
 	ofCamera					camera;
 	ofLight						light;
@@ -45,6 +48,7 @@ public:
 
     vector<Attr> attrs;
 
-
     ofVboMesh points, lines;
+    
+    ofxExportImageSequence exporter;
 };

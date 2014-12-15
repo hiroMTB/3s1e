@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGpuNoise.h"
+#include "ofxVoronoi.h"
 
 class ofApp : public ofBaseApp{
 
@@ -26,4 +27,6 @@ public:
 	int mH;
     
     ofImage img;
+    
+    ofxVoronoi voro;
 };

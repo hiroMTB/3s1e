@@ -8,8 +8,8 @@ void ofApp::setup(){
 	mesh.setUsage( GL_DYNAMIC_DRAW );
 	mesh.setMode( OF_PRIMITIVE_TRIANGLES );
 	
-	mW = 512;
-	mH = 256;
+	mW = 1024;
+	mH = 512;
 
 	cam.lookAt( ofVec3f(0,0,0), ofVec3f(0,1,0) );
     // cam.enableOrtho();
@@ -21,12 +21,16 @@ void ofApp::setup(){
     gn1.setOctaves( 16 );
     gn1.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
     gn1.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+    gn1.setFrame(0.1);
+    gn1.update();
     
     gn2.create( mW, mH );
     gn2.setFreq( 2 );
     gn2.setOctaves( 4 );
     gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
     gn2.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+    gn2.setFrame(0.01);
+    gn2.update();
     
     string fixed_point = "img/fixed_point/lg/losglaciares12.jpg";
     string gns2 = "img/gns2.jpg";
@@ -57,6 +61,13 @@ void ofApp::setup(){
             hole.push_back(0);
         }
     }
+    
+    // voronoi
+    ofRectangle bounds = ofRectangle( 0,0, mW, mH );
+    vector<ofPoint> ps = mesh.getVertices();
+    voro.setBounds( bounds );
+    voro.setPoints( ps );
+    voro.generate();
 }
 
 void ofApp::setVertices(){
@@ -207,8 +218,13 @@ void ofApp::draw(){
     }
 	mesh.drawWireframe();
 	mesh.drawVertices();
+    
 	cam.end();
 
+    ofNoFill();
+    ofSetColor( 255 );
+    voro.draw();
+    
 	draw_info();
     float nscale = 0.5;
     gn1.draw( ofGetWidth()-10-mW*nscale, 10, nscale );

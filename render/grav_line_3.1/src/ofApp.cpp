@@ -31,14 +31,23 @@ void ofApp::setup(){
     setup_noise();
     setup_svg();
     
+    proj_surface.loadImage( ad_util::data_path + "img/projection_suface/B.png" );
+    canvas.set( proj_surface.width, proj_surface.height );
+    
     exporter.setup(canvas.x, canvas.y, 25, GL_RGB, 8);
     exporter.setOutputDir( ofGetTimestampString() );
     exporter.setFrameRange(1, 3000);
     exporter.setAutoExit(true);
     
-    ofSetWindowShape(canvas.x*0.75, canvas.y*0.75);
+    ofSetWindowShape(canvas.x, canvas.y);
     ofSetWindowPosition(0, 0);
     cout << "canvas size : " << canvas << endl;
+    
+    
+    cam.setFov( 37.13 * 0.596f);
+    cam.lookAt( ofVec3f(0,0,0), ofVec3f(0,1,0) );
+    cam.setDistance(1000);
+    
 };
 
 void ofApp::setup_svg(){
@@ -63,17 +72,17 @@ void ofApp::setup_svg(){
             
             float w = svg.getWidth()  + 1;
             float h = svg.getHeight() + 1;
-            canvas.set(w, h);
+     
 
             for( int i=0; i<n; i++ ){
                 ofPath &p = svg.getPathAt(i);
+                p.setStrokeWidth(5);
                 ofFloatColor c = p.getStrokeColor();
                 
                 vector<ofPolyline>& lines = p.getOutline();
                 for(int j=0;j<(int)lines.size();j++){
                     ofPoint st = ( lines[j].getVertices()[0] );
                     ofPoint end = ( lines[j].getVertices()[1]);
-                    
                     gravline.create_line(st, end, density );
                     
                     cout << "grav line from " << st << "  ->  " << end << endl;
@@ -113,16 +122,24 @@ void ofApp::update(){
 
 void ofApp::draw(){
     
-    exporter.begin();{
+    exporter.begin(cam);{
         ofEnableAlphaBlending();
         ofEnableAntiAliasing();
         ofEnableSmoothing();
-
-        ofSetupScreenOrtho();
-        ofBackground( 255, 255, 255, 255 );
-        gravline.draw();
+        ofBackground( 255 );
+        ofScale(1, -1);
         
-        if(!exporter.isExporting()) gravline.draw_attr();
+        ofTranslate( -1858, -847 );
+
+        if(exporter.isExporting()){
+            //        ofSetupScreenOrtho();
+            gravline.draw();
+        }else{
+            ofSetColor(255, 0, 0);
+            svg.getPathAt(1).draw();
+            svg.getPathAt(3).draw();
+            //  gravline.draw_attr();
+        }
         
     }exporter.end();
 
@@ -132,9 +149,16 @@ void ofApp::draw(){
         exporter.draw(0, 0);
 
         draw_info();
-        if( !exporter.isExporting() )
+        if( exporter.isExporting() ){
             gpu_noise.draw( ofGetWidth()-110, 40, 0.2);
+        }
     }ofPopMatrix();
+    
+    ofPushMatrix();
+    ofSetupScreenOrtho();
+    ofSetColor(255, 50);
+    proj_surface.draw(0, 0);
+    ofPopMatrix();
 }
 
 void ofApp::draw_info(){

@@ -58,5 +58,7 @@ public:
     ofxSVG svg;
     ofxExportImageSequence exporter;
 
-    ofVec2f canvas;    
+    ofVec2f canvas;
+    
+    ofImage proj_surface;
 };

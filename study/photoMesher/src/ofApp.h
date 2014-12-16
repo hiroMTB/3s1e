@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxGpuNoise.h"
 #include "ofxMaxGui.h"
+#include "ofxExportImageSequence.h"
+#include "ofxSvg.h"
 
 class ofApp : public ofBaseApp{
 	
@@ -12,38 +14,38 @@ public:
 	void draw();
     void keyPressed( int key );
     void load_mesh( ofFloatImage &img );
-    void update_mesh();
     void set_indices();
     void dragEvent( ofDragInfo info );
     
 	bool bMove;
-	bool bUseMask;
 	bool bDrawLineMesh;
 	bool bDrawMesh;
 	bool bThruAccel;
 	bool bThruSpeed;
     bool bBaseMove;
-
+    bool bMakeHole;
+    
 	int res;
+    int mW, mH;
     float extrusion;
 	float friction;
     float threthold;
 	float animSpeed;
-	
 	float camDist;
 
-    ofFloatImage img, mask;
-    ofEasyCam cam;
-    ofVboMesh mesh;
-	ofVboMesh lines;
-	
-	ofxGpuNoise gn;
-    ofxGpuNoise gn2;
-	
-	ofxMaxGui gui;
-    
     vector<ofVec3f> speed, accel;
     vector<ofVec3f> speed_b, accel_b;
+    vector<float> hole_factors;
+    
+    ofFloatColor bg;
+    ofFloatImage img;
+    ofEasyCam cam;
+    ofVboMesh mesh, lines;
+    
+    ofxGpuNoise gn, gn2, gn3;
+    ofxExportImageSequence exporter;
+    
+    //ofxSVG svg;
+    //ofxMaxGui gui;
 
-	ofFloatColor bg;
 };

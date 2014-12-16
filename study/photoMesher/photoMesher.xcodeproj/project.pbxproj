@@ -14,6 +14,11 @@
 		4DF1870D1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1870A1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm */; };
 		4DF1870E1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1870B1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp */; };
 		4DF187141A21AB1E00A1D331 /* ofxFastFboReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF187121A21AB1E00A1D331 /* ofxFastFboReader.cpp */; };
+		4DFCCCFA1A40D5020066EC88 /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFCCCEF1A40D5020066EC88 /* ofxSvg.cpp */; };
+		4DFCCCFB1A40D5020066EC88 /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFCCCF41A40D5020066EC88 /* src_colors.cpp */; };
+		4DFCCCFC1A40D5020066EC88 /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFCCCF51A40D5020066EC88 /* svgtiny.cpp */; };
+		4DFCCCFD1A40D5020066EC88 /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFCCCF71A40D5020066EC88 /* svgtiny_gradient.cpp */; };
+		4DFCCCFE1A40D5020066EC88 /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DFCCCF91A40D5020066EC88 /* svgtiny_list.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -84,6 +89,7 @@
 /* Begin PBXFileReference section */
 		4D8339D31A277CA9006F1837 /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_util.cpp; path = ../../../module/ad_util.cpp; sourceTree = "<group>"; };
 		4D8339D41A277CA9006F1837 /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_util.h; path = ../../../module/ad_util.h; sourceTree = "<group>"; };
+		4D94F15C1A4049E00044A0B6 /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		4DF186F71A218BA600A1D331 /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoise.cpp; sourceTree = "<group>"; };
 		4DF186F81A218BA600A1D331 /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
 		4DF186F91A218BA600A1D331 /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
@@ -94,6 +100,14 @@
 		4DF1870B1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_win.cpp; sourceTree = "<group>"; };
 		4DF187121A21AB1E00A1D331 /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
 		4DF187131A21AB1E00A1D331 /* ofxFastFboReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
+		4DFCCCEF1A40D5020066EC88 /* ofxSvg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSvg.cpp; sourceTree = "<group>"; };
+		4DFCCCF01A40D5020066EC88 /* ofxSvg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSvg.h; sourceTree = "<group>"; };
+		4DFCCCF41A40D5020066EC88 /* src_colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
+		4DFCCCF51A40D5020066EC88 /* svgtiny.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
+		4DFCCCF61A40D5020066EC88 /* svgtiny.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
+		4DFCCCF71A40D5020066EC88 /* svgtiny_gradient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_gradient.cpp; sourceTree = "<group>"; };
+		4DFCCCF81A40D5020066EC88 /* svgtiny_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny_internal.h; sourceTree = "<group>"; };
+		4DFCCCF91A40D5020066EC88 /* svgtiny_list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -188,6 +202,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D94F15A1A4049E00044A0B6 /* ofxExportImageSequence */ = {
+			isa = PBXGroup;
+			children = (
+				4D94F15B1A4049E00044A0B6 /* src */,
+			);
+			name = ofxExportImageSequence;
+			sourceTree = "<group>";
+		};
+		4D94F15B1A4049E00044A0B6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4D94F15C1A4049E00044A0B6 /* ofxExportImageSequence.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxExportImageSequence/src;
+			sourceTree = "<group>";
+		};
 		4DF186D81A218BA600A1D331 /* ofxGpuNoise */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,9 +277,60 @@
 			path = ../../../addons/ofxFastFboReader/src;
 			sourceTree = "<group>";
 		};
+		4DFCCCED1A40D5020066EC88 /* ofxSvg */ = {
+			isa = PBXGroup;
+			children = (
+				4DFCCCEE1A40D5020066EC88 /* src */,
+				4DFCCCF11A40D5020066EC88 /* libs */,
+			);
+			name = ofxSvg;
+			sourceTree = "<group>";
+		};
+		4DFCCCEE1A40D5020066EC88 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DFCCCEF1A40D5020066EC88 /* ofxSvg.cpp */,
+				4DFCCCF01A40D5020066EC88 /* ofxSvg.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxSvg/src;
+			sourceTree = "<group>";
+		};
+		4DFCCCF11A40D5020066EC88 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				4DFCCCF21A40D5020066EC88 /* svgTiny */,
+			);
+			name = libs;
+			path = ../../../addons/ofxSvg/libs;
+			sourceTree = "<group>";
+		};
+		4DFCCCF21A40D5020066EC88 /* svgTiny */ = {
+			isa = PBXGroup;
+			children = (
+				4DFCCCF31A40D5020066EC88 /* src */,
+			);
+			path = svgTiny;
+			sourceTree = "<group>";
+		};
+		4DFCCCF31A40D5020066EC88 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DFCCCF41A40D5020066EC88 /* src_colors.cpp */,
+				4DFCCCF51A40D5020066EC88 /* svgtiny.cpp */,
+				4DFCCCF61A40D5020066EC88 /* svgtiny.h */,
+				4DFCCCF71A40D5020066EC88 /* svgtiny_gradient.cpp */,
+				4DFCCCF81A40D5020066EC88 /* svgtiny_internal.h */,
+				4DFCCCF91A40D5020066EC88 /* svgtiny_list.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4DFCCCED1A40D5020066EC88 /* ofxSvg */,
+				4D94F15A1A4049E00044A0B6 /* ofxExportImageSequence */,
 				F6ECA45A1A23916A0064611B /* ofxOsc */,
 				F6ECA44B1A23915C0064611B /* ofxJSON */,
 				F6ECA41A1A2390710064611B /* ofxMaxGui */,
@@ -610,15 +692,20 @@
 				F6ECA4461A2390710064611B /* ofxMaxGui.cpp in Sources */,
 				F6ECA48B1A23916A0064611B /* NetworkingUtils.cpp in Sources */,
 				F6ECA48D1A23916A0064611B /* OscOutboundPacketStream.cpp in Sources */,
+				4DFCCCFB1A40D5020066EC88 /* src_colors.cpp in Sources */,
 				4DF186FF1A218BA600A1D331 /* ofxGpuNoiseShaders.cpp in Sources */,
 				F6ECA48E1A23916A0064611B /* OscPrintReceivedElements.cpp in Sources */,
 				F6ECA4861A23916A0064611B /* ofxOscMessage.cpp in Sources */,
+				4DFCCCFC1A40D5020066EC88 /* svgtiny.cpp in Sources */,
 				4DF187141A21AB1E00A1D331 /* ofxFastFboReader.cpp in Sources */,
 				4DF1870E1A2194D900A1D331 /* ofxModifierKeys_impl_win.cpp in Sources */,
 				F6ECA4871A23916A0064611B /* ofxOscParameterSync.cpp in Sources */,
+				4DFCCCFA1A40D5020066EC88 /* ofxSvg.cpp in Sources */,
 				F6ECA48C1A23916A0064611B /* UdpSocket.cpp in Sources */,
 				4D8339D51A277CA9006F1837 /* ad_util.cpp in Sources */,
 				F6ECA48F1A23916A0064611B /* OscReceivedElements.cpp in Sources */,
+				4DFCCCFE1A40D5020066EC88 /* svgtiny_list.cpp in Sources */,
+				4DFCCCFD1A40D5020066EC88 /* svgtiny_gradient.cpp in Sources */,
 				F6ECA4891A23916A0064611B /* ofxOscSender.cpp in Sources */,
 				F6ECA4851A23916A0064611B /* ofxOscBundle.cpp in Sources */,
 				4DF1870D1A2194D900A1D331 /* ofxModifierKeys_impl_mac.mm in Sources */,

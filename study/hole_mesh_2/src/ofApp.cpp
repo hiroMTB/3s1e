@@ -39,11 +39,14 @@ void ofApp::setup(){
     int imgH = img.getHeight();
 
     ofRectangle bounds = ofRectangle( 0,0, mW*1.75, mH*1.75 );
+    bounds = ofRectangle( 0, 0, 10, mH*1.75 );
+
     int n = 1000;
     for( int i=0; i<n; i++ ){
         float x = ofNoise(i*0.01) * bounds.width;
-        float y = ofNoise(x, i*0.03) * bounds.height;
+        float y = ofNoise(x, i*0.0001) * bounds.height - i*0.5;
         
+        //x = bounds.width/2 + ofRandomf();
         ofVec3f pos(x, y, 0);
         seeds.push_back( pos );
         
@@ -81,7 +84,7 @@ void ofApp::setVertices(){
         
         // low speed, Continum
         float amp1 = 0.1;
-        nd1[i].x = gn1.getNoisef(i,0) * amp1 * r;
+        nd1[i].x = gn1.getNoisef(i,0) * amp1 * r*3 + 0.3;
         nd1[i].y = gn1.getNoisef(i,1) * amp1 * g;
         
         // high speed, temporary
@@ -93,10 +96,26 @@ void ofApp::setVertices(){
         seeds[i].y += nd1[i].y + nd2[i].y;
     }
     
-    voro.clear();
+    ofRectangle bounds = ofRectangle( 0, 0, 10 + ofGetFrameNum(), mH*1.75 );
+  
+    // new seed on start
+    for (int i=0; i<6; i++) {
+        float x = ofRandomuf();
+        float y = gn1.getNoisef(i*10, 0) * bounds.height - i;
+        
+        ofVec3f pos(x, y, 0);
+        seeds.push_back( pos );
+        
+        nd1.push_back( pos );
+        nd2.push_back( ofVec3f() );
+        speeds.push_back(ofVec3f() );
+        hole.push_back(0);
+    }
+    
+    //voro.clear();
+    voro.setBounds( bounds );
     voro.setPoints( seeds );
     voro.generate();
-
 }
 
 

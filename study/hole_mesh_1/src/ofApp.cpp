@@ -8,8 +8,8 @@ void ofApp::setup(){
 	mesh.setUsage( GL_DYNAMIC_DRAW );
 	mesh.setMode( OF_PRIMITIVE_TRIANGLES );
 	
-	mW = 1024;
-	mH = 512;
+	mW = 512;
+	mH = 256;
 
 	cam.lookAt( ofVec3f(0,0,0), ofVec3f(0,1,0) );
     // cam.enableOrtho();
@@ -61,13 +61,6 @@ void ofApp::setup(){
             hole.push_back(0);
         }
     }
-    
-    // voronoi
-    ofRectangle bounds = ofRectangle( 0,0, mW, mH );
-    vector<ofPoint> ps = mesh.getVertices();
-    voro.setBounds( bounds );
-    voro.setPoints( ps );
-    voro.generate();
 }
 
 void ofApp::setVertices(){
@@ -162,7 +155,8 @@ void ofApp::setIndices(){
                 hole[index+1] = 1;
                 hole[index-1] = 1;
                 hole[index+mW] = 1;
-                hole[index-mW] = 1;            }
+                hole[index-mW] = 1;
+            }
         }
 	}
 }
@@ -221,9 +215,6 @@ void ofApp::draw(){
     
 	cam.end();
 
-    ofNoFill();
-    ofSetColor( 255 );
-    voro.draw();
     
 	draw_info();
     float nscale = 0.5;

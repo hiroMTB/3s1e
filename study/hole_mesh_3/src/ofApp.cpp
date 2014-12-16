@@ -43,8 +43,8 @@ void ofApp::setup(){
     
     for (int y=0; y<mH; y++) {
         for (int x=0; x<mW; x++) {
-            float xx = ofSignedNoise( x*0.29 ) * mW * 5;
-            float yy = ofSignedNoise( y*0.11 ) * mH * 5;
+            float xx = ofSignedNoise( x*0.29 ) * mW * 15;
+            float yy = ofSignedNoise( y*0.11 ) * mH * 15;
             ofVec3f pos( xx-mW/2, yy-mH/2, 0 );
             
             del.addPoint( pos );

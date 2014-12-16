@@ -6,6 +6,9 @@ void ofxMaxGui::setup( int _portOF, int _portMax ){
 	portMax = _portMax;
 	oscr.setup( portOF );
 	oscs.setup( "localhost", portMax );
+    
+    cout << "Osc Listening on " << portOF << " port" << endl;
+    cout << "Osc Sending to " << portMax << " port" << endl;
 }
 
 void ofxMaxGui::addPatcher ( float win_x, float win_y, float win_w, float win_h){

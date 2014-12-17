@@ -57,6 +57,7 @@ public:
     float           getFreq() const;
 	string			getNoiseParamString();
 	
+    void            addFrame( float aFrame );
     void            setFrame( float aFrame );
     void            setOctaves( int aOctaves );
     void            setFreq( float aFreq );

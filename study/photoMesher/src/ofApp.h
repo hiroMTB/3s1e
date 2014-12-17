@@ -36,11 +36,15 @@ public:
     vector<ofVec3f> speed, accel;
     vector<ofVec3f> speed_b, accel_b;
     vector<float> hole_factors;
-    
+
     ofFloatColor bg;
     ofFloatImage img;
     ofEasyCam cam;
-    ofVboMesh mesh, lines;
+    ofVboMesh mesh;
+
+#ifdef USE_LINE_MESH
+    ofVboMesh lines;
+#endif
     
     ofxGpuNoise gn, gn2, gn3;
     ofxExportImageSequence exporter;
@@ -48,4 +52,5 @@ public:
     //ofxSVG svg;
     //ofxMaxGui gui;
 
+    int frame;
 };

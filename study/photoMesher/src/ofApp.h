@@ -14,6 +14,7 @@ public:
 	void draw();
     void keyPressed( int key );
     void load_mesh( ofFloatImage &img );
+
     void set_indices();
     void dragEvent( ofDragInfo info );
     
@@ -24,6 +25,8 @@ public:
 	bool bThruSpeed;
     bool bBaseMove;
     bool bMakeHole;
+    bool bTriangleTess;
+
     
 	int res;
     int mW, mH;
@@ -36,14 +39,18 @@ public:
     vector<ofVec3f> speed, accel;
     vector<ofVec3f> speed_b, accel_b;
     vector<float> hole_factors;
+    vector<int> hole_index;
 
+    
     ofFloatColor bg;
     ofFloatImage img;
     ofEasyCam cam;
     ofVboMesh mesh;
 
+#define USE_LINE_MESH 1
 #ifdef USE_LINE_MESH
     ofVboMesh lines;
+    void update_line_mesh();
 #endif
     
     ofxGpuNoise gn, gn2, gn3;

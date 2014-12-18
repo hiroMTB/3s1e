@@ -13,7 +13,17 @@
 class ad_util{
     
 public:
+
+    ad_util(){};
     
     static string data_path;
+    
+    static string getFrameInfoString();
+    
+    static string getCameraInfoString( ofCamera &cam );
+
+    static void draw_axis( float length=100 );
+    
+    static void draw_plane( float size= 100 );
 };
 

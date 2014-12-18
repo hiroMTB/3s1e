@@ -1,5 +1,4 @@
-#ifndef _TEST_APP
-#define _TEST_APP
+#pragma once
 
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
@@ -13,16 +12,8 @@ class ofApp : public ofBaseApp{
 		void draw();
 		
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);		
     
-        ofxAssimpModelLoader model;
+        ofxAssimpModelLoader dae;
     
 		bool bAnimate;
         bool bAnimateMouse;
@@ -31,7 +22,10 @@ class ofApp : public ofBaseApp{
         ofMesh mesh;
         ofLight	light;
     
-    ofEasyCam cam;
+        ofEasyCam cam;
+    
+    ofVec3f campos;
+    ofVec3f target;
+    ofVec3f model_pos;
+    ofVboMesh mymesh;
 };
-
-#endif

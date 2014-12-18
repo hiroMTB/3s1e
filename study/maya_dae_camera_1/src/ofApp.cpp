@@ -6,8 +6,6 @@ void ofApp::setup(){
     ofSetWindowShape( 1400, 1050 );
     ofBackground(255);
     model_pos.set( 2571.943, 1080.105, -2712.017 );
-
-
     
     dae.loadModel("B_cam_simple.dae", true);
     const aiScene * scene = dae.getAssimpScene();
@@ -37,6 +35,11 @@ void ofApp::setup(){
             ss << "pos   : " << pos << "\n";
             ss << "rot   : " << rot << "\n";
             cout << ss.str() << endl;
+			
+			ofMatrix4x4 mat;
+			mat.translate( pos );
+			mat.rotate( quat );
+			cam.setTransformMatrix( mat );
         }
         
         //stringstream ss;
@@ -82,22 +85,14 @@ void ofApp::setup(){
         cout << ss.str() << endl;
         
     }
-    
-    
+
     //dae.setPosition(0,0,0);
-    
     dae.setScale(1, 1, 1);
+
 }
 
 
 void ofApp::update(){
-    dae.update();
-    
-    if(bAnimateMouse) {
-        dae.setPositionForAllAnimations(animationPosition);
-    }
-
-    mesh = dae.getCurrentAnimatedMesh(0);
 }
 
 
@@ -136,20 +131,10 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
    
-    campos.set(5362.976, 300, -1560.683);
-    target.set(2554.265, 805, -2461.052);
-    
-    // cam.setTarget( target );
-    cam.setPosition( campos );
-    cam.setOrientation( ofVec3f(7.007, 45.416, 0) );
-    cam.lookAt( target );
-
-    float angle_of_view = 37.13;
-    cam.setFov( angle_of_view - 8.8 );
-    cam.setNearClip( 10 );
-    cam.setFarClip( 100000000 );
-
+    ofSetColor(255, 255, 255 );
+    ofDrawBitmapString("fps: "+ofToString(ofGetFrameRate(), 2), 10, 15);
+    ofDrawBitmapString("keys 1-5 load models, spacebar to trigger animation", 10, 30);
+    ofDrawBitmapString("drag to control animation with mouseY", 10, 45);
+    ofDrawBitmapString("num animations for this model: " + ofToString(model.getAnimationCount()), 10, 60);
 }
-
-
 

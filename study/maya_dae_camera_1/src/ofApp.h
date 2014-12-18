@@ -15,10 +15,6 @@ class ofApp : public ofBaseApp{
     
         ofxAssimpModelLoader dae;
     
-		bool bAnimate;
-        bool bAnimateMouse;
-        float animationPosition;
-
         ofMesh mesh;
         ofLight	light;
     

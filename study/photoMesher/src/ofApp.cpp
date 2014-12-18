@@ -7,11 +7,13 @@ void ofApp::setup(){
     bMove = false;
 	bThruAccel = false;
 	bThruSpeed = false;
-	bDrawMesh = false;
-	bDrawLineMesh = true;
+	bDrawMesh = true;
+	bDrawLineMesh = false;
     bBaseMove = false;
+    bMakeHole = false;
     
-    res = 16;
+    frame = -1;
+    res = 8;
     extrusion = 300;
 	friction = 0.99;
     threthold = 8;
@@ -19,50 +21,78 @@ void ofApp::setup(){
 	
 	ofSetVerticalSync( true );
 	ofSetFrameRate( 60 );
-	ofBackground( 0 );
-
-	camDist = 2500;
-    cam.setPosition(0, 0, camDist);
-	cam.lookAt(ofVec3f(0,0,0), ofVec3f(0,1,0));
-//    cam.setFov( 40 );
+    bg.set(0);
+    
+    camDist = 7300;
+    cam.setPosition(1, 0, camDist);
+    cam.lookAt(ofVec3f(0,0,0), ofVec3f(0,1,0));
+    cam.setFov( 15 );
+    
+    // 01, 03, 06, 10, 12
+    img.loadImage( "img/losglaciares10.jpg");
+    load_mesh( img );
+    int nw = img.getWidth() / 2;
+    int nh = img.getHeight() / 2;
 
     gn.setup();
-    gn.create( 2428,1378 );
-    gn.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
+    gn.create( nw, nh );
+    gn.setShaderType( ofxGpuNoise::SHADER_TYPE_Cellular );
     gn.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
-    gn.setFreq( 0.001 );
+    gn.setFreq( 0.004 );
     gn.setOctaves( 4 );
-
-	gn2.setup();
-	gn2.create( 2428,1378 );
-	gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
+    gn.setFrame( ofRandomuf()*100 );
+    gn.update();
+    
+    gn2.setup();
+    gn2.create( nw, nh );
+    gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
 	gn2.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
-	gn2.setFreq( 0.0005 );
-	gn2.setOctaves( 2 );
-	
-    if ( !mask.loadImage( ad_util::data_path + "img/crater_Marculy/mMask4.jpg" ) ){
-		cout << "can not load mask" << endl;
-	}
-	
+	gn2.setFreq( 0.0001 );
+	gn2.setOctaves( 4 );
+    gn2.setFrame( ofRandomuf()*100 );
+    gn2.update();
+    
+    gn3.create( nw, nh );
+    gn3.setFreq( 0.02 );
+    gn3.setOctaves( 6 );
+    gn3.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
+    gn3.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+    gn3.setFrame( ofRandomuf()*100 );
+    gn3.update();
+    
 	// gui
-
-	int y = 100; int offsety = 30;
-	gui.setup( 12345 );
-	gui.addPatcher(0, 0);
-	gui.addOscOut(45, 10);
-	gui.addToggle("useMask", 45, y, &bUseMask);
-	gui.addToggle("draw_mesh", 45, y+=offsety, &bDrawMesh);
-	gui.addToggle("draw_line_mesh", 45, y+=offsety, &bDrawLineMesh);
-
-	gui.addToggle("thruAccel", 45, y+=offsety, &bThruAccel);
-
-	gui.addFloat("extrusion", 45, y+=offsety, &extrusion);
-	gui.addFloat("friction", 45, y+=offsety, &friction);
-	gui.addFloat("speed", 45, y+=offsety,  &animSpeed);
-	gui.addColor("background", 45, y+=offsety, &bg);
-	gui.write( "_gui_main.maxpat" );
-	gui.open( "_gui_main.maxpat" );
-	
+    {
+//        int y = 100; int offsety = 30;
+//        gui.setup( 12345, 5555 );
+//        gui.addPatcher(0, 0);
+//        gui.addOscOut(45, 10);
+//        gui.addToggle("draw_mesh", 45, y+=offsety, &bDrawMesh);
+//        gui.addToggle("draw_line_mesh", 45, y+=offsety, &bDrawLineMesh);
+//
+//        gui.addToggle("thruAccel", 45, y+=offsety, &bThruAccel);
+//
+//        gui.addFloat("extrusion", 45, y+=offsety, &extrusion);
+//        gui.addFloat("friction", 45, y+=offsety, &friction);
+//        gui.addFloat("speed", 45, y+=offsety,  &animSpeed);
+//        gui.addColor("background", 45, y+=offsety, &bg);
+//        gui.write( "_gui_main.maxpat" );
+//        gui.open( "_gui_main.maxpat" );
+    }
+    
+    //ofxSVG svg;
+    //svg.load( ad_util::data_path + "svg/v1/ABC.svg" );
+    //int w = svg.getWidth() + 1;
+    //int h = svg.getHeight() + 1;
+    int w = 5000;  // 7908.01;
+    int h = 2500;  //4017.48;
+    exporter.setup( w, h, 25, GL_RGBA, 4);
+//    exporter.setup(1920, 1080, 25, GL_RGB, 4);
+    exporter.setFilePattern( ofGetTimestampString() + "/frame_%05i." + "tif" );
+    exporter.setAutoExit(true);
+    exporter.setFrameRange(1,3000);
+    
+    ofSetWindowPosition(0, 0);
+    ofSetWindowShape( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()/2);
 }
 
 void ofApp::dragEvent( ofDragInfo info ){
@@ -79,251 +109,425 @@ void ofApp::load_mesh( ofFloatImage &img ){
     mesh.setUsage( GL_DYNAMIC_DRAW );
     mesh.setMode( OF_PRIMITIVE_TRIANGLES );
 
+#ifdef USE_LINE_MESH
 	lines.clear();
 	lines.setUsage( GL_DYNAMIC_DRAW );
 	lines.setMode( OF_PRIMITIVE_LINES);
-
+#endif
+    
+    hole_factors.clear();
+    
     int ch = img.getPixelsRef().getNumChannels();
-    int w = img.getWidth() / res;
-    int h = img.getHeight() / res;
+    mW = img.getWidth() / res;
+    mH = img.getHeight() / res;
 	
 	float startx = -img.getWidth()*0.5;
 	float starty = -img.getHeight()*0.5;
 	
     int index = 0;
-    for( int y=0; y<h; y++ ){
-        for( int x=0; x<w; x++ ){
+    float rnd = ofRandomuf() * 100.0;
+    for( int y=0; y<mH; y++ ){
+        for( int x=0; x<mW; x++ ){
             
             ofVec2f sampling_point( x*res, y*res );
-            ofFloatColor c = img.getPixelsRef().getColor( sampling_point.x, sampling_point.y );
+            ofFloatColor c = img.getPixelsRef().getColor( sampling_point.x, img.getHeight()-sampling_point.y );
             c.a = 0.7;
-            float z = c.getBrightness() * extrusion;
+            //float z = c.getBrightness() * extrusion;
+            float z = 0;
 			ofVec3f pos( startx + sampling_point.x, starty + sampling_point.y, z);
-            pos.x *= 5.0;
 
 			mesh.addVertex( pos  );
             mesh.addColor( c );
 			
-			// create Line mesh
+#ifdef USE_LINE_MESH
+            // create Line mesh
             lines.addVertex( pos );
-            pos.z = 0;
-			lines.addVertex( pos );
+            pos.y += ofSignedNoise(x*0.001) * 20.0;
+            pos.x += ofSignedNoise(y*0.001) * 20.0;
+            pos.z *= 0.9;
+            //pos.z += ofSignedNoise(index*0.001) * 30.0;
+            lines.addVertex( pos );
 			
 			lines.addColor( c );
 			lines.addColor( c );
-			
+#endif
+            
+            hole_factors.push_back(600*ofNoise(rnd+x*0.003, rnd+y*0.003) + 3);
 			index++;
         }
     }
 	
-    for( int y=0; y<h-1; y++ ){
-        for( int x=0; x<w-1; x++ ){
-            mesh.addIndex(x+y*w);				// 0
-            mesh.addIndex((x+1)+y*w);			// 1
-            mesh.addIndex(x+(y+1)*w);			// 10
+    for( int y=0; y<mH-1; y++ ){
+        for( int x=0; x<mW-1; x++ ){
+            mesh.addIndex(x+y*mW);				// 0
+            mesh.addIndex((x+1)+y*mW);			// 1
+            mesh.addIndex(x+(y+1)*mW);			// 10
 
-            mesh.addIndex((x+1)+y*w);			// 1
-            mesh.addIndex((x+1)+(y+1)*w);		// 11
-            mesh.addIndex(x+(y+1)*w);			// 10
+            //mesh.addIndex((x+1)+y*mW);			// 1
+            //mesh.addIndex((x+1)+(y+1)*mW);		// 11
+            //mesh.addIndex(x+(y+1)*mW);			// 10
         }
     }
     
-    speed.assign(w*h, ofVec3f(0,0,0) );
-    accel.assign(w*h, ofVec3f(0,0,0) );
+    speed.assign(mW*mH, ofVec3f(0,0,0) );
+    accel.assign(mW*mH, ofVec3f(0,0,0) );
  
-    speed_b.assign(w*h, ofVec3f(0,0,0) );
-    accel_b.assign(w*h, ofVec3f(0,0,0) );
+    speed_b.assign(mW*mH, ofVec3f(0,0,0) );
+    accel_b.assign(mW*mH, ofVec3f(0,0,0) );
 }
 
 void ofApp::update(){
-	gui.update();
+	//if( !exporter.isExporting() )
+     //   gui.update();
 	
-    if( bMove ){
-        gn.setFrame( ofGetFrameNum()*0.03 * animSpeed );
-        gn.update();
+    if( !bMove )
+        return;
+    
+    frame++;
 
-		gn2.setFrame( ofGetFrameNum()*0.01 * animSpeed );
-		gn2.update();
+    if( frame > 200 ) bMakeHole = true;
 
-        int n = mesh.getNumVertices();
-        if( 0 < n ){
+    gn.addFrame( 0.02 * animSpeed );
+    gn.update();
+    
+    gn2.addFrame( 0.012 * animSpeed );
+    gn2.update();
+    
+    gn3.addFrame( 0.002 );
+    gn3.update();
+    
+    int n = mesh.getNumVertices();
+    if( 0 >= n )
+        return;
+    
+    vector<ofVec3f> &vs = mesh.getVertices();
+    vector<ofFloatColor> &cols = mesh.getColors();
+    
+#ifdef USE_LINE_MESH
+    vector<ofVec3f> &lvs = lines.getVertices();
+    vector<ofFloatColor> &lcols = lines.getColors();
+#endif
+    
+    for( int y=0; y<mH; y++){
+        for( int x=0; x<mW; x++){
             
-            float * maskf = mask.getPixels();
-            float mw = mask.getWidth();
-            float mh = mask.getHeight();
-            int mn = mw * mh;
+            int index = x + y*mW;
+            float rate = 1;
             
-            int w = img.getWidth()/res;
-            int h = img.getHeight()/res;
-            vector<ofVec3f> &vs = mesh.getVertices();
-            vector<ofFloatColor> &cols = mesh.getColors();
+            float r = cols[index].r*2 - 1;
+            float g = cols[index].g*2 - 1;
+            float b = cols[index].b*2 - 1;
+            
+            rate = (g+b) * 0.06;
 
-            vector<ofVec3f> &lvs = lines.getVertices();
-            vector<ofFloatColor> &lcols = lines.getColors();
-
-            for( int y=0; y<h; y++){
-				for( int x=0; x<w; x++){
-                    
-                    int real_index = x*res + y*res*img.getWidth();
-					int index = x + y*w;
-					float rate = 1;
-					
-					if( bUseMask ){
-						int maskIndex = x*res + y*res*mask.getWidth();
-						if( mw<=x || mh<=y )
-							continue;
-						
-						float r =  maskf[ maskIndex*3 + 0];
-						float g =  maskf[ maskIndex*3 + 1];
-						float b =  maskf[ maskIndex*3 + 2];
-						float avg = (r + g + b) * 0.3333;
-						rate = avg + 0.1;
-					}else{
-						
-						float r = cols[index].r;
-						float g = cols[index].g;
-						float b = cols[index].b;
-						
-						rate = (r+g+b) * 0.333;
-					}
-					
-					float nR1 = gn.getNoisef( x, y, 0);
-                    float nG1 = gn.getNoisef( x, y, 1);
-                    float nB1 = gn.getNoisef( x, y, 2);
-
-					float nR2 = gn2.getNoisef( x, y, 0);
-					float nG2 = gn2.getNoisef( x, y, 1);
-					float nB2 = gn2.getNoisef( x, y, 2);
-					
-                    {
-                        float nR = nR1*nR2;
-                        float nG = nG1*nG2;
-                        float nB = nB1*nB2;
-                        
-                        if( !bThruAccel ){
-                            accel[index].x = nR * rate * 0.2;
-                            accel[index].y = nG * rate * 0.2;
-                            accel[index].z = nB * rate * 0.1;
-                            speed[index] += accel[index];
-                        }else{
-                            speed[index].x = nR * rate * 100.0;
-                            speed[index].y = nG * rate * 100.0;
-                            speed[index].z = nB * rate * 100.0;
-                        }
-                        
-                        speed[index] *= friction;
-                        
-                        vs[index] += speed[index];
-                    
-                        
-                        if( abs(vs[index].z) > extrusion*5 ){
-                            if( vs[index].z < 0 )
-                                vs[index].z = -extrusion*5;
-                            else
-                                vs[index].z = extrusion*5;
-                            
-                            accel[index] *= 0.8;
-                            speed[index] *= 0.8;
-                        }
-                        
-                        //vs[index] += ofVec3f( ofRandomf(),ofRandomf(),ofRandomf() );
-                        
-                        lvs[index*2] = vs[index];
-                    }
-                    
-                    
-                    if( bBaseMove ){
-                    
-                        float nR = nR1*nB2;
-                        float nG = nG1*nR2;
-                        float nB = nB1*nG2;
-                        
-                        speed_b[index].x += nR * rate * 0.2;
-                        speed_b[index].y += nG * rate * 0.2;
-                        speed_b[index].z += nB * rate * 0.1;
-                        lvs[index*2 + 1] += speed_b[index];
-                    }
-                    
-                    {
-                        float nR = nR1*nG2;
-                        float nG = nG1*nB2;
-                        float nB = nB1*nR2;
-                        
-                        rate *= 0.005;
-                        cols[index].r += (nR * rate);
-                        cols[index].g += (nG * rate);
-                        cols[index].b += (nB * rate);
-                        cols[index].a += (nR+nG+nB) * rate * 0.333 * 0.5;
-                        
-                        ofFloatColor lc =  ofFloatColor(1) - cols[index];
-                        lcols[index*2] = lc;
-                        lcols[index*2+1] = lc;
-                    }
+            float nR1 = gn.getNoisef( x, y, 0);
+            float nG1 = gn.getNoisef( x, y, 1);
+            float nB1 = gn.getNoisef( x, y, 2);
+            
+            float nR2 = gn2.getNoisef( x, y, 0) * 0.1;
+            float nG2 = gn2.getNoisef( x, y, 1) * 0.1;
+            float nB2 = gn2.getNoisef( x, y, 2) * 0.1;
+            
+            {
+                float nR = nR1 + nR2;
+                float nG = nG1 + nG2;
+                float nB = nB1 + nB2;
+                
+                if( !bThruAccel ){
+                    accel[index].x = nR * rate * 0.3;
+                    accel[index].y = nG * rate * 0.3;
+                    //accel[index].z = nB * rate * 0.05;
+                    speed[index] += accel[index];
+                }else{
+                    speed[index].x = nR * rate * 0.02;
+                    speed[index].y = nG * rate * 0.02;
+                    //speed[index].z = nB * rate * 0.02;
                 }
-			}
+                
+                speed[index] *= friction;
+                
+                vs[index] += speed[index];
+                
+                
+                if( abs(vs[index].z) > extrusion*5 ){
+//                    if( vs[index].z < 0 )
+//                        vs[index].z = -extrusion*5;
+//                    else
+//                        vs[index].z = extrusion*5;
+                
+                    accel[index] *= 0.95;
+                    speed[index] *= 0.95;
+                }
+                
+                //vs[index] += ofVec3f( ofRandomf(),ofRandomf(),ofRandomf() );
+#ifdef USE_LINE_MESH
+                lvs[index*2] = vs[index];
+#endif
+            }
+            
+            
+            if( bBaseMove ){
+                
+                float nR = nR1*nB2;
+                float nG = nG1*nR2;
+                float nB = nB1*nG2;
+
+#ifdef USE_LINE_MESH
+                lvs[index*2 + 1] = vs[index];
+                lvs[index*2 + 1].z *= 0.6;
+#endif
+            }
+            
+            {
+                float nR = nR1*nG2;
+                float nG = nG1*nB2;
+                float nB = nB1*nR2;
+                
+                rate *= 0.005;
+                cols[index].r += (nR * rate);
+                cols[index].g += (nG * rate);
+                cols[index].b += (nB * rate);
+                cols[index].a += (nR+nG+nB) * rate * 0.333 * 0.5;
+
+#ifdef USE_LINE_MESH
+                ofFloatColor lc =  ofFloatColor(1) - cols[index];
+                lc.a *= 0.7;
+                lcols[index*2] = lc;
+                lcols[index*2+1] = lc;
+#endif
+            }
         }
     }
+    
+    set_indices();
+}
+
+void ofApp::set_indices(){
+    
+   if( bMakeHole ){
+       
+       mesh.clearIndices();
+       vector<ofVec3f> &vs = mesh.getVertices();
+       vector<ofFloatColor> &cols = mesh.getColors();
+       
+       int max_index = mW * mH -1;
+       
+       for( int y=0; y<mH; y++){
+           for( int x=0; x<mW; x++){
+               
+               int index = x + y*mW;
+               
+               float n1 = gn.getNoiseuf(x,y,0);
+               float n2 = gn3.getNoiseuf(x,y,1);
+               float hole  = n1*n1*n1 + n2*n2*n2  + ofRandomuf()*0.1;
+               hole_factors[index] -= hole;
+
+               if( hole_factors[index] > 0 ){
+               //if( hole > 0.1 ){
+                   
+                   if( x<mW-1 && y<mH-1){
+                       mesh.addIndex( index );
+                       mesh.addIndex( index+1 );
+                       mesh.addIndex( index+mW );
+                       
+                       //mesh.addIndex( index+1 );
+                       //mesh.addIndex( index+mW+1 );
+                       //mesh.addIndex( index+mW );
+                   }
+               }else{
+                   
+                   if (cols[index].a <= 0) {
+                       continue;
+                   }
+                   
+                   ofVec3f rv( ofRandomf(), ofRandomuf(), 0);
+                   rv *= 0.01;
+                   rv.y += 0.001 * gn.getNoisef(index, 0)*0.01;
+                   float red_rate = ofRandomuf()*0.01;
+
+                   vs[index].x += gn.getNoisef(index, 1) + rv.x*0.1;
+                   vs[index].y += gn.getNoiseuf(index, 2) + rv.y*0.1;
+                   cols[index].a    -= 0.0004;
+                   cols[index].r += red_rate;
+                   
+                   float low_limit = 40;
+                   
+                   // RIGHT
+                   int aid;
+                   aid = index + 1;
+                   if( aid <=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r  += red_rate;
+                   }
+                   
+                   aid = index + 2;
+                   if( aid<=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r  += red_rate/2;
+                   }
+
+                   // LEFT
+                   aid = index - 1;
+                   if( aid >=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                        cols[aid].r  += red_rate;
+                   }
+                   
+                   aid = index - 2;
+                   if( aid>=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r  += red_rate/2;
+                   }
+
+
+                   // UP
+                   aid = index + mW;
+                   if( index+mW<=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate;
+                   }
+
+                   aid = index + mW*2;
+                   if( aid<=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+
+                   aid = index + mW + 1;
+                   if( aid <=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+
+                   aid = index + mW - 1;
+                   if( aid<=max_index && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+                   
+                   // DOWN
+                   aid = index - mW;
+                   if( aid>=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate;
+                   }
+
+                   aid = index - mW*2;
+                   if( aid>=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+                   
+                   aid = index - mW + 1;
+                   if( aid>=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+
+                   aid = index - mW - 1;
+                   if( aid>=0 && hole_factors[aid]>low_limit ){
+                       vs[aid] += rv;
+                       cols[aid].r += red_rate/2;
+                   }
+               }
+           }
+       }
+   }
 }
 
 void ofApp::draw(){
-	ofEnableDepthTest();
-    ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofBackground( bg );
     
-    int w = img.getWidth();
-    int h = img.getHeight();
+    ofPushMatrix(); {
+            exporter.begin( cam ); {
+                ofEnableDepthTest();
+                ofEnableAlphaBlending();
+                ofEnableSmoothing();
+                ofBackground( bg );
+                
+                // cam.enableOrtho();
+                //ofTranslate( -w/2, h/2 );
+                //ofScale( 1, -1, -1);
+                
+#ifdef USE_LINE_MESH
+                if( bDrawLineMesh ){
+                    glPointSize( 1 );
+                    glLineWidth( 1 );
 
-    cam.begin(); {
-//        cam.enableOrtho();
+                    lines.setMode( OF_PRIMITIVE_LINES);
+                    lines.draw();
+                    lines.setMode( OF_PRIMITIVE_POINTS);
+                    lines.draw();
+                }
+#endif
+                if( bDrawMesh ){
+                    glPointSize( 1 );
+                    glLineWidth( 1 );
+                    if( mesh.getNumIndices() != 0)
+                        mesh.drawWireframe();
+                    mesh.drawVertices();
+                }
+                
+                // guide
+                if( !exporter.isExporting() ){
+                    ofSetColor(255, 0, 0);
+                    ofLine(0, 0, 300, 0);
+
+                    ofSetColor(0, 255, 0);
+                    ofLine(0, 0, 0, 300);
+
+                    ofSetColor(0, 0, 255);
+                    ofLine( ofVec3f(0,0,0), ofVec3f(0,0,300) );
+                }
+                
+            } exporter.end();
         
-        //ofTranslate( -w/2, h/2 );
-        //ofScale( 1, -1, -1);
-		
-		if( bDrawLineMesh ){
-			glPointSize( 2 );
-			glLineWidth( 1 );
-
-			lines.setMode( OF_PRIMITIVE_LINES);
-			lines.draw();
-			lines.setMode( OF_PRIMITIVE_POINTS);
-			lines.draw();
-		}
-		if( bDrawMesh ){
-			glPointSize( 1 );
-			glLineWidth( 1 );
-			mesh.drawWireframe();
-		}
-		
-		// guide
-		ofSetColor(255, 0, 0);
-		ofLine(0, 0, 300, 0);
-
-		ofSetColor(0, 255, 0);
-		ofLine(0, 0, 0, 300);
-
-		ofSetColor(0, 0, 255);
-		ofLine( ofVec3f(0,0,0), ofVec3f(0,0,300) );
-
-    } cam.end();
+    } ofPopMatrix();
     
-    gn.draw(10,10,0.1);
-	gn2.draw(10,150,0.1);
-	
-	//mask.draw( 10, 300, 200, 100);
-	
-	
-	ofVec3f pos = cam.getPosition();
-	
-	stringstream ss;
+    if( !exporter.isExporting() ){
+
+        ofBackground( 0 );
+        ofPushMatrix();
+        //float s = ofGetWidth() / svg.getWidth();
+        //ofScale(s, s);
+        //ofTranslate( svg.getWidth()/2, svg.getHeight()/2 );
+        //svg.draw();
+        //ofPopMatrix();
+        
+        gn.draw( ofGetWidth()-200,  100, 0.1);
+        gn2.draw( ofGetWidth()-200, 250, 0.1);
+        gn3.draw( ofGetWidth()-200, 400, 0.1);
+
+        ofPushMatrix();{
+            ofSetColor( 255 );
+            exporter.draw(0, 0);
+        }ofPopMatrix();
+    }
+    
+    stringstream ss;
+    ss << "frame      : " << frame << "\n";
 	ss << "cam\n";
-	ss << "pos        : " << pos.x << ","  << pos.y << "," << pos.z << "\n";
+	ss << "pos        : " << cam.getPosition() << "\n";
 	ss << "distance   : " << cam.getDistance() << "\n";
 	ss << "lookAt dir : " << cam.getLookAtDir() << "\n";
 	ss << "Up dir     : " << cam.getUpDir() << "\n";
-	ofSetColor(0);
+    
+    ss << "\n";
+    
+    ss << "gn " << gn.getNoiseParamString() << "\n";
+    ss << "gn2 " << gn2.getNoiseParamString() << "\n";
+
+    ss << "\n";
+    
+    ss << "exporter\n";
+    ss << "export enable   : " << exporter.isExporting() << "\n";
+    ss << "export frame    : " << exporter.getFrameNum() << "\n";
+
+    ss << "\n";
+    ss << "Mesh Resolution : " << res << "\n";
+    ss << "Make Hole       ; " << bMakeHole << "\n";
+
+    ofSetColor( 255 );
 	ofDrawBitmapString(ss.str(), 20, 20);
-	
 }
 
 void ofApp::keyPressed( int key ){
@@ -352,7 +556,14 @@ void ofApp::keyPressed( int key ){
                 res = max(res, 1);
                 needUpdate = true;
                 break;
-
+                
+            case 'S':
+                ofSetWindowShape( 300, 500 );
+                ofSetWindowPosition(0, 0);
+                bMove = true;
+                exporter.startExport();
+                break;
+                
             default:
                 break;
         }
@@ -370,7 +581,7 @@ void ofApp::keyPressed( int key ){
 				break;
 			
 			case '3':
-				cam.setPosition(0, 0, camDist);
+				cam.setPosition(0, -60, camDist);
 				cam.lookAt(ofVec3f(0,0,0), ofVec3f(0,1,0));
 				break;
 				
@@ -423,6 +634,12 @@ void ofApp::keyPressed( int key ){
 			case 'u':
 				load_mesh( img );
                 break;
+
+                
+            case 'h':
+                bMakeHole = !bMakeHole;
+                break;
+    
         }
     }
     

@@ -299,8 +299,8 @@ void ad_grav_line::update_lines(){
             }
             
 #pragma mark LONG_LINE
-            float ylimit = ofApp::app->canvas.y - 180;
-            if( ylimit-200< pos2.y && pos2.y<ylimit ){
+            float ylimit = ofApp::app->exporter.getFbo().getHeight() - 200;
+            if( ylimit-400< pos2.y && pos2.y<ylimit ){
                 if( ofRandomuf() > 0.9995){
                     ofVec3f dir = pos2-pos1;
                     float angle = dir.angle(ofVec3f(0,1,0));

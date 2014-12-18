@@ -21,12 +21,16 @@ void ofApp::setup(){
     gn1.setOctaves( 16 );
     gn1.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
     gn1.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+    gn1.setFrame(0.1);
+    gn1.update();
     
     gn2.create( mW, mH );
     gn2.setFreq( 2 );
     gn2.setOctaves( 4 );
     gn2.setShaderType( ofxGpuNoise::SHADER_TYPE_Perlin );
     gn2.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
+    gn2.setFrame(0.01);
+    gn2.update();
     
     string fixed_point = "img/fixed_point/lg/losglaciares12.jpg";
     string gns2 = "img/gns2.jpg";
@@ -151,7 +155,8 @@ void ofApp::setIndices(){
                 hole[index+1] = 1;
                 hole[index-1] = 1;
                 hole[index+mW] = 1;
-                hole[index-mW] = 1;            }
+                hole[index-mW] = 1;
+            }
         }
 	}
 }
@@ -207,8 +212,10 @@ void ofApp::draw(){
     }
 	mesh.drawWireframe();
 	mesh.drawVertices();
+    
 	cam.end();
 
+    
 	draw_info();
     float nscale = 0.5;
     gn1.draw( ofGetWidth()-10-mW*nscale, 10, nscale );

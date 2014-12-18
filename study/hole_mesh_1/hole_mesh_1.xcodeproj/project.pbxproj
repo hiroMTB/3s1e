@@ -506,6 +506,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
+					"/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/ofxVoronoi/libs/Voro++2D",
 				);
 				PRODUCT_NAME = hole_mesh_1Debug;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -592,6 +593,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
+					"/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/ofxVoronoi/libs/Voro++2D",
 				);
 				PRODUCT_NAME = hole_mesh_1;
 				USER_HEADER_SEARCH_PATHS = "";

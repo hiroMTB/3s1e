@@ -283,6 +283,10 @@ ofVec2f & ofxGpuNoise::getSamplingPoints( int index ){
 //		return ofVec2f( -123,-123 );
 }
 
+void ofxGpuNoise::addFrame( float aFrame ){
+    mFrame += aFrame;
+}
+
 //  Setter
 void ofxGpuNoise::setFrame( float aFrame ) {
     mFrame = aFrame;

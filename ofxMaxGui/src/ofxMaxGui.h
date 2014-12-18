@@ -12,7 +12,7 @@ public:
 	ofxMaxGui(){};
 	~ofxMaxGui();
 
-	void setup		( int portMAxMsp=1111, int portOF=2222 );
+	void setup		( int portOF, int portMAxMsp );
 	void update		( void );
 
 	void addPatcher ( float win_x, float win_y, float win_w=500, float win_h=500 );

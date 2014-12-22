@@ -21,5 +21,6 @@ public:
 	
 	static ofVec3f vec_pl( ofVec3f point, ofVec3f line_st, ofVec3f line_end );
     
+    static bool isOnline( ofVec3f point, ofVec3f line_st, ofVec3f line_end );
 
 };

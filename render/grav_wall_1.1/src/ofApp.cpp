@@ -15,7 +15,10 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( "svg_r/v2/FGH_r.svg" );
+    sABC.load( "svg_r/v2/ABC_r.svg" );
+
+	// ABC : 10 2362
+	global_pivot.set(10, 2362);
     ofSetCircleResolution( 4 );
 
     gpu_noise.setup();
@@ -24,9 +27,9 @@ void ofApp::setup(){
     gpu_noise.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
     gpu_noise.setShaderDerivType( ofxGpuNoise::SHADER_DERIV_TYPE_YES );
     
-    int nsize = 512;
-    gpu_noise.create( nsize, nsize);
-    noise_size = nsize * nsize;
+    int nsize = 4096;
+	gpu_noise.create( nsize, 8);
+    noise_size = nsize * 4;
     gpu_noise.setFrame( 0.01 );
     gpu_noise.update();
     noise = gpu_noise.getNoiseData();
@@ -34,8 +37,7 @@ void ofApp::setup(){
     bool imgload = img.loadImage( "img/fixed_point/lg/losglaciares03.jpg");
     if( imgload ) cout << "load image ok " << endl;
     else cout << " ! load image fail" << endl;
-    
-        
+	
     grav_wall.setup( &img );
     
     int n = sABC.getNumPath();
@@ -48,7 +50,7 @@ void ofApp::setup(){
         for(int j=0;j<(int)lines.size();j++){
             ofPoint st = ( lines[j].getVertices()[0] );
             ofPoint end = ( lines[j].getVertices()[1]);
-            grav_wall.create_line(st, end, 1);
+            grav_wall.create_line(st, end, 1 );
             cout << "crate line" << endl;
         }
     }
@@ -65,7 +67,6 @@ void ofApp::setup(){
     exporter.startExport();
 };
 
-
 void ofApp::update(){
     
     frame = ofGetFrameNum();
@@ -74,10 +75,9 @@ void ofApp::update(){
     noise = gpu_noise.getNoiseData();
     grav_wall.update();
     
-    if( exporter.getFrameNum() > 1500 ){
-        grav_wall.impulse = -0.2;
+    if( exporter.getFrameNum() > 1500 && grav_wall.bReleased == false ){
+        grav_wall.releaseGrav();
     }
-    
 }
 
 void ofApp::draw(){
@@ -155,7 +155,7 @@ void ofApp::keyPressed( int key ){
 //            break;
                         
         case 'g':
-            grav_wall.impulse = -0.2;
+			grav_wall.releaseGrav();
             break;
     };
 }

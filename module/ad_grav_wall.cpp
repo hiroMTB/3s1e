@@ -9,6 +9,7 @@
 #include "ad_grav_wall.h"
 #include "ofApp.h"
 #include "ad_geom_util.h"
+#include "ofxTransitions.h"
 
 int ad_grav_wall::particle_col_group = 1;
 int ad_grav_wall::wall_col_group = 2;
@@ -19,6 +20,7 @@ int ad_grav_wall::pid = 0;
 
 ad_grav_wall::ad_grav_wall()
 :bInitPhysics(false),
+bReleased(false),
 impulse(0.4)
 {}
 
@@ -31,7 +33,7 @@ void ad_grav_wall::setup( ofImage * img,  ofCamera *cam ){
 //        ofAddListener(world.COLLISION_EVENT, this, &ad_grav_wall::onCollision);
         
         for( int i=1; i<=30; i++ ){
-            float size = 0.5 + i*i*0.002;
+            float size = 0.6 + i*i*0.008;
             sphereShapes.push_back( ofBtGetSphereCollisionShape( size ) );
             cout << ofToString(size,2) << " ";
         }
@@ -83,7 +85,7 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
 
         int updown = j==0 ? 1:-1;
         int logr = ofRandom(1,12);
-        float start_rate = ofRandom(0.1, 0.4);
+        float start_rate = ofRandom(0.15, 0.2);
         int start_id = side_num * start_rate;
 
         float expand_rate = ofRandom(1.1, 1.75);
@@ -91,7 +93,10 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
         
             pid++;
 
-            float logf = log10(3+i)/log10(3+side_num-1);
+            float logf = log10(1+i)/log10(1+side_num-1);
+			logf *= 0.3;
+			logf += (float)i/side_num * 0.7;
+			
             int add = side_num * logf * (0.8-start_rate);
             add += start_id;
             if( add >= side_num )
@@ -100,33 +105,26 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
             ofVec3f pivot = p1 + adder*add;
             
             float dist;
-            if( ofNoise(pid*0.0072) > 0.4){
+            if( ofNoise(i, j*0.007) > 0.55 ){
                 // stream
-                dist = ofNoise( j*13+i*0.04 )*120 + ofNoise(j*12 + i*0.7)*30.0;
-                dist *=1.3;
+                dist = ofNoise( j*13+i*0.01 )*100 + ofNoise(j*12 + i*0.3)*30.0;
+                dist *= 4.0;
             }else{
-                dist = ofNoise( j, i*0.05 )*120 + ofNoise(j, i*0.5)*30.0;
-                dist *= (1 + ofNoise(pid*0.007)*2.0);
+                dist = ofNoise( j, i*0.05 )*100 + ofNoise(j, i*0.5)*30.0;
+				dist *= 3.0;
+			}
+			
+			
+            if( ofRandomuf()>0.8){
+                dist *= 1.5;
             }
             
-            dist *= 2.0;
-            dist += add*add*0.00001;
-            
-            if( add > side_num*0.9 )
-                dist *= 0.5;
-            else if(add < side_num*0.5)
-                dist *= 0.5;
-            
-            if( ofRandomuf()>0.96){
-                dist *= 3;
-            }
-            
-            dist = MAX(110, dist);
+            dist = MAX(50, dist);
             dist *= updown;
             
             ofVec3f pos = pivot + gvw->norm*dist;
-//            pos.y += ofSignedNoise(pid*0.0021) * 50;
-//            pos.x += ofSignedNoise(nshapes+pid*0.00001) * 40;
+            pos.y += ofSignedNoise(pid*0.0021) * 100;
+            pos.x += ofRandomf() * 250;
             
             pivots.push_back( pivot );
             
@@ -137,7 +135,7 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
             size = ofMap(size, 0, 30.0, 0, 29, true);
             
             float friction = ofApp::app->getNoise(i+400,2) * 10.0;
-            float restriction = 1 + ofNoise(pid*0.01)*0.25;
+            float restriction = 0.75 + ofNoise(pid*0.01)*1.0;
             
             s->init( sphereShapes[(int)size] );
             s->create( world.world, pos, mass );
@@ -196,12 +194,12 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
         float angle = dir.angle( xa );
         ofQuaternion quat( angle, ofVec3f(0,0,1) );
         float mass = 0;
-        wall_thickness = 40;
+        wall_thickness = 80;
         ofVec3f size( length+3, wall_thickness, 1000 );
         w->create( world.world, center, quat, mass, size.x, size.y, size.z );
 
-        float restriction = 1.52;
-        float friction = 0.95;
+        float restriction = 0.7;
+        float friction = 0.5;
         w->setProperties( restriction, friction );
         w->add( wall_col_group, wall_col_setting );
         w->getRigidBody()->setUserPointer( NULL );
@@ -234,11 +232,11 @@ void ad_grav_wall::update_attrs(){
 
             ofVec3f grav_dir = ad_geom_util::vec_pl(pos, gl->p1, gl->p2 );
             grav_dir.normalize();
-            
+			
             btVector3 grav(grav_dir.x, grav_dir.y, grav_dir.z );
             
             btRigidBody* body = btRigidBody::upcast(objs[i]);
-            body->applyCentralForce( grav * impulse * 150 );
+            body->applyCentralForce( grav * impulse * 2000 );
         }
     }
 }
@@ -252,6 +250,92 @@ void ad_grav_wall::update_lines(){
     const vector<ofFloatColor> & pcol = points.getColors();
     
 	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
+	
+#pragma mark GLOBAL_PIVOT_LINE
+	{
+		int n = 1 + ofNoise(ofGetFrameNum()*1.2) * 800;
+		for( int i=0; i<n; i++ ){
+		
+			int id1 = ofNoise(i, ofGetFrameNum()*2.0) * (objs.size()-1);
+			if( ofRandomuf()<0.02 ) id1 = ofRandom(0, 20);
+			
+			ofPoint &gpv = ofApp::app->global_pivot;
+			
+			btTransform &trans1 = objs[id1]->getWorldTransform();
+			btVector3 &bpos1 = trans1.getOrigin();
+			ofVec3f pos1( bpos1.x(), bpos1.y(), bpos1.z() );
+			
+			float d = pos1.distance( gpv );
+			float limit = 800;
+			if( d<30 || limit<d  ) continue;
+			
+			ofFloatColor c = ofFloatColor(0.8, 0.8) - pcol[id1];
+			c.a = 0.4;
+			
+			lines.addVertex( pos1 );
+			lines.addVertex( gpv );
+			lines.addColor( c );
+			lines.addColor( c );
+			
+			for( int k=0; k<3; k++ ){
+				float rate = 1+k*0.5;
+				
+				ofVec3f d1 = pos1;
+				ofVec3f d2 = gpv;
+				d1.x += ofRandomf() * rate;
+				d1.y += ofRandomf() * rate;
+				
+				lines.addVertex( d1 );
+				lines.addVertex( d2 );
+				lines.addColor( c );
+				lines.addColor( c );
+			}
+		}
+	}
+#pragma mark RANDOM_LINE
+	for( int i=0; i<1000; i++ ){
+
+		int id1 = ofRandom(0, objs.size()-1);
+		int id2 = ofRandom(0, objs.size()-1);
+		
+		btTransform &trans1 = objs[id1]->getWorldTransform();
+		btVector3 &bpos1 = trans1.getOrigin();
+		ofVec3f pos1( bpos1.x(), bpos1.y(), bpos1.z() );
+		
+		btTransform &trans2 = objs[id2]->getWorldTransform();
+		btVector3 &bpos2 = trans2.getOrigin();
+		ofVec3f pos2( bpos2.x(), bpos2.y(), bpos2.z() );
+		
+		float d = pos1.distance(pos2);
+		float limit = 300;
+		if( d<30 || limit<d  ) continue;
+		
+		ofFloatColor c = ofFloatColor(0.8, 0.8) - pcol[id1];
+		c.b = 1;
+		c.a = 0.2;
+		
+		lines.addVertex( pos1 );
+		lines.addVertex( pos2 );
+		lines.addColor( c );
+		lines.addColor( c );
+		
+		for( int k=0; k<3; k++ ){
+			float rate = 3.0 + k;
+			
+			ofVec3f d1 = pos1;
+			ofVec3f d2 = pos2;
+			d1.x += ofRandomf() * rate;
+			d1.y += ofRandomf() * rate;
+			d2.x += ofRandomf() * rate;
+			d2.y += ofRandomf() * rate;
+			
+			lines.addVertex( d1 );
+			lines.addVertex( d2 );
+			lines.addColor( c );
+			lines.addColor( c );
+		}
+	}
+	
 	for( int i=0; i<objs.size(); i++ ){
         
         float nR = ofApp::app->getNoise(i,0);
@@ -262,115 +346,197 @@ void ad_grav_wall::update_lines(){
 		btVector3 &bpos = trans.getOrigin();
 		ofVec3f pos1( bpos.x(), bpos.y(), bpos.z() );
         pos1.z = 0;
-        int num_line = 1 + (nR+nG);
-        bool bStatic1 = objs[i]->isStaticObject();
-        if( bStatic1 ) continue;
-        
-        multimap<float, ofVec3f> near_p;
-        pair<float, ofVec3f> pair1( 999999999999, ofVec3f(-12345,0,0) );
-        for( int line=0; line<num_line; line++ ){
-            near_p.insert( pair1 );
-        }
-        
 
-        for( int j=i+1; j<objs.size(); j++ ){
-
-			bool bStatic2 = objs[j]->isStaticObject();
-            if( bStatic2 ) continue;
-            
-			btTransform &trans = objs[j]->getWorldTransform();
-			btVector3 &bpos = trans.getOrigin();
-			ofVec3f pos2( bpos.x(), bpos.y(), bpos.z() );
-            pos2.z = 0;
-
-			float dist = pos1.distance( pos2 );
-            
-            multimap<float, ofVec3f>::iterator itr = near_p.end();
-            
-            itr--;
-            if( dist < itr->first ){
-                std::pair<float, ofVec3f> pair2( dist, pos2 );
-                near_p.insert( pair2 );
-                
-                multimap<float, ofVec3f>::iterator end = near_p.end();
-                near_p.erase( --end );
-            }
-        }
-        multimap<float, ofVec3f>::iterator itr = near_p.begin();
-        
+		
 #pragma mark NEAR_LINE
-        for(; itr!=near_p.end(); itr++ ){
-            ofVec3f &pos2 = itr->second;
-            if(pos2.x == -12345) continue;
-            
-            float d = pos1.distance(pos2);
-            float limit = 200;
-            
-            if( d<2 || limit<d  ) continue;
+		{
+			int num_line = ofNoise(i, ofGetFrameNum() ) * 20.0 - 2;
+			bool bStatic1 = objs[i]->isStaticObject();
+			if( bStatic1 ) continue;
+			
+			if( num_line <= 0 ) continue;
+			
+			multimap<float, ofVec3f> near_p;
+			pair<float, ofVec3f> pair1( 999999999999, ofVec3f(-12345,0,0) );
+			for( int line=0; line<num_line; line++ ){
+				near_p.insert( pair1 );
+			}
+			
+			for( int j=0; j<objs.size(); j++ ){
+				if( i==j ) continue;
 
-            ofFloatColor c = ofFloatColor(0.8, 0.8) - pcol[i];
-            c.r += nR*0.1 + ofRandomf()*0.01;
-            c.g += nG*0.1 + ofRandomf()*0.01;
-            c.b += nB*0.1  + ofRandomf()*0.01;
-            lines.addVertex( pos1 );
-            lines.addVertex( pos2 );
-            lines.addColor( c );
-            lines.addColor( c );
-        }
-        
-        
-        // pivot line
-        
-        gvWall * gl = static_cast<gvWall*>(objs[i]->getUserPointer());
-        if( gl != NULL){
-            ofVec3f toline = ad_geom_util::vec_pl(pos1, gl->p1, gl->p2);
-            ofVec3f onLine = pos1 + toline;
-            float len = toline.length();
-            bool isOnline = ad_geom_util::isOnline(onLine, gl->p1, gl->p2);
-            if( len < 300 && isOnline ){
-                
-                if( ofApp::app->getNoise(i,2) + ofNoise(i*0.002) > 1.45 ){
-                    
-                    prep_lines.addVertex(pos1);
-                    prep_lines.addVertex(onLine);
-                    
-                    ofFloatColor c = pcol[i];
-                    c.b *= 0.2;
-                    c *= 0.8;
-                    c.a = 0.4;
-                    prep_lines.addColor( c );
-                    prep_lines.addColor( c );
-                }
+				bool bStatic2 = objs[j]->isStaticObject();
+				if( bStatic2 ) continue;
+				
+				btTransform &trans = objs[j]->getWorldTransform();
+				btVector3 &bpos = trans.getOrigin();
+				ofVec3f pos2( bpos.x(), bpos.y(), bpos.z() );
+				pos2.z = 0;
 
-                
-                if ( 10<len && len<1500 ) {
-                    if( ofApp::app->getNoise(i)>0.3) continue;
-                    
-                    int n = ofApp::app->getNoise( i ) * 5;
-                    for (int k=0; k<n; k++) {
-                        ofVec3f dir = gl->p2-gl->p1;
-                        ofVec3f dirn = dir.getNormalized();
-                        int step = ofRandom(14, 20);
-                        float curb_rate = ofRandom(0.6, 3.5);
-                        
-                        if(len < 120) curb_rate *= 2.3;
+				float dist = pos1.distance( pos2 );
+				
+				multimap<float, ofVec3f>::iterator itr = near_p.end();
+				
+				itr--;
+				if( dist < itr->first ){
+					std::pair<float, ofVec3f> pair2( dist, pos2 );
+					near_p.insert( pair2 );
+					
+					multimap<float, ofVec3f>::iterator end = near_p.end();
+					near_p.erase( --end );
+				}
+			}
+			multimap<float, ofVec3f>::iterator itr = near_p.begin();
+			
+			for(; itr!=near_p.end(); itr++ ){
+				ofVec3f &pos2 = itr->second;
+				if(pos2.x == -12345) continue;
+				
+				float d = pos1.distance(pos2);
+				float limit = 600;
+				
+				if( d<10 || limit<d  ) continue;
 
-                        ofVec3f adder = toline/step;
-                        
-                        ofPolyline poly;
-                        poly.addVertex( pos1 );
-                        int pn = 4;
+				ofFloatColor c = ofFloatColor(0.8, 0.8) - pcol[i];
+				c.a = 0.2;
 
-                        dirn *= ofNoise( i*0.03 )<0.25 ? -1 : 1;
-                        for (int l=0; l<step; l++) {
-                    
-                            ofVec3f p = pos1 + adder * (pow((float)l,pn)/pow((float)step-1,pn)) * step;
-                            p += dirn * l* log10(i)/log10(step-1) * curb_rate;
-                            poly.addVertex( p );
-                        }
-                        polys.push_back( poly );
-                    }
-                }
+				lines.addVertex( pos1 );
+				lines.addVertex( pos2 );
+				lines.addColor( c );
+				lines.addColor( c );
+
+				c.r += nR*0.1 + ofRandomf()*0.01;
+				c.g += nG*0.1 + ofRandomf()*0.01;
+				c.b += nB*0.1  + ofRandomf()*0.01;
+
+				c.a = 0.1;
+
+				int n = ofNoise( i, ofGetFrameNum() ) * 10.0;
+				for( int k=0; k<n; k++ ){
+					float rate = 1.0 + k;
+
+					ofVec3f d1 = pos1;
+					ofVec3f d2 = pos2;
+					d1.x += ofRandomf() * rate;
+					d1.y += ofRandomf() * rate;
+					d2.x += ofRandomf() * rate;
+					d2.y += ofRandomf() * rate;
+
+					lines.addVertex( d1 );
+					lines.addVertex( d2 );
+					lines.addColor( c );
+					lines.addColor( c );
+				}
+			}
+		}
+		
+		
+#pragma mark PREP_LINE
+		gvWall * gl = static_cast<gvWall*>(objs[i]->getUserPointer());
+		if( gl != NULL){
+			ofVec3f toline = ad_geom_util::vec_pl(pos1, gl->p1, gl->p2);
+			ofVec3f onLine = pos1 + toline;
+			float len = toline.length();
+			bool isOnline = ad_geom_util::isOnline(onLine, gl->p1, gl->p2);
+			
+			if( ofApp::app->getNoise(i,2) + ofNoise(i*0.002) > 1.45 ){
+				
+				if( len < 150 && isOnline ){
+					
+					prep_lines.addVertex(pos1);
+					prep_lines.addVertex(onLine);
+					
+					ofFloatColor c = pcol[i];
+					c.b *= 1;
+					c.a = 0.35;
+					prep_lines.addColor( c );
+					prep_lines.addColor( c );
+					
+					int n = 1 + ofNoise( i, ofGetFrameNum() ) * 20.0;
+					for( int k=0; k<n; k++ ){
+						float rate = 1.0 + k*0.1;
+						
+						ofVec3f d1 = pos1;
+						ofVec3f d2 = onLine;
+						d1.x += ofRandomf() * rate;
+						d1.y += ofRandomf() * rate;
+						d2.x += ofRandomf() * rate;
+						d2.y += ofRandomf() * rate;
+						
+						lines.addVertex( d1 );
+						lines.addVertex( d2 );
+						lines.addColor( c );
+						lines.addColor( c );
+					}
+				}
+			}
+			
+			if( bReleased )
+				continue;
+			
+#pragma mark POLY_LINE
+			if ( 10<len && len<200 ) {
+				if( ofApp::app->getNoise(i)>0.3) continue;
+				
+				int n = ofApp::app->getNoise( i ) * 6;
+				ofVec3f dir = gl->p2-gl->p1;
+				ofVec3f dirn = dir.getNormalized();
+				ofVec3f toLinen = toline.getNormalized();
+				
+				float lenToEnd = (gl->p2 - onLine).length();
+				
+				dirn *= ofNoise( i*0.03 )<0.25 ? -1 : 1;
+				
+				for (int k=0; k<n; k++) {
+					
+					for( int l=0; l<5; l++ ){
+						int step = 60 + ofRandomf()*5;
+						float width = lenToEnd; //300 + ofRandomf()*10;
+						
+						ofVec3f current = pos1 + ofVec3f(5, ofRandomf()*5, 0);
+						ofVec3f toline = ad_geom_util::vec_pl(current, gl->p1, gl->p2);
+						float height = toline.length();
+						
+						ofPolyline poly;
+						poly.addVertex( pos1 );
+						
+						current += dirn*30;
+						poly.addVertex( current );
+						
+						ofxTransitions tr;
+						for( int l=0; l<step; l++ ){
+							float plotx = log10(l)/log10(step);
+							float x = width * plotx;
+							float y = tr.easeInOutCubic(l, 0, height, step);
+							ofVec3f v =  dirn*x + toLinen*y;
+							poly.addVertex( current + v);
+						}
+						polys.push_back( poly );
+					}
+					
+					//						for( int l=0; l<5; l++ ){
+					//
+					//							int step = ofRandom(14, 20);
+					//							float curb_rate = ofRandom(0.6, 3.5);
+					//
+					//							if(len < 120) curb_rate *= 2.3;
+					//
+					//							ofVec3f adder = toline/step;
+					//
+					//							ofPolyline poly;
+					//							poly.addVertex( pos1 );
+					//							int pn = 4;
+					//
+					//							dirn *= ofNoise( i*0.03 )<0.5 ? -1 : 1;
+					//							for (int l=0; l<step; l++) {
+					//
+					//								ofVec3f p = pos1 + adder * (pow((float)l,pn)/pow((float)step-1,pn)) * step;
+					//								p += dirn * l* log10(i)/log10(step-1) * curb_rate;
+					//								poly.addVertex( p );
+					//							}
+					//							polys.push_back( poly );
+					//						}
+				}
             }
         }
     }
@@ -380,7 +546,7 @@ void ad_grav_wall::update_points(){
 
     vector<ofVec3f> & verts = points.getVertices();
     vector<ofFloatColor> &cols = points.getColors();
-    
+	
     for( int i=0; i<shapes.size(); i++ ){
         ofVec3f p = shapes[i]->getPosition();
         p.z = 0;
@@ -395,20 +561,23 @@ void ad_grav_wall::update_points(){
 
 void ad_grav_wall::draw(){
     ofNoFill();
-    ofSetLineWidth( 1 );
-	for( int i=0; i<gvws.size(); i++ ){
-		ofSetColor( 0 );
-		ofLine( gvws[i]->p1, gvws[i]->p2 );
-	}
 
-    glPointSize( 2 );
+	if( ofApp::app->exporter.getFrameNum() <= 1 ){
+		ofSetLineWidth( 1 );
+		for( int i=0; i<gvws.size(); i++ ){
+			ofSetColor( 0 );
+			ofLine( gvws[i]->p1, gvws[i]->p2 );
+		}
+	}
+	
+    glPointSize( 1 );
     points.draw();
 
     glLineWidth( 1 );
     lines.draw();
 
     for( int i=0; i<polys.size(); i++ ){
-        ofSetColor(10,0,60, 170);
+        ofSetColor(10,0,60, 80);
         polys[i].draw();
     }
 
@@ -421,3 +590,13 @@ void ad_grav_wall::onCollision( ofxBulletCollisionData &cdata ){
     //    collision.insert( collision.end(), cdata.worldContactPoints1.begin(), cdata.worldContactPoints1.end() );
 }
 
+void ad_grav_wall::releaseGrav(){
+	
+	for( int i=0; i<shapes.size(); i++ ){
+		short mask = particle_col_group | wall_col_group;
+		shapes[i]->getRigidBody()->getBroadphaseProxy()->m_collisionFilterMask = mask;
+	}
+	
+    impulse = -0.02;
+	bReleased = true;
+}

@@ -32,12 +32,16 @@ void ofApp::setup(){
     noise = gpu_noise.getNoiseData();
     
     bool imgload = img.loadImage( "img/fixed_point/lg/losglaciares02.jpg");
-    if( imgload ) cout << "load image ok " << endl;
-    else cout << " ! load image fail" << endl;
-    
-        
-    grav_wall.setup( &img );
-    
+	if( imgload ){
+		cout << "load image ok " << endl;
+		grav_wall.setup( &img );
+	}else{
+		cout << " ! load image fail" << endl;
+		grav_wall.setup( NULL );
+	}
+	
+	
+	
     int n = sABC.getNumPath();
     cout << "load SVG success, found " << n << " paths" << endl;
     for( int i=0; i<n; i++ ){
@@ -62,7 +66,7 @@ void ofApp::setup(){
     exporter.setOutputDir( ofGetTimestampString() );
     ofSetWindowPosition(0, 0);
     ofSetWindowShape(w*0.5, h*0.5);
-    exporter.startExport();
+    //exporter.startExport();
 };
 
 

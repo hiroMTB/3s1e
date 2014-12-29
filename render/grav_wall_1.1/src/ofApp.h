@@ -54,5 +54,6 @@ public:
     ofxSVG sABC;
     ofxExportImageSequence exporter;
 
+	ofPoint global_pivot;
     ofImage img;
 };

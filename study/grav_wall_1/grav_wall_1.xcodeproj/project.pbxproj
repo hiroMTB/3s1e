@@ -135,8 +135,6 @@
 		4D744F361A28D867008B31A1 /* svgtiny_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny_internal.h; sourceTree = "<group>"; };
 		4D744F371A28D867008B31A1 /* svgtiny_list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
 		4D744F401A28E080008B31A1 /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
-		4D744F451A28EEA2008B31A1 /* ofxTileSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTileSaver.h; sourceTree = "<group>"; };
-		4D744F461A28EEA2008B31A1 /* ofxTileSaverImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTileSaverImage.h; sourceTree = "<group>"; };
 		4D78105B1A205B7300721FDE /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		4D78105C1A205B7300721FDE /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		4DDF9C7B1A36DC2E00F56DEB /* ad_geom_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_geom_util.cpp; path = ../../../module/ad_geom_util.cpp; sourceTree = "<group>"; };
@@ -386,28 +384,9 @@
 			path = ../../../addons/ofxExportImageSequence/src;
 			sourceTree = "<group>";
 		};
-		4D744F431A28EEA2008B31A1 /* ofxTileSaver */ = {
-			isa = PBXGroup;
-			children = (
-				4D744F441A28EEA2008B31A1 /* src */,
-			);
-			name = ofxTileSaver;
-			sourceTree = "<group>";
-		};
-		4D744F441A28EEA2008B31A1 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				4D744F451A28EEA2008B31A1 /* ofxTileSaver.h */,
-				4D744F461A28EEA2008B31A1 /* ofxTileSaverImage.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxTileSaver/src;
-			sourceTree = "<group>";
-		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				4D744F431A28EEA2008B31A1 /* ofxTileSaver */,
 				4D744F3E1A28E080008B31A1 /* ofxExportImageSequence */,
 				4D744F2B1A28D867008B31A1 /* ofxSvg */,
 				F6FB46A11A1F699700F7D98B /* ofxFastFboReader */,

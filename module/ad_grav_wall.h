@@ -44,13 +44,15 @@ public:
     void update_attrs();
     void draw();
     void onCollision( ofxBulletCollisionData& cdata );
-    
+	void releaseGrav();
+	
     static int particle_col_group;
     static int wall_col_group;
     static int particle_col_setting;
     static int wall_col_setting;
 
     bool bInitPhysics;
+	bool bReleased;
     float frame;
 
     float impulse;

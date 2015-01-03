@@ -57,7 +57,7 @@ public:
     ofxExportImageSequence exporter;
     
     //ofxSVG svg;
-    //ofxMaxGui gui;
+    ofxMaxGui gui;
 
     int frame;
 };

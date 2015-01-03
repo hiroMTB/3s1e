@@ -38,13 +38,15 @@ public:
     void setup( ofImage * img=NULL, ofCamera * cam = NULL );
 
     void create_line( ofVec2f p1, ofVec2f p2, float density=0.1 );
+    void create_wall( ofVec2f p1, ofVec2f p2 );
     void update();
     void update_lines();
     void update_points();
     void update_attrs();
     void draw();
     void onCollision( ofxBulletCollisionData& cdata );
-	void releaseGrav();
+	void setGrav( float g);
+    void toggleCollision();
 	
     static int particle_col_group;
     static int wall_col_group;
@@ -70,6 +72,7 @@ public:
     ofVboMesh points;
     ofVboMesh lines;
     ofVboMesh prep_lines;
+    ofVboMesh poly_lines;
     
     vector<gvWall*> gvws;
   

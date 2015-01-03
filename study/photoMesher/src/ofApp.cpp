@@ -30,7 +30,7 @@ void ofApp::setup(){
     cam.setFov( 15 );
     
     // 01, 03, 06, 10, 12
-    img.loadImage( "img/losglaciares10.jpg");
+    img.loadImage( "img/coffee_2.tif"); //losglaciares10.jpg");
     load_mesh( img );
     int nw = img.getWidth() / 2;
     int nh = img.getHeight() / 2;
@@ -63,21 +63,19 @@ void ofApp::setup(){
     
 	// gui
     {
-//        int y = 100; int offsety = 30;
-//        gui.setup( 12345, 5555 );
-//        gui.addPatcher(0, 0);
-//        gui.addOscOut(45, 10);
-//        gui.addToggle("draw_mesh", 45, y+=offsety, &bDrawMesh);
-//        gui.addToggle("draw_line_mesh", 45, y+=offsety, &bDrawLineMesh);
-//
-//        gui.addToggle("thruAccel", 45, y+=offsety, &bThruAccel);
-//
-//        gui.addFloat("extrusion", 45, y+=offsety, &extrusion);
-//        gui.addFloat("friction", 45, y+=offsety, &friction);
-//        gui.addFloat("speed", 45, y+=offsety,  &animSpeed);
-//        gui.addColor("background", 45, y+=offsety, &bg);
+        int y = 100; int offsety = 30;
+        gui.setup( 12345, 5555 );
+        gui.addPatcher(0, 0);
+        gui.addOscOut(45, 10);
+        gui.addToggle("draw_mesh", 45, y+=offsety, &bDrawMesh);
+        gui.addToggle("draw_line_mesh", 45, y+=offsety, &bDrawLineMesh);
+        gui.addToggle("thruAccel", 45, y+=offsety, &bThruAccel);
+        gui.addFloat("extrusion", 45, y+=offsety, &extrusion);
+        gui.addFloat("friction", 45, y+=offsety, &friction);
+        gui.addFloat("speed", 45, y+=offsety,  &animSpeed);
+        gui.addColor("background", 45, y+=offsety, &bg);
 //        gui.write( "_gui_main.maxpat" );
-//        gui.open( "_gui_main.maxpat" );
+        gui.open( "_gui_main.maxpat" );
     }
     
     //ofxSVG svg;
@@ -189,7 +187,7 @@ void ofApp::load_mesh( ofFloatImage &img ){
 
 void ofApp::update(){
 	//if( !exporter.isExporting() )
-     //   gui.update();
+    gui.update();
 	
     if( !bMove )
         return;

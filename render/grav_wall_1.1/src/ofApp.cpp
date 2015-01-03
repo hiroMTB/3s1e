@@ -15,10 +15,11 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( "svg_r/v2/ABC_r.svg" );
+    sABC.load( "svg_r/v2/FGH_r.svg" );
 
-	// ABC : 10 2362
-	global_pivot.set(10, 2362);
+	//global_pivot.set( 10, 2362 );          // ABC
+    //global_pivot.set( -320.89, 2126.188 );    // DEF
+    global_pivot.set( 2243.349, -5639.81 );   // FGH
     ofSetCircleResolution( 4 );
 
     gpu_noise.setup();
@@ -45,19 +46,35 @@ void ofApp::setup(){
     for( int i=0; i<n; i++ ){
         ofPath &p = sABC.getPathAt(i);
         ofFloatColor c = p.getStrokeColor();
-        
         vector<ofPolyline>& lines = p.getOutline();
         for(int j=0;j<(int)lines.size();j++){
             ofPoint st = ( lines[j].getVertices()[0] );
             ofPoint end = ( lines[j].getVertices()[1]);
-            grav_wall.create_line(st, end, 1 );
-            cout << "crate line" << endl;
+
+            if( c.b == 1 ){
+                // blue line is only for wall
+                grav_wall.create_wall(st, end );
+                cout << "crate wall" << endl;
+            }else{
+                grav_wall.create_line(st, end, 2.5 );
+                grav_wall.create_wall(st, end );
+                cout << "crate line&wall" << endl;
+            }
+
         }
     }
     
     ofSetVerticalSync( true );
-    int w = sABC.getWidth();
+    
+    /*
+     *
+     *      Dont know why but need +1 width
+     *      otherwise exporter save img in strange pixel alighment
+     *
+     */
+    int w = sABC.getWidth() + 1;
     int h = sABC.getHeight();
+    cout << "svg canvas size: " << w << ", " << h << endl;
     exporter.setup(w, h, 25, GL_RGBA, 8);
     exporter.setAutoExit(true);
     exporter.setFrameRange(1, 3000);
@@ -75,8 +92,15 @@ void ofApp::update(){
     noise = gpu_noise.getNoiseData();
     grav_wall.update();
     
-    if( exporter.getFrameNum() > 1500 && grav_wall.bReleased == false ){
-        grav_wall.releaseGrav();
+    int end_bounce = 700;
+    int collision_on = 1000;
+    int frame = exporter.isExporting() ? exporter.getFrameNum() : ofGetFrameNum();
+    if( end_bounce<frame && grav_wall.bReleased==false ){
+        grav_wall.setGrav(-0.1);
+    }
+    if(collision_on<frame){
+        grav_wall.toggleCollision();
+        //grav_wall.setGrav(-0.01);
     }
 }
 
@@ -86,7 +110,7 @@ void ofApp::draw(){
         ofEnableAntiAliasing();
         ofEnableSmoothing();
 
-        ofBackground( 255 );
+        ofBackground( 255, 255, 255, 255 );
         grav_wall.draw();
 
     }exporter.end();
@@ -100,7 +124,6 @@ void ofApp::draw(){
         draw_info();
         gpu_noise.draw(300, 10, 0.2);
         
-
     }ofPopMatrix();
 }
 
@@ -133,6 +156,10 @@ void ofApp::keyPressed( int key ){
             exporter.startExport();
             break;
             
+       case 'c':
+            grav_wall.toggleCollision();
+            break;
+            
 //        case OF_KEY_RIGHT:
 //        {
 //            int i = gpu_noise.getShaderType();
@@ -155,7 +182,7 @@ void ofApp::keyPressed( int key ){
 //            break;
                         
         case 'g':
-			grav_wall.releaseGrav();
+			grav_wall.setGrav(-0.5);
             break;
     };
 }

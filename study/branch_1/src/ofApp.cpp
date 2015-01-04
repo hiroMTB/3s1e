@@ -1,6 +1,13 @@
 #include "ofApp.h"
 #include "ad_util.h"
 
+ofApp * ofApp::app = NULL;
+
+ofApp * ofApp::init(){
+    if( app == NULL )
+        app = new ofApp();
+}
+
 void ofApp::setup(){
 
     ofSetVerticalSync( true );
@@ -9,11 +16,11 @@ void ofApp::setup(){
     ofEnableAlphaBlending();
     ofEnableSmoothing();
     
-    bStart = false;
-    bDrawInfo = true;
-    layer_num = 3;
-    sel_layer = 0;
+    layer_num = 1;
     setup_export_layer( 1920, 1080, layer_num );
+    setup_scene();
+
+    
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -29,45 +36,71 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     }
 
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w/2, h/2);
+    ofSetWindowShape(w, h);
+}
+
+void ofApp::setup_scene(){
+    
+    bStart = false;
+    bDrawInfo = true;
+    
+    
+    territoryFbo.allocate( 1920, 1080 );
+    territoryFbo.begin();
+    ofClear(0);
+    territoryFbo.end();
+    territoryPix.allocate( 1920, 1080, 4);
+    
+    Branch::root.set( 50, exps[0].getFbo().getHeight()/2 );
+    
+    for (int i=0; i<4; i++) {
+        Branch br;
+        float sp_len = ofRandom( 20, 50);
+        float sp_angle = 90;
+        sp_angle *= ofRandomuf()>0.5 ? 1 : -1;
+        float fw_len = ofRandom( 50, 220);
+        
+        ofVec3f dirn = ofVec3f(1,0,0); //.rotated(sp_angle, ofVec3f(0,0,1) );
+        dirn.normalize();
+        br.craete(NULL, dirn, sp_len, sp_angle, fw_len, 0, 0);
+        tree.push_back( br );
+    }
 }
 
 void ofApp::update(){
 
-
+    for (int i=0; i<tree.size(); i++) {
+        tree[i].update();
+    }
     
+    territoryFbo.readToPixels(territoryPix);
 }
 
 void ofApp::draw(){
 
     ofBackground(255);
+
     draw_layer_0();
-    draw_layer_1();
-    draw_layer_2();
     draw_preview();
+
+    if( bDebugDraw){
+        ofPushMatrix();
+        territoryFbo.draw(0, 0);
+        ofPopMatrix();
+    }
+
     draw_info();
 }
 
 void ofApp::draw_layer_0(){
     exps[0].begin(); {
         ofClear(0);
+
+        for (int i=0; i<tree.size(); i++) {
+            tree[i].draw();
+        }
         
-    
     } exps[0].end();
-}
-
-void ofApp::draw_layer_1(){
-    exps[1].begin(); {
-        ofClear(0);
-        
-    } exps[1].end();
-}
-
-void ofApp::draw_layer_2(){
-    exps[2].begin(); {
-        ofClear(0);
-        
-    } exps[2].end();
 }
 
 void ofApp::draw_preview(){
@@ -76,8 +109,6 @@ void ofApp::draw_preview(){
         ofBackground(255);
         ofSetColor(255);
         exps[0].draw(0, 0);
-        exps[1].draw(0, 0);
-        exps[2].draw(0, 0);
     } ofPopMatrix();
 }
 
@@ -86,8 +117,10 @@ void ofApp::draw_info(){
     stringstream ss;
     ss << ad_util::getFrameInfoString();
 
-    ofSetColor(0);
-    ofDrawBitmapString( ss.str(), 20, 20);
+    ofPushMatrix(); {
+        ofSetColor(0);
+        ofDrawBitmapString( ss.str(), 20, 20);
+    } ofPopMatrix();
 }
 
 void ofApp::keyPressed(int key){
@@ -106,17 +139,15 @@ void ofApp::keyPressed(int key){
                 exps[i].startExport();
             }
             break;
-
-        case '0':
-            sel_layer = 0;
+            
+        case 'c':
+            for (int i=0; i<tree.size(); i++) {
+                tree[i].create_child();
+            }
             break;
 
-        case '1':
-            sel_layer = 1;
-            break;
-
-        case '2':
-            sel_layer = 2;
+        case 'd':
+            bDebugDraw = !bDebugDraw;
             break;
             
         default:

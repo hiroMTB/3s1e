@@ -2,20 +2,27 @@
 
 #include "ofMain.h"
 #include "ofxExportImageSequence.h"
+#include "Branch.h"
+
+#include "tbb/parallel_for.h"
+#include "tbb/blocked_range.h"
 
 class ofApp : public ofBaseApp{
 
 public:
+
+    static ofApp * app;
+    static ofApp * init();
     void setup();
         void setup_export_layer( int w, int h, int num );
-
+        void setup_scene();
     void update();
     
     void draw();
         void draw_all();
         void draw_layer_0();
-        void draw_layer_1();
-        void draw_layer_2();
+        void draw_layer_1(){};
+        void draw_layer_2(){};
         void draw_preview();
         void draw_info();
     
@@ -24,7 +31,12 @@ public:
 
     bool bStart;
     bool bDrawInfo;
+    bool bDebugDraw;
     int layer_num;
-    int sel_layer;
     vector<ofxExportImageSequence> exps;
+    
+    vector<Branch> tree;
+
+    ofFbo territoryFbo;
+    ofPixels territoryPix;
 };

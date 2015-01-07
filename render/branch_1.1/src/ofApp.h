@@ -45,4 +45,6 @@ public:
     ofVec2f start;
 
     ofPoint win;
+    
+    double start_time;
 };

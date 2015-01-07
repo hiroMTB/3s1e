@@ -20,6 +20,7 @@ public:
         bool check_territory();
     
     void update();
+    void revive();
     void animate();
     
     
@@ -29,9 +30,9 @@ public:
     static int top_depth;
     static int total_bnum;
     static ofVec3f root;
-
+    static int active_total;
+    
     bool bDrawShapeAsPoint;
-    bool bDeadEnd;
     bool bMainBranch;
     
     int b_type;
@@ -54,4 +55,6 @@ public:
     ofVboMesh lines;
     
     vector<Branch> children;
+    
+
 };

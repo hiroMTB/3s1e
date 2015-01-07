@@ -15,8 +15,8 @@ void ofApp::setup(){
     ofEnableAntiAliasing();
     ofEnableAlphaBlending();
     ofEnableSmoothing();
-    
-    svg.load( "svg_r/v3/A_r.svg");
+
+    svg.load( "svg_r/v3/C_r.svg");
     win.x = svg.getWidth();
     win.y = svg.getHeight();
     cout << "svg : " << win << endl;
@@ -31,7 +31,10 @@ void ofApp::setup(){
                 if( vs.size() == 2 ){
                     ofVec3f st = vs[0];
                     ofVec3f end = vs[1];
-                    gAngle = (end-st).angle(ofVec3f(1,0,0) );
+                    ofVec3f dir = end-st;
+                    gAngle = dir.angle(ofVec3f(1,0,0) );
+                    if(dir.y > 0)
+                        gAngle = -gAngle;
                     start = st;
                     
                     cout << "gAngle : " << gAngle << endl;
@@ -44,6 +47,8 @@ void ofApp::setup(){
     layer_num = 1;
     setup_export_layer( win.x, win.y, layer_num );
     setup_scene();
+    
+    start_time = ofGetSystemTime();
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -54,12 +59,12 @@ void ofApp::setup_export_layer( int w, int h, int num ){
         exps.push_back( ofxExportImageSequence() );
         exps[i].setup(w, h, 25, GL_RGBA, 8 );
         exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.tif");
-        exps[i].setFrameRange( 1, 3000 );
+        exps[i].setFrameRange( 1, 1501 );
         exps[i].setAutoExit( true );
     }
 
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w*0.5, h*0.5);
+    ofSetWindowShape(w/2, h/2);
     exps[0].startExport();
 }
 
@@ -67,7 +72,7 @@ void ofApp::setup_scene(){
     
     bStart = false;
     bDrawInfo = true;
-
+    
     if( img.loadImage("img/fixed_point/lg/losglaciares04.jpg") )
         cout << "Image load OK" << endl;
     else
@@ -82,7 +87,7 @@ void ofApp::setup_scene(){
 //    Branch::root.set( 50, exps[0].getFbo().getHeight()/2 );
     Branch::root.set( 0,0);
     
-    int num_first_branch = 2;
+    int num_first_branch = 4;
     for (int i=0; i<num_first_branch; i++) {
         ofVec3f dirn = ofVec3f(1,0,0);
         Branch br;
@@ -94,15 +99,19 @@ void ofApp::setup_scene(){
 
 void ofApp::update(){
 
+    Branch::active_total = 0;
+    
     for (int i=0; i<tree.size(); i++) {
         tree[i].update();
     }
-    
-    territoryFbo.readToPixels(territoryPix);
+        
+    for (int i=0; i<tree.size(); i++) {
+        tree[i].revive();
+    }
+    //territoryFbo.readToPixels(territoryPix);
     
     for (int i=0; i<tree.size(); i++) {
-        if( ofNoise( ofGetSystemTime()%100, ofGetFrameNum()*0.5) > 0.6)
-            tree[i].create_child();
+        tree[i].create_child();
     }
 }
 
@@ -125,16 +134,17 @@ void ofApp::draw(){
 void ofApp::draw_layer_0(){
     exps[0].begin(); {
         ofClear(0);
+        //ofBackground(255);
         
         if( bDebugDraw )
             svg.draw();
         
         ofTranslate( start );
         ofRotateZ( -gAngle );
+
         for (int i=0; i<tree.size(); i++) {
             tree[i].draw();
         }
-        
         
     } exps[0].end();
 }
@@ -155,6 +165,7 @@ void ofApp::draw_info(){
 
     ss << "Branch Num       : " << Branch::total_bnum << "\n";
     ss << "Branch Top Depth : " << Branch::top_depth << "\n";
+    ss << "Branch active total : " << Branch::active_total << "\n";
     
     ofPushMatrix(); {
         ofSetColor(0);

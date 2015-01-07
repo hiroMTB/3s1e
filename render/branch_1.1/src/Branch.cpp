@@ -9,51 +9,26 @@
 #include "ofApp.h"
 #include "ofxTransitions.h"
 
-int Branch::top_depth = -1;
+int Branch::top_depth = 0;
 int Branch::total_bnum = 0;
+int Branch::active_total= 0;
+
 ofVec3f Branch::root = ofVec3f(0,0,0);
 
 void Branch::craete(Branch *_parent, ofVec3f _dirn ){
-
+    
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
     points.setUsage( GL_DYNAMIC_DRAW );
     points.setMode( OF_PRIMITIVE_POINTS );
     
     bDrawShapeAsPoint = false;
-    bDeadEnd = false;
     bMainBranch = false;
     parent = _parent;
     dirn = _dirn;
-
-
-    // dead end?
-    if( depth != top_depth ){
-        bDeadEnd = ofRandomuf()>0.5;
-        bMainBranch = false;
-    }else{
-        bDeadEnd = false;
-    }
-
-    color.set(0.9, 0.9);
-    set_param();
-
-    int trial = 0;
-    while ( trial<10 && !check_territory() ) {
-        set_param();
-    }
+    depth = 0;
     
-    calc_posision();
-    calc_shape();
-
-    ofApp::app->territoryFbo.begin();
-    ofSetColor(0, 0, 0, 80);
-    ofCircle( end, 30 );
-    ofRect( ofRectangle( st, end) );
-    ofApp::app->territoryFbo.end();
-}
-
-void Branch::set_param(){
+    color.set(1);
     
     b_type = floor( ofRandomuf() * 17);
     
@@ -63,17 +38,51 @@ void Branch::set_param(){
         }
     }
     
-    if( parent == NULL ){
-        depth = 0;
-    }else{
+    if( parent )
         depth = parent->depth+1;
-    }
-
+    
     bid = total_bnum;
     
     // static param
     top_depth = MAX(top_depth, depth);
     total_bnum++;
+    
+    set_param();
+//    int trial = 0;
+//    while ( ++trial<10 && !check_territory() ) {
+//        set_param();
+//    }
+    
+    calc_posision();
+    calc_shape();
+
+//    ofApp::app->territoryFbo.begin();
+//    ofSetColor(0, 0, 0, 80);
+//    ofCircle( end, 30 );
+//    ofRect( ofRectangle( st, end) );
+//    ofApp::app->territoryFbo.end();
+    
+    int w = ofApp::app->img.getWidth();
+    int h = ofApp::app->img.getHeight();
+    int x = bid*3%w;
+    int y = bid*3/w;
+    color = ofApp::app->img.getColor( x, y );
+    
+    if( ofRandomuf()>0.99 ){
+        color.set(0.8,0,0.2 );
+    }
+    
+    if( ofRandomuf()>0.99 ){
+        color.set(1);
+    }
+    
+    color.a = 0.3 + ofRandomuf()*0.6;
+    
+    if( bMainBranch )
+        active_total++;
+}
+
+void Branch::set_param(){
     
     switch (b_type) {
         case 0:
@@ -121,7 +130,7 @@ void Branch::set_param(){
         case 11:
         case 12:
         case 13:
-            sp_angle = ofRandom(0,90);
+            sp_angle = ofRandom(0,135);
             sp_len = ofRandom( 15, 25 );
             fw_len = ofRandom( 10, 20 );
             break;
@@ -134,21 +143,26 @@ void Branch::set_param(){
     }
     
     // X jump
-    if( ofRandomuf()>0.98 ){
-        if( b_type != 6 && b_type != 9 && b_type != 7 && b_type != 8 )
+    if( ofRandomuf()>0.995 ){
+        if( b_type != 6 && b_type != 9 && b_type != 7 && b_type != 8 ){
             fw_len *= ofRandom(2, 10);
+
+            if( ofRandomuf() > 0.1 ){
+                bMainBranch = true;
+            }
+        }
     }else{
         fw_len *= 0.5;
     }
     
     // Y jump
-    if( ofRandomuf()>0.975){
+    if( ofRandomuf()>0.98){
         sp_len *= ofRandom(3, 12);
 
         float r = ofRandomuf();
-        if( r<0.25 ){
+        if( r<0.2 ){
             sp_angle = ofRandom(45, 90);
-        }else if( r<0.5 ){
+        }else if( r<0.35 ){
             sp_angle = 45;
             
             float r = ofRandomuf();
@@ -156,15 +170,16 @@ void Branch::set_param(){
                 b_type = floor(ofRandom(2,5));
             }
             
-        }else if( r<0.82 ){
+        }else if( r<0.75 ){
             sp_angle = 90;
         }else{
             sp_angle = 135;
-            sp_len *= 0.5;
+            sp_len *= 0.9;
         }
         
-        if( ofRandomuf() > 0.2 )
+        if( ofRandomuf() > 0.2 ){
             bMainBranch = true;
+        }
     }
     
     if( parent==NULL ){
@@ -175,17 +190,6 @@ void Branch::set_param(){
     }
     
     sp_angle *= ofRandomuf()>0.5 ? 1: -1;
-    
-    int w = ofApp::app->img.getWidth();
-    int h = ofApp::app->img.getHeight();
-    int x = bid*3%w;
-    int y = bid*3/w;
-    color = ofApp::app->img.getColor( x, y );
-    color.a = 0.6 + ofRandomuf()*0.3;
-    
-    if( ofRandomuf()>0.99 ){
-        color.set(0.8,0,0.2, 0.7);
-    }
 }
 
 bool Branch::check_territory(){
@@ -194,32 +198,31 @@ bool Branch::check_territory(){
 
 void Branch::create_child(){
 
-    if (depth == top_depth) {
+    bool top = depth == top_depth;
+    
+    if ( top ) {
         bMainBranch = true;
     }
     
     if( bMainBranch ){
-        bDeadEnd = false;
-    }
-
-    if( bDeadEnd )
-        return;
+        
+        if( ofRandomuf() > 0.5 ) return;
+   
+        if( top )
+            if( ofRandomuf() > 0.2 ) return;
+        
+        Branch child;
+        child.craete(this, dirn );
+        children.push_back( child );
     
-    if( bMainBranch ){
-        int n = 1;
-        
-        for (int i=0; i<n; i++) {
-            Branch child;
-            children.push_back( child );
-            int id = children.size() -1;
-            children[id].craete(this, dirn );
-        }
-        
         // inheirt main branch
-        if( bMainBranch && children.size() >= 4 ){
-            int id = floor( ofRandom(0, children.size()) );
+        int son = ofNoise(bid)*6 + 3;
+        
+        if( bMainBranch && children.size() > son ){
+            int id = ofRandom(0, children.size()-1);
             children[id].bMainBranch = true;
             bMainBranch = false;
+            return;
         }
     }else{
         for (int i=0; i<children.size(); i++) {
@@ -230,38 +233,37 @@ void Branch::create_child(){
 
 void Branch::update(){
     
-    //if( parent ){
-    //if( parent->end.x != st.x && parent->end.y != st.y ){
-    //animate();
-    calc_posision();
-    calc_shape();
-    //}
-    //}
+    if( bMainBranch)
+        active_total++;
+    
+    if( active_total > 12 ){
+        bMainBranch = false;
+    }
+    
+    if( parent ){
+        //calc_posision();
+        calc_shape();
+    }
     
     for (int i=0; i<children.size(); i++) {
         children[i].update();
     }
 }
 
+void Branch::revive(){
+    if( depth > top_depth*0.1 ){
+        if( ofRandomuf()>0.93 ){
+            bMainBranch = true;
+        }
+    }
+}
+
 void Branch::animate(){
-    if( ofRandomuf()>0.995){
-        sp_angle += ofRandom(-10, 10);
-    }
-
-    if( ofNoise(bid, ofGetFrameNum()*0.1) >0.9999){
-        fw_len *= 0.2;
-    }
-
-    if( ofRandomuf()>0.9999){
-        sp_len *= 0.2;
-    }
 }
 
 void Branch::calc_posision(){
     
-    if( parent == NULL ){
-        st = root;
-    }else{
+    if( parent ){
         st = parent->end;
     }
     
@@ -273,8 +275,10 @@ void Branch::calc_shape(){
     
     ofFloatColor c = color;
     if (bMainBranch) {
-        c.a = 1.0;
+        c.set( ofRandomuf()*0.3+0.7, 0, 0.2 );
+        c.a = ofRandomuf()*0.3 + 0.5;
     }
+    
     
     // clear
     lines.clearColors();
@@ -288,29 +292,26 @@ void Branch::calc_shape(){
         // LINEAR
         case 0:
         case 1:
-            if( bDrawShapeAsPoint ){
-                
-            }else{
-                int num_line = 1;
-                if( ofNoise(bid*0.4) > 0.6 ){
-                    num_line += ofNoise(bid*0.4)*4;
-                }
-                
-                float adder = ofNoise(bid*3.5) * 3 + 1;
-                for (int k=0; k<num_line; k++) {
-                    ofVec2f offset(k*adder, 0);
-                    lines.addVertex( st + offset);
-                    lines.addVertex( anchor + offset );
-                    lines.addVertex( anchor + offset );
-                    lines.addVertex( end + offset );
-                
-                    lines.addColor( c );
-                    lines.addColor( c );
-                    lines.addColor( c );
-                    lines.addColor( c );
-                }
+        {
+            int num_line = 1;
+            if( ofNoise(bid*0.4) > 0.6 ){
+                num_line += ofNoise(bid*0.4)*4;
             }
             
+            float adder = ofNoise(bid*3.5) * 3 + 1;
+            for (int k=0; k<num_line; k++) {
+                ofVec2f offset(k*adder, 0);
+                lines.addVertex( st + offset);
+                lines.addVertex( anchor + offset );
+                lines.addVertex( anchor + offset );
+                lines.addVertex( end + offset );
+                
+                lines.addColor( c );
+                lines.addColor( c );
+                lines.addColor( c );
+                lines.addColor( c );
+            }
+        }
             break;
 
         // SplineA
@@ -322,7 +323,7 @@ void Branch::calc_shape(){
             float height = dir.y;
 
             int num_line = 1;
-            if( ofNoise(bid)>0.5)
+            if( ofNoise(bid)>0.85)
                 num_line = ofNoise(bid)*5 + 1;
             
             int step = width * 0.5;
@@ -365,7 +366,7 @@ void Branch::calc_shape(){
             float height = dir.y;
             
             int num_line = 1;
-            if( ofNoise(bid*0.4)>0.5)
+            if( ofNoise(bid*0.4)>0.8)
                 num_line = ofNoise(bid)*5 + 1;
 
             int step = width * 0.5;
@@ -763,9 +764,6 @@ void Branch::calc_shape(){
 
             for (int i=0; i<step; i++) {
                 current.x += adderx;
-                
-                if( ofGetFrameNum()%step <= i+2 ) continue;
-                
                 float y = ofSignedNoise(i, ofGetFrameNum()*0.1) * bh/2 * 0.8;
                 lines.addVertex( current + ofVec2f(0, y) );
                 lines.addVertex( current - ofVec2f(0, y) );
@@ -964,6 +962,8 @@ void Branch::calc_shape(){
             lines.addColor( c );
         }
         
+            break;
+            
         // circle
         case 16:
         {
@@ -1001,6 +1001,8 @@ void Branch::calc_shape(){
             points.addVertex( anchor );
             points.addColor( c );
         }
+        
+        break;
             
         default:
             break;
@@ -1022,11 +1024,10 @@ void Branch::draw(){
         children[i].draw();
     }
     
-    if(bDeadEnd){
+    if(!bMainBranch){
         ofFill();
         ofSetLineWidth(0);
         ofSetColor( color );
         ofLine( end+ofVec3f(0,2,0), end-ofVec3f(0,2,0) );
     }
 }
-

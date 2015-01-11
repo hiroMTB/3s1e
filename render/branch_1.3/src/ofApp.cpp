@@ -95,13 +95,12 @@ void ofApp::setup_scene(){
         
     Branch::root.set( 0,0);
     
-    int num_first_branch = 20;
+    int num_first_branch = 30;
     for (int i=0; i<num_first_branch; i++) {
         ofVec3f dirn = ofVec3f(1,0,0);
-        Branch br;
-        br.craete( NULL, dirn );
-        br.bMainBranch = true;
-        tree.push_back( br );
+        tree.push_back( Branch() );
+        tree[tree.size()-1].craete( NULL, dirn );
+        tree[tree.size()-1].bMainBranch = true;
     }
 }
 
@@ -124,10 +123,6 @@ void ofApp::setup_export_layer( int w, int h, int num ){
 
 void ofApp::update(){
 
-    Branch::active_total = 0;
-    Branch::nonp.clear();
-    Branch::dist_limit = max_dist * (float)ofGetFrameNum()/max_frame;
-    
     for (int i=0; i<tree.size(); i++) {
         tree[i].update();
     }
@@ -142,6 +137,8 @@ void ofApp::update(){
         tree[i].create_child();
     }
 
+    Branch::update_s();
+    
 //    if( ofRandomuf() > 0.95 ){
 //        ofVec3f dirn = ofVec3f(1,0,0);
 //        Branch br;
@@ -209,7 +206,7 @@ void ofApp::draw_info(){
     ss << "Branch Num          : " << Branch::total_bnum << "\n";
     ss << "Branch Top Depth    : " << Branch::top_depth << "\n";
     ss << "Branch active total : " << Branch::active_total << "\n";
-    ss << "Branch nonp         : " << Branch::nonp.size() << "\n";
+    ss << "Branch nonp         : " << Branch::allb.size() << "\n";
     
     ofPushMatrix(); {
         ofSetColor(0);

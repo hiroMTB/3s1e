@@ -13,16 +13,17 @@ class Branch{
     
 public:
     
+    Branch();
     void craete( Branch * parent, ofVec3f dirn );
         void set_param();
         void calc_posision();
         void calc_shape();
         bool check_territory();
     
+    static void update_s();
     void update();
     void revive();
     void animate();
-    
     
     void draw();
     void create_child();
@@ -35,7 +36,8 @@ public:
 
     bool bDrawShapeAsPoint;
     bool bMainBranch;
-  
+    bool bInit;
+    
     static int max_b_type;
     static int max_f_type;
     
@@ -60,7 +62,7 @@ public:
     
     vector<Branch> children;
     
-    static vector<Branch*> nonp;
+    static vector<Branch*> allb;
 
     ofVec2f speed;
     ofVec2f initpos;

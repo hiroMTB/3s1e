@@ -17,7 +17,12 @@ int Branch::max_f_type = 15;
 float Branch::dist_limit = 100;
 
 ofVec3f Branch::root = ofVec3f(0,0,0);
-vector<Branch*> Branch::nonp;
+vector<Branch*> Branch::allb;
+
+Branch::Branch()
+:bInit(false)
+{
+}
 
 void Branch::craete(Branch *_parent, ofVec3f _dirn ){
     
@@ -26,6 +31,7 @@ void Branch::craete(Branch *_parent, ofVec3f _dirn ){
     points.setUsage( GL_DYNAMIC_DRAW );
     points.setMode( OF_PRIMITIVE_POINTS );
     
+    bInit = true;
     bDrawShapeAsPoint = false;
     bMainBranch = false;
     bStation = false;
@@ -73,7 +79,8 @@ void Branch::craete(Branch *_parent, ofVec3f _dirn ){
     
     initpos = st;
     speed.set(-123,-123);
-
+    
+    allb.push_back(this);
 }
 
 void Branch::set_param(){
@@ -84,24 +91,21 @@ void Branch::set_param(){
     
 #pragma mark JUMP
     // X jump
-    bool xjump = ofRandomuf()>0.99;
+    bool xjump = ofRandomuf()>0.985;
     if( xjump ){
-        if( b_type != 6 && b_type != 9 && b_type != 7 && b_type != 8 ){
-            fw_len *= ofRandom(2, 10);
-
-            if( ofRandomuf() > 0.1 ){
-                bMainBranch = true;
-            }
+        fw_len *= ofRandom(2, 10);
+        if( ofRandomuf() > 0.1 ){
+            bMainBranch = true;
         }
     }else{
         fw_len *= 0.5;
     }
     
     // Y jump
-    bool yjump = ofRandomuf()>0.98;
+    bool yjump = ofRandomuf()>0.975;
 
     if( yjump ){
-        sp_len *= ofRandom(2, 7);
+        sp_len *= ofRandom(2, 10);
 
         float r = ofRandomuf();
         if( r<0.2 ){
@@ -126,7 +130,7 @@ void Branch::set_param(){
         }
     }
     
-    node_anim_speed = ofRandom(0.3, 2);
+    node_anim_speed = ofRandom(0.1, 2);
     
 #pragma mark STATION_SETTING
     if( parent!=NULL && parent->bStation ==false ){
@@ -149,11 +153,12 @@ void Branch::set_param(){
 
 #pragma mark ROOT_SETTINGS
     if( parent==NULL ){
-        sp_angle = 0;
+        sp_angle = ofRandom(0, 30);
         sp_len += ofRandom(70,150);
         fw_len += ofRandom(70,150);
         st = root;
         b_type = ofRandom(0,max_b_type);
+        f_type = ofRandom(0,max_f_type);
         node_anim_speed = 1;
     }
     
@@ -176,12 +181,11 @@ void Branch::create_child(){
         
         if( !bStation && ofRandomuf() > 0.3 ) return;
    
-        int n = 1;
+        int n = 3;
         if(bStation) n = ofRandomuf()*5 + 5;
         for (int i=0; i<n; i++) {
-            Branch child;
-            child.craete(this, dirn );
-            children.push_back( child );
+            children.push_back( Branch() );
+            children[children.size()-1].craete(this, dirn );
         }
         
         // inheirt main branch        
@@ -214,11 +218,6 @@ void Branch::update(){
     for (int i=0; i<children.size(); i++) {
         children[i].update();
     }
-    
-    
-    if( parent == NULL){
-        nonp.push_back(this);
-    }
 }
 
 void Branch::revive(){
@@ -234,8 +233,8 @@ void Branch::animate(){
         node_anim_time += node_anim_speed;
         
         if( speed.x == -123){
-            float xamp = 0.5;
-            float yamp = 0.1;
+            float xamp = 0.6;
+            float yamp = 0.0;
             speed.x = ofNoise(bid*0.35 + 4) * xamp;
             speed.y = ofSignedNoise(bid*0.5) * yamp;
         }
@@ -251,8 +250,10 @@ void Branch::animate(){
     if( 1 ){
         
         if( ofRandomf() > 0.993){
-            fw_len *= 0.8;
-            calc_posision();
+            if( fw_len>40 ){
+                fw_len *= 0.8;
+                calc_posision();
+            }
         }
 
         if( ofRandomf() > 0.993){
@@ -261,8 +262,10 @@ void Branch::animate(){
         }
         
         if( ofRandomf() > 0.993){
-            sp_len *= 0.8;
-            calc_posision();
+            if( sp_len>40 ){
+                sp_len *= 0.8;
+                calc_posision();
+            }
         }
         
         if( ofRandomf() > 0.999){
@@ -478,7 +481,7 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
      *
      *
      */
-    if( node_anim_time < 1 ){
+    if( node_anim_time < 2 ){
         return;
     }
     
@@ -894,7 +897,7 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
             int n_step = MIN(step, node_anim_time*3 );
 
             for (int i=0; i<n_step; i++) {
-                if( ofRandomuf()> 0.95)
+                if( ofRandomuf()> 0.98)
                     continue;
                 float rad1 = i*adder;
                 ofVec2f p( cos(rad1), sin(rad1) );
@@ -1040,4 +1043,31 @@ void Branch::draw(){
         ofSetColor( color );
         ofLine( end+ofVec3f(0,2,0), end-ofVec3f(0,2,0) );
     }
+}
+
+void Branch::update_s(){
+    
+    active_total = 0;
+    dist_limit = ofApp::app->max_dist * (float)ofGetFrameNum()/ofApp::app->max_frame;
+    
+    int n= allb.size()-1;
+
+//    if( n < 50 )
+//        return;
+//    
+//    int nline = n * 0.1;
+//    for (int i=0; i<nline; i++) {
+//        
+//        int id1 = ofRandomuf() * n;
+//        int id2 = ofRandomuf() * n;
+//        int id3 = ofRandomuf() * n;
+//        
+//        ofVec3f &v1 = allb[id1]->end;
+//        ofVec3f &v2 = allb[id2]->anchor;
+//        ofVec3f &v3 = allb[id3]->st;
+//        ofFloatColor c(1,0,0);
+//
+//        if( allb[id1]->bInit )
+//            allb[id1]->add_line(v1, v2, v3, c, 0, 0);
+//    }
 }

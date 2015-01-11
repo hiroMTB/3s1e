@@ -12,7 +12,7 @@
 int Branch::top_depth = 0;
 int Branch::total_bnum = 0;
 int Branch::active_total= 0;
-int Branch::max_b_type = 5;
+int Branch::max_b_type = 4;
 int Branch::max_f_type = 15;
 float Branch::dist_limit = 100;
 
@@ -58,13 +58,9 @@ void Branch::craete(Branch *_parent, ofVec3f _dirn ){
     if( ofRandomuf()>0.99 ){
         color.set(0.8,0,0.8 );
     }
-    
-    if( ofRandomuf()>0.99 ){
-        color.set(1,0.8);
-    }
 
     if( ofRandomuf()>0.99 ){
-        color.set(0,0.8);
+        color.set(0,1);
     }
 
     set_param();
@@ -82,9 +78,9 @@ void Branch::craete(Branch *_parent, ofVec3f _dirn ){
 
 void Branch::set_param(){
     
-    fw_len = ofRandom( 7, 50);
-    sp_len = ofRandom( 7, 50);
-    sp_angle = ofRandom(10, 80);
+    fw_len = ofRandom( 20, 70);
+    sp_len = ofRandom( 20, 70);
+    sp_angle = ofRandom(30, 100);
     
 #pragma mark JUMP
     // X jump
@@ -105,7 +101,7 @@ void Branch::set_param(){
     bool yjump = ofRandomuf()>0.98;
 
     if( yjump ){
-        sp_len *= ofRandom(3, 12);
+        sp_len *= ofRandom(2, 7);
 
         float r = ofRandomuf();
         if( r<0.2 ){
@@ -133,13 +129,9 @@ void Branch::set_param(){
     node_anim_speed = ofRandom(0.3, 2);
     
 #pragma mark STATION_SETTING
-    
     if( parent!=NULL && parent->bStation ==false ){
         if( yjump || xjump )
-            bStation = ofRandomf() > 0.9;
-        
-        if( bStation )
-            color.set(0,0,0.7,0.7);
+            bStation = ofRandomf() > 0.95;
     }
 
     if( bStation ){
@@ -149,9 +141,9 @@ void Branch::set_param(){
     }
     
     if( parent && parent->bStation ){
-        sp_angle = ofRandom(0,20);
-        sp_len += ofRandom(50,100);
-        fw_len += ofRandom(50,100);
+        sp_angle = ofRandom(20,90);
+        sp_len += ofRandom(30,150);
+        fw_len += ofRandom(30,150);
         b_type = ofRandom(0, max_b_type);
     }
 
@@ -243,7 +235,7 @@ void Branch::animate(){
         
         if( speed.x == -123){
             float xamp = 0.5;
-            float yamp = 0.35;
+            float yamp = 0.1;
             speed.x = ofNoise(bid*0.35 + 4) * xamp;
             speed.y = ofSignedNoise(bid*0.5) * yamp;
         }
@@ -254,6 +246,29 @@ void Branch::animate(){
         
         anchor += speed;
         end += speed;
+    }
+    
+    if( 1 ){
+        
+        if( ofRandomf() > 0.993){
+            fw_len *= 0.8;
+            calc_posision();
+        }
+
+        if( ofRandomf() > 0.993){
+            sp_angle += ofRandom(-10, 10);
+            calc_posision();
+        }
+        
+        if( ofRandomf() > 0.993){
+            sp_len *= 0.8;
+            calc_posision();
+        }
+        
+        if( ofRandomf() > 0.999){
+            node_anim_time = 0 + ofRandom(10, 30);
+            calc_posision();
+        }
     }
 }
 
@@ -270,11 +285,6 @@ void Branch::calc_posision(){
 void Branch::calc_shape(){
     
     ofFloatColor c = color;
-    if (bMainBranch) {
-        c.set( ofRandomuf()*0.3+0.7, 0, 0.2 );
-        c.a = ofRandomuf()*0.3 + 0.6;
-    }
-    
     
     // clear
     lines.clearColors();
@@ -284,18 +294,18 @@ void Branch::calc_shape(){
     
     add_line(st, anchor, end, c, b_type, f_type );
     
-    if( parent) {
-        if( parent->depth == depth-1){
-            ofVec2f dir = st - parent->end;
-            if( dir.length() < 3) return;
-
-            ofVec2f at = parent->end;
-            at.y += dir.y;
-            ofFloatColor ct = c;
-            ct.a *= 0.7;
-            add_line(parent->end, at, st, ct, round(ofRandom(0, max_b_type)), 0 );
-        }
-    }
+//    if( parent ) {
+//        if( parent->depth == depth-1){
+//            ofVec2f dir = st - parent->end;
+//            if( dir.length() < 3) return;
+//
+//            ofVec2f at = parent->end;
+//            at.y += dir.y;
+//            ofFloatColor ct = c;
+//            ct.a *= 0.8;
+//            add_line(parent->end, at, st, ct, round(ofRandom(0, max_b_type)), 0 );
+//        }
+//    }
     
     if (bStation) {
         points.addVertex( st );
@@ -373,6 +383,8 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
         // SplineB
         case 3:
         {
+            bool bDot = bid%2==0;
+
             ofxTransitions tr;
             ofVec3f dir = ap - sp;
             float width = dir.x;
@@ -391,13 +403,19 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
                 ofVec3f current = sp;
                 
                 for (int i=0; i<n_step; i++) {
+
                     float x = width * ((float)i/step) + offsetx;
                     float y = tr.easeInOutSine(i, 0, height, step);
-                    lines.addVertex( current );
-                    current = sp + ofVec3f(x, y, 0);
-                    lines.addVertex( current );
-                    lines.addColor( c );
-                    lines.addColor( c );
+
+                    if( bDot && i%2==0){
+                        current = sp + ofVec3f(x, y, 0);
+                    }else{
+                        lines.addVertex( current );
+                        current = sp + ofVec3f(x, y, 0);
+                        lines.addVertex( current );
+                        lines.addColor( c );
+                        lines.addColor( c );
+                    }
                 }
                 lines.addVertex( current );
                 lines.addVertex( ap );
@@ -410,7 +428,7 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
         // Spline C
         case 4:
         {
-            bool bDot = bid%3==0;
+            bool bDot = bid%2==0;
             
             ofxTransitions tr;
             ofVec3f current = sp;
@@ -435,7 +453,9 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
                     default: y = tr.easeInOutCirc(i, 0, height, step); break;
                 }
                 
-                if ( !bDot || i%2==0 ) {
+                if ( bDot && i%2==0 ) {
+                    current = sp + ofVec3f(x, y, 0);
+                }else{
                     lines.addVertex( current ); lines.addColor( c );
                     current = sp + ofVec3f(x, y, 0);
                     lines.addVertex( current ); lines.addColor( c );
@@ -978,7 +998,7 @@ void Branch::add_line(const ofVec2f &sp, const ofVec2f &ap, const ofVec2f &ep, c
             lines.addVertex( ap ); lines.addColor( c );
             lines.addVertex( bst ); lines.addColor( c );
 
-            for (int i=0; i<len/2; i++) {
+            for (int i=0; i<len/3; i++) {
                 int x = ofRandomuf() * bw;
                 int y = ofRandomuf() * bh + 1;
                 y *= minus;

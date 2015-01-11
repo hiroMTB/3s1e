@@ -95,29 +95,30 @@ void ofApp::setup_scene(){
         
     Branch::root.set( 0,0);
     
-    //    int num_first_branch = 1;
-    //    for (int i=0; i<num_first_branch; i++) {
-    //        ofVec3f dirn = ofVec3f(1,0,0);
-    //        Branch br;
-    //        br.craete( NULL, dirn );
-    //        br.bMainBranch = true;
-    //        tree.push_back( br );
-    //    }
+    int num_first_branch = 20;
+    for (int i=0; i<num_first_branch; i++) {
+        ofVec3f dirn = ofVec3f(1,0,0);
+        Branch br;
+        br.craete( NULL, dirn );
+        br.bMainBranch = true;
+        tree.push_back( br );
+    }
 }
+
 void ofApp::setup_export_layer( int w, int h, int num ){
 
-    string dir_name = ofGetTimestampString("%m%d_%H%M_%S");
+    string dir_name = ofGetTimestampString("rnd/L_%m%d_%H%M_%S");
     
     for (int i=0; i<num; i++) {
         exps.push_back( ofxExportImageSequence() );
         exps[i].setup(w, h, 25, GL_RGBA, 8 );
-        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.tif");
+        exps[i].setFilePattern(  dir_name + "/F_%05i.tif");
         exps[i].setFrameRange( 1, max_frame+1 );
         exps[i].setAutoExit( true );
     }
 
+    ofSetWindowShape(w/4, h/4);
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w/2, h/2);
     exps[0].startExport();
 }
 
@@ -141,13 +142,12 @@ void ofApp::update(){
         tree[i].create_child();
     }
 
-    if( ofGetFrameNum() % 50 == 0 ){
-        ofVec3f dirn = ofVec3f(1,0,0);
-        Branch br;
-        br.craete( NULL, dirn );
-        br.bMainBranch = true;
-        tree.push_back( br );
-    }
+//    if( ofRandomuf() > 0.95 ){
+//        ofVec3f dirn = ofVec3f(1,0,0);
+//        Branch br;
+//        tree.push_back( br );
+//        tree[tree.size()-1].craete( NULL, dirn );
+//    }
 }
 
 void ofApp::draw(){

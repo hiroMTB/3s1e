@@ -68,6 +68,8 @@ void ofApp::setup_scene(){
     
     // svg
     svg.load("svg/expl/A_G.svg");
+    svg_r.load("svg/expl/A_G_render.svg");
+
     win.x = svg.getWidth();
     win.y = svg.getHeight();
     cout << "svg : " << win << endl;
@@ -123,7 +125,7 @@ void ofApp::setup_export_layer( int w, int h, int num ){
 
     ofSetWindowPosition(0, 0);
     ofSetWindowShape(w/2, h/2);
-    //exps[0].startExport();
+    exps[0].startExport();
 }
 
 void ofApp::update(){
@@ -474,7 +476,11 @@ void ofApp::draw_layer_0(){
             points.draw();
         } ofPopMatrix();
         
-        if( bDebugDraw )
+
+        svg_r.draw();
+
+        //if( bDebugDraw )
+        if( ofGetFrameNum()==0)
             svg.draw();
 
         ofPushMatrix(); {

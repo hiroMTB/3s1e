@@ -112,8 +112,18 @@ void ad_graph::add_branch( ofVboMesh &mesh, const ofVec2f &st, const ofVec2f &en
             
             for (int i=0; i<step; i++) {
                 float x = width * ((float)i/step);
-                float y = tr.easeOutBack(i, 0, height, step);
+                float y = 0;
                 
+                int easeType = round(ofNoise(width, height) * 5);
+                switch (easeType) {
+                    case 0: y = tr.easeInOutQuart(i, 0, height, step); break;
+                    case 1: y = tr.easeInOutExpo(i, 0, height, step); break;
+                    case 2: y = tr.easeInBack(i, 0, height, step); break;
+                    case 3: y = tr.easeOutBack(i, 0, height, step); break;
+                    case 4: y = tr.easeInOutQuart(i, 0, height, step); break;
+                    case 5: y = tr.easeInOutExpo(i, 0, height, step); break;
+                    default: y = tr.easeInOutCirc(i, 0, height, step); break;
+                }
                 if ( dot && i%2==0 ) {
                     current = st + ofVec3f(x, y, 0);
                 }else{
@@ -140,6 +150,9 @@ void ad_graph::add_flower(ofVboMesh &mesh, const ofVec2f &st, const ofVec2f &end
     }
     
     ofVec3f dir = end - st;
+    ofVec3f dirn = dir.normalized();
+    ofVec3f dirp = dirn.perpendicular(ofVec3f(0,0,1));
+
     float len = dir.length();
     
     switch (ftype) {
@@ -404,7 +417,7 @@ void ad_graph::add_flower(ofVboMesh &mesh, const ofVec2f &st, const ofVec2f &end
         // Wave
         case 8:
         {
-            float space = len*0.1;
+            float space = len*0.3;
             float bw = len - space*2;
             float bh = len*0.15;
             bh = MIN(bh,10);

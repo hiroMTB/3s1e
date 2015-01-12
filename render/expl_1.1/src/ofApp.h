@@ -41,6 +41,7 @@ public:
     
     int frame;
     
+    ofVboMesh n_points;
     ofVboMesh points;
     ofVboMesh lines;
     ofVboMesh prep_lines;
@@ -61,4 +62,9 @@ public:
     ofMesh circle;
 
     vector<bLine> bLines;
+    
+    list<int> branchIds;
+    
+    ofImage img;
+    ofImage img2;
 };

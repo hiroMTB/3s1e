@@ -98,7 +98,7 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     
     ofSetWindowPosition(0, 0);
     ofSetWindowShape(w*0.75, h*0.75);
-    exps[0].startExport();
+    //exps[0].startExport();
 }
 
 void ofApp::update(){

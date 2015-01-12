@@ -144,7 +144,7 @@ void ofApp::update(){
     
 #pragma mark LOAD_PARTICLE
     
-    float scale = 100;
+    float scale = 105;
     
     {
         ofxAlembic::Reader abc;
@@ -153,10 +153,6 @@ void ofApp::update(){
     
         vector<ofVec3f> pos;
         abc.get( 0, pos );
-        for( int i=0; i<pos.size(); i++){
-            pos[i] *= scale;
-            pos[i].z = 0;
-        }
         points.addVertices( pos );
     }
     
@@ -164,15 +160,18 @@ void ofApp::update(){
         ofxAlembic::Reader abc;
         abc.open(path_R);
         //abc.dumpNames();
-        
         vector<ofVec3f> pos;
         abc.get( 0, pos );
-        for( int i=0; i<pos.size(); i++){
-            pos[i] *= scale;
-            pos[i].z = 0;
-        }
-        
         points.addVertices( pos );
+    }
+    
+    // adjust
+    vector<ofVec3f> & vs = points.getVertices();
+    for( int i=0; i<vs.size(); i++){
+        vs[i] *= scale;
+        vs[i].z = 0;
+        vs[i].rotate( -gAngle, ofVec3f(0,0,1) );
+        vs[i] += center;
     }
 
 #pragma mark DUPLICATE
@@ -184,15 +183,9 @@ void ofApp::update(){
             points.addVertex( points.getVertex(i) + r );
         }
     }
-
     vector<ofFloatColor> cs;
     cs.assign(points.getNumVertices(), ofFloatColor(0.1, 0.8) );
     points.addColors( cs );
-
-    float line_y = 4.4 * scale;
-    ofVec2f rf_st = ofVec3f(0,-line_y,0);
-    ofVec2f rf_end = ofVec3f(0,line_y,0);
-    ofVec2f rf_center = (rf_st + rf_end) * 0.5;
     
 #pragma PREP_LINE
     {
@@ -204,7 +197,7 @@ void ofApp::update(){
             
             int id = ofRandomuf() * np;
             ofVec3f p = points.getVertex(id);
-            ofVec3f prep = ad_geom_util::vec_pl(p, rf_st, rf_end );
+            ofVec3f prep = ad_geom_util::vec_pl(p, st, end );
             ofVec3f onLine = p + prep;
             float len = prep.length();
 
@@ -212,7 +205,7 @@ void ofApp::update(){
             bool longl = ofRandomuf()>0.8;
             if( longl ) limit *= 4;
             if( 1 <=len && len<=limit){
-                if( ad_geom_util::isOnline(onLine, rf_st, rf_end ) ){
+                if( ad_geom_util::isOnline(onLine, st, end ) ){
 
                     for (int j=0; j<10; j++) {
                         ofVec3f r1 = ofVec2f( ofRandomf(), ofRandomf() );
@@ -227,15 +220,15 @@ void ofApp::update(){
                     }
                 }else{
                     
-                    float l1 = p.distance(rf_st);
-                    float l2 = p.distance(rf_end);
-                    ofVec2f rf_dir = rf_end - rf_st;
+                    float l1 = p.distance(st);
+                    float l2 = p.distance(end);
+                    ofVec2f rf_dir = end - st;
                     ofVec2f edge;
                     if( l1<l2 ){
-                        edge = rf_st;
+                        edge = st;
                         edge += rf_dir * ofRandomuf()*0.2;
                     }else{
-                        edge = rf_end;
+                        edge = end;
                         edge -= rf_dir * ofRandomuf()*0.2;
                     }
                     
@@ -273,7 +266,7 @@ void ofApp::update(){
             int n = 12;
             ofFloatColor c(0,0.3);
             for (int i=0; i<n; i++) {
-                ofVec3f onLine = rf_st + (rf_end-rf_st)*ofNoise( i, ofGetFrameNum()*0.3 );
+                ofVec3f onLine = st + (end-st)*ofNoise( i, ofGetFrameNum()*0.3 );
                 for (int j=0; j<6; j++) {
                     int id = np - ofNoise(i, j, ofGetFrameNum()*0.001)*700;
                     if( id < 0)
@@ -302,7 +295,7 @@ void ofApp::update(){
             for (int i=0; i<n; i++) {
                 int id = ofRandomuf() * np;
                 ofVec3f p = points.getVertex(id);
-                ofVec3f prep = ad_geom_util::vec_pl(p, rf_st, rf_end );
+                ofVec3f prep = ad_geom_util::vec_pl(p, st, end );
                 ofVec3f onLine = p + prep;
                 float len = prep.length();
                 float limit = 100;
@@ -321,7 +314,7 @@ void ofApp::update(){
                 }
 
                 if( 5 <len && len<limit ){
-                    if( ad_geom_util::isOnline(onLine, rf_st, rf_end ) ){
+                    if( ad_geom_util::isOnline(onLine, st, end ) ){
                 
                         for (int j=0; j<2; j++) {
                             ofVec2f r1( ofRandomf(), ofRandomf() );
@@ -354,7 +347,7 @@ void ofApp::update(){
                 int id = ofNoise(i, ofGetFrameNum()*0.3 ) * np;
                 
                 ofVec3f p = points.getVertex(id);
-                if( rf_center.distance(p) > 400)
+                if( center.distance(p) > 400)
                     continue;
                 
                 float rad = ofSignedNoise(i, p.x*0.1, p.y*0.1)*100 + 10;
@@ -395,8 +388,8 @@ void ofApp::draw_layer_0(){
         ofBackground(255);
 
         ofPushMatrix(); {
-            ofTranslate(center);
-            ofRotateZ( -gAngle );
+            //ofTranslate(center);
+            //ofRotateZ( -gAngle );
             
             glPointSize(1);
             points.draw();
@@ -407,8 +400,8 @@ void ofApp::draw_layer_0(){
             svg.draw();
 
         ofPushMatrix(); {
-            ofTranslate(center);
-            ofRotateZ( -gAngle );
+            //ofTranslate(center);
+            //ofRotateZ( -gAngle );
             {
                 glLineWidth(1);
                 prep_lines.setMode( OF_PRIMITIVE_LINES );

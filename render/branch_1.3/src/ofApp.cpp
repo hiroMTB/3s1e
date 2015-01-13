@@ -88,12 +88,14 @@ void ofApp::setup_scene(){
     /*
      *      IMG load
      */
-    if( img.loadImage("img/fixed_point/lg/losglaciares05.jpg") )
+    //string path = "img/fixed_point/lg/losglaciares05.jpg";
+    string path = "img/photo/4.jpg";
+    if( img.loadImage( path ) )
         cout << "Image load OK" << endl;
     else
         cout << "Can not load image" << endl;
         
-    Branch::root.set( 0,0);
+        Branch::root.set( 0,0);
     
     int num_first_branch = 30;
     for (int i=0; i<num_first_branch; i++) {
@@ -116,9 +118,9 @@ void ofApp::setup_export_layer( int w, int h, int num ){
         exps[i].setAutoExit( true );
     }
 
-    ofSetWindowShape(w/4, h/4);
+    ofSetWindowShape(w/2, h/2);
     ofSetWindowPosition(0, 0);
-    exps[0].startExport();
+    //exps[0].startExport();
 }
 
 void ofApp::update(){

@@ -63,15 +63,17 @@ void ofApp::setup_scene(){
 
     
     // img
-    img.loadImage("img/fixed_point/lg/losglaciares12.jpg");
+    img.loadImage("img/fixed_point/lg/losglaciares04.jpg");
     img2.loadImage("img/fixed_point/lg/losglaciares05.jpg");
     
     // svg
     svg.load("svg/expl/A_G.svg");
     svg_r.load("svg/expl/A_G_render.svg");
 
-    win.x = svg.getWidth();
-    win.y = svg.getHeight();
+    win.x = (int)svg.getWidth();
+    win.y = (int)svg.getHeight();
+    win.x -= 1;
+
     cout << "svg : " << win << endl;
     
     int n = svg.getNumPath();
@@ -117,14 +119,14 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     
     for (int i=0; i<num; i++) {
         exps.push_back( ofxExportImageSequence() );
-        exps[i].setup(w, h, 25, GL_RGBA, 8 );
-        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.tif");
+        exps[i].setup(w, h, 25, GL_RGB, 8 );
+        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.png");
         exps[i].setFrameRange( 1, 751 );
         exps[i].setAutoExit( true );
     }
 
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w/2, h/2);
+    ofSetWindowShape(w/4, h/4);
     exps[0].startExport();
 }
 
@@ -132,8 +134,8 @@ void ofApp::update(){
 
     frame++;
   	frame = frame%750;
-    string path_L = "sim/v3/L/pL_" + ofToString( frame,0,5,'0' )+ ".abc";
-    string path_R = "sim/v3/R/pR_" + ofToString( frame,0,5,'0' )+ ".abc";
+    string path_L = "sim/v4/L/pL_" + ofToString( frame,0,5,'0' )+ ".abc";
+    string path_R = "sim/v4/R/pR_" + ofToString( frame,0,5,'0' )+ ".abc";
 
     points.clearVertices();
     points.clearColors();
@@ -377,10 +379,11 @@ void ofApp::update(){
 
         {
             if( branchIds.size() > 125 ){
-                branchIds.pop_front();
+                //branchIds.pop_front();
+            }else{
+                int id = ofNoise( ofGetFrameNum()*0.01)*100;
+                branchIds.push_back( id );
             }
-            int id = ofNoise( ofGetFrameNum()*0.01)*100;
-            branchIds.push_back( id );
             
             list<int>::iterator itr = branchIds.begin();
             for (int i=0; itr!=branchIds.end(); i++, itr++) {
@@ -394,32 +397,26 @@ void ofApp::update(){
                 int y = ofNoise(p.y) * img2.getHeight();
                 ofFloatColor c = img2.getColor(x, y);
 
-                //if( 300<len ){
-                //    ofVec3f dir = p - onLine;
-                //    p = onLine + dir/2;
-                //}
-                
-                for (int k=0; k<10; k++) {
-                    int t = round( ofRandom(0,3) );
-                    ofVec2f r1( ofRandomf(), ofRandomf() );
-                    ofVec2f r2( ofRandomf(), ofRandomf() );
-                    r1 *= 0.3;
-                    r2 *= 0.3;
-                    ad_graph::add_branch( branchs, onLine+r1, p+r2, c, t, ofRandomuf()>0.5 );
+                if( 10<len && len < 3000){
+                    ofVec3f dir = p - onLine;
+                    float angle = (rf_end-rf_st).angle( dir );
+                    if( 30<angle && angle<150 ){
+                        //branchs.addVertex( p * 1.3 );
+                        //branchs.addVertex( onLine );
+                        //branchs.addColor( c );
+                        //branchs.addColor( c );
+                        
+                        for (int k=0; k<10; k++) {
+                            //int t = round( ofRandom(0,3) );
+                            int t = 2;
+                            ofVec2f r1( ofRandomf(), ofRandomf() );
+                            ofVec2f r2( ofRandomf(), ofRandomf() );
+                            r1 *= 0.3;
+                            r2 *= 0.3;
+                            ad_graph::add_branch( branchs, onLine+r1, p+r2, c, t, ofRandomuf()>0.5 );
+                        }
+                    }
                 }
-                
-                
-                
-                //ofVec3f prep = ad_geom_util::vec_pl(p, rf_st, rf_end );
-                ofVec3f dir = p - onLine;
-                float angle = (rf_end-rf_st).angle( dir );
-                if( 70<angle && angle<110 ){
-                    branchs.addVertex( p * 1.3 );
-                    branchs.addVertex( onLine );
-                    branchs.addColor( c );
-                    branchs.addColor( c );
-                }
-                
             }
         }
 
@@ -470,13 +467,7 @@ void ofApp::draw_layer_0(){
     exps[0].begin(); {
         ofClear(0);
         ofBackground(255);
-
-        ofPushMatrix(); {
-            glPointSize(2);
-            points.draw();
-        } ofPopMatrix();
         
-
         svg_r.draw();
 
         //if( bDebugDraw )
@@ -510,6 +501,12 @@ void ofApp::draw_layer_0(){
                 
             }
         } ofPopMatrix();
+        
+        ofPushMatrix(); {
+            glPointSize(1);
+            points.draw();
+        } ofPopMatrix();
+        
         
     } exps[0].end();
 }

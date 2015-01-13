@@ -233,37 +233,37 @@ void Branch::animate(){
         node_anim_time += node_anim_speed;
         
         if( speed.x == -123){
-            float xamp = 0.6;
+            float xamp = 6;
             float yamp = 0.0;
             speed.x = ofNoise(bid*0.35 + 4) * xamp;
             speed.y = ofSignedNoise(bid*0.5) * yamp;
         }
-        
-        if( parent && !parent->bStation){
-            st += speed;
+
+        if( ofRandomuf()>0.1 ){
+            if( parent && !parent->bStation){
+                st += speed;
+            }
+            anchor += speed;
+            end += speed;
         }
-        
-        anchor += speed;
-        end += speed;
     }
     
     if( 1 ){
-        
-        if( ofRandomf() > 0.993){
+        if( ofRandomf() > 0.9){
             if( fw_len>40 ){
-                fw_len *= 0.8;
+                fw_len *= ofRandom(0.95, 1.06);
                 calc_posision();
             }
         }
 
-        if( ofRandomf() > 0.993){
-            sp_angle += ofRandom(-10, 10);
+        if( ofRandomf() > 0.8){
+            sp_angle += ofRandom(-5, 5);
             calc_posision();
         }
         
-        if( ofRandomf() > 0.993){
+        if( ofRandomf() > 0.9){
             if( sp_len>40 ){
-                sp_len *= 0.8;
+                sp_len *= ofRandom(0.95, 1.06);
                 calc_posision();
             }
         }

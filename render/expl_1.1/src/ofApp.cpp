@@ -20,46 +20,45 @@ void ofApp::setup(){
     setup_scene();
     setup_export_layer( win.x, win.y, layer_num );
     
-    
-    int res = 24;
-    float adder = TWO_PI/res;
-    for( int i=0; i<res; i++ ){
-        int id = i;
-        float x = cos(id * adder);
-        float y = sin(id * adder);
-        circle.addVertex( ofVec2f(x, y) );
-
-        id++;
-        x = cos(id * adder);
-        y = sin(id * adder);
-        circle.addVertex( ofVec2f(x, y) );
-    }
-
-    circles.setMode( OF_PRIMITIVE_LINES );
-    circles.setUsage( GL_DYNAMIC_DRAW );
+//    int res = 24;
+//    float adder = TWO_PI/res;
+//    for( int i=0; i<res; i++ ){
+//        int id = i;
+//        float x = cos(id * adder);
+//        float y = sin(id * adder);
+//        circle.addVertex( ofVec2f(x, y) );
+//
+//        id++;
+//        x = cos(id * adder);
+//        y = sin(id * adder);
+//        circle.addVertex( ofVec2f(x, y) );
+//    }
+//
+//    circles.setMode( OF_PRIMITIVE_LINES );
+//    circles.setUsage( GL_DYNAMIC_DRAW );
 }
 
 void ofApp::setup_scene(){
     points.setMode( OF_PRIMITIVE_POINTS );
     points.setUsage( GL_DYNAMIC_DRAW );
 
-    n_points.setMode( OF_PRIMITIVE_POINTS );
-    n_points.setUsage( GL_DYNAMIC_DRAW );
+//    n_points.setMode( OF_PRIMITIVE_POINTS );
+//    n_points.setUsage( GL_DYNAMIC_DRAW );
 
     lines.setMode( OF_PRIMITIVE_LINES );
     lines.setUsage( GL_DYNAMIC_DRAW );
 
-    prep_lines.setMode( OF_PRIMITIVE_LINES );
-    prep_lines.setUsage( GL_DYNAMIC_DRAW );
-
-    prep_lines_b.setMode( OF_PRIMITIVE_LINES );
-    prep_lines_b.setUsage( GL_DYNAMIC_DRAW );
-
-    branchs.setMode( OF_PRIMITIVE_LINES );
-    branchs.setUsage( GL_DYNAMIC_DRAW );
-
-    flowers.setMode( OF_PRIMITIVE_LINES );
-    flowers.setUsage( GL_DYNAMIC_DRAW );
+//    prep_lines.setMode( OF_PRIMITIVE_LINES );
+//    prep_lines.setUsage( GL_DYNAMIC_DRAW );
+//
+//    prep_lines_b.setMode( OF_PRIMITIVE_LINES );
+//    prep_lines_b.setUsage( GL_DYNAMIC_DRAW );
+//
+//    branchs.setMode( OF_PRIMITIVE_LINES );
+//    branchs.setUsage( GL_DYNAMIC_DRAW );
+//
+//    flowers.setMode( OF_PRIMITIVE_LINES );
+//    flowers.setUsage( GL_DYNAMIC_DRAW );
 
     
     // img
@@ -115,7 +114,7 @@ void ofApp::setup_scene(){
         }
     }
     
-    frame = 500;
+    frame = 0;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -145,23 +144,23 @@ void ofApp::update(){
     points.clearVertices();
     points.clearColors();
     
-    n_points.clearVertices();
-    n_points.clearColors();
+//    n_points.clearVertices();
+//    n_points.clearColors();
     
     lines.clearColors();
     lines.clearVertices();
 
-    prep_lines.clearColors();
-    prep_lines.clearVertices();
-    
-    branchs.clearColors();
-    branchs.clearVertices();
-    
-    flowers.clearVertices();
-    flowers.clearColors();
-    
-    circles.clearVertices();
-    circles.clearColors();
+//    prep_lines.clearColors();
+//    prep_lines.clearVertices();
+//    
+//    branchs.clearColors();
+//    branchs.clearVertices();
+//    
+//    flowers.clearVertices();
+//    flowers.clearColors();
+//    
+//    circles.clearVertices();
+//    circles.clearColors();
     
 #pragma mark LOAD_PARTICLE
     
@@ -183,17 +182,17 @@ void ofApp::update(){
         }
     }
     
-    if(1){
+    if(0){
         ofxAlembic::Reader abc;
         abc.open(path_R);
         //abc.dumpNames();
         vector<ofVec3f> pos;
         abc.get( 0, pos );
         for (int i=0; i<pos.size(); i++) {
-//            if(i%1 == 0){
+            if(i%4 == 0){
                 points.addVertex( pos[i] );
 //                n_points.addVertex( pos[i] );
-//            }
+            }
         }
     }
     
@@ -211,12 +210,6 @@ void ofApp::update(){
 //        n_vs[i].z = 0;
     }
     
-    /*
-    vector<ofFloatColor> cs;
-    cs.assign(points.getNumVertices(), ofFloatColor(0.1, 0.8) git );
-    points.addColors( cs );
-    n_points.addColors( cs );
-    */
 
     int w = img.getWidth();
     int h = img.getHeight();
@@ -224,20 +217,20 @@ void ofApp::update(){
     int np = points.getNumVertices();
     vc.assign(np, ofFloatColor(0));
     points.addColors( vc );
-    for (int i=0; i<points.getNumVertices(); i++) {
+    for (int i=0; i<np; i++) {
         int x = i%w;
         int y = i/w;
         ofFloatColor c = img.getPixelsRef().getColor(x, y);
 //        c.setBrightness( ofNoise(i)*0.3 + 0.1 );
 //        c.setHueAngle( c.getHueAngle() - 20 );
         c.a = 0.8;
-        points.setColor( np-i, c );
+        points.setColor( np-i-1, c );
     }
 
     
 #pragma mark NEAR_LINE
     if( 1 ){
-        int num_line = 5;
+        int num_line = 10;
         int num_dupl = 5;
         int vertex_per_point = num_line * num_dupl * 2;
         
@@ -751,8 +744,8 @@ void ofApp::draw_info(){
     if( !bDrawInfo ) return;
     stringstream ss;
     ss << ad_util::getFrameInfoString();
-    ss << "num vert  : " << points.getNumVertices() << "\n";
-    ss << "num color : " << points.getNumColors() << "\n";
+//    ss << "num vert  : " << points.getNumVertices() << "\n";
+//    ss << "num color : " << points.getNumColors() << "\n";
     
     ofSetColor(0);
     ofDrawBitmapString( ss.str(), 20, 20);

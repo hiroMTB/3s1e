@@ -20,7 +20,7 @@ testApp::testApp(){
 
 void testApp::setup(){
 	
-    ofSeedRandom(123);
+    ofSeedRandom(1123);
     
     in_angle = ofRandom( -360, 360 );
     out_angle = ofRandom( -360, 360 );
@@ -49,7 +49,7 @@ void testApp::setup(){
 }
 
 void testApp::update(){
-    int frame = ofGetFrameNum() - current_setting_start_frame;
+    frame = ofGetFrameNum();// - current_setting_start_frame;
     float step_angle = (out_angle-in_angle)/ 3000.0;
     
     if( frame%500 == 0 ){
@@ -72,11 +72,11 @@ void testApp::update(){
         for ( int i=0; i<la.size(); i++ ) {
             if( ofRandom(1.0)<0.3 ||i==la.size()-1 ){
                 la[i].dna.setBoundsMode( i%3 );
-                la[i].dna.mutate(  ofMap(mouseX, 0, ofGetWidth(), 0, 0.5)*0.4 );
+                la[i].dna.mutate(  ofMap(0, 0, ofGetWidth(), 0, 0.5)*0.4 );
             }else{
                 la[i].dna.setBoundsMode( i%3 );
                 la[i].dna.setMateMode( floor(ofRandom(0,4)) );
-                la[i].dna.mate( la[i+1].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
+                la[i].dna.mate( la[i+1].dna, ofMap(0, 0, ofGetWidth(), 0, 0.1) *0.4 );
             }
             
             la[i].add_result();
@@ -92,6 +92,7 @@ void testApp::update(){
 void testApp::draw(){
 	
     exporter.begin(); {
+        ofClear(0);
         ofBackground( 255 );
         ofSetColor( 255 );
         if( bOrtho ){
@@ -119,11 +120,11 @@ void testApp::draw(){
                 la[i].draw_connection_inside_of_agent();
             }
         }
-        
         ofPopMatrix();
     }exporter.end();
     
     ofPushMatrix(); {
+        ofClear(0);
         ofBackground(0);
         ofSetColor(255);
         exporter.draw(0, 0);
@@ -185,13 +186,8 @@ void testApp::draw_connection_between_agnet(){
 }
 
 void testApp::change_settings(){
-    in_angle = ofRandom( -200, 0 );
-    if( in_angle>-90 ){
-        out_angle = in_angle - ofRandom( 180, 60 );
-    }else{
-        out_angle = in_angle + ofRandom( 180, 60 );
-    }
-    
+    in_angle = ofRandom( 0, 360 );
+    out_angle = in_angle + ofRandom( 100, 360 );
     initial_radius = ofRandom( 300, 1800 );
     sequencial_add_speed = ofRandom( 6, 8 );
     current_setting_start_frame = ofGetFrameNum();
@@ -272,6 +268,9 @@ void testApp::keyPressed( int key ){
 
         case 'S':
             bStart = true;
+            frame = 0;
+            ofSetWindowShape( win.x/8, win.y/8);
+            ofSetWindowPosition(0, 0);
             exporter.startExport();
             break;
             

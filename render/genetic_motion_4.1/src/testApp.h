@@ -192,4 +192,5 @@ public:
     ofxExportImageSequence exporter;
     
     ofPoint win;
+    int frame;
 };

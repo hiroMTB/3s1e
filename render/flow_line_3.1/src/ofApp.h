@@ -40,4 +40,6 @@ public:
 	ofxGpuNoise gn;
 
 	vector<float> rotation;
+	
+	string sim_name;
 };

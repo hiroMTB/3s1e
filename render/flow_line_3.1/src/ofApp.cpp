@@ -3,7 +3,7 @@
 
 void ofApp::setup(){
 	
-//	ofSetLogLevel( OF_LOG_VERBOSE );
+	sim_name = "line_flow_3";
 	
 	ofSetWindowPosition( 0, 0 );
 	bInit = false;
@@ -13,20 +13,15 @@ void ofApp::setup(){
 	bOrtho = false;
 	
     ofSetVerticalSync( true );
-	ofSetFrameRate(30);
-	
+	ofSetFrameRate(60);
 	ofBackground( 255 );
-	ofEnableAlphaBlending();
-	ofEnableSmoothing();
-	ofEnableAntiAliasing();
 	
 	cam.setTarget( ofVec3f(0,0,0) );
 	cam.setDistance( 50 );
 	cam.lookAt( ofVec3f(0,0,0), ofVec3f(1, 0, 0) );
-			   
 	fov = cam.getFov();
-	cam.setNearClip( 0.00001 );
-    cam.setFarClip( 10000 );
+	cam.setNearClip( 0.0001 );
+    cam.setFarClip( 100000 );
 	
     points.setUsage( GL_DYNAMIC_DRAW );
     points.setMode( OF_PRIMITIVE_POINTS );
@@ -34,13 +29,6 @@ void ofApp::setup(){
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
 
-	frame=0;
-	
-	vector<ofVec3f> v;
-	v.assign(1000000, ofVec3f(0,0,0) );
-	points.addVertices(v);
-
-	rot = 0;
 	
 	bool ok = img.loadImage( ad_util::data_path  + "img/gns3.jpg");	// 2333 * 1477px
 	if( !ok ) cout << "image load failer" << endl;
@@ -50,14 +38,16 @@ void ofApp::setup(){
 	gn.setShaderType( ofxGpuNoise::SHADER_TYPE_SimplexPerlin );
 	gn.setFreq( 0.005 );
 	
+	rot = 90;
+	frame = 0;
+	
 	int w = 5000;
-	int h = 2500;
+	int h = 5000;
 	
-	exporter.setup(w, h, 25, GL_RGB, 4);
-	exporter.setFrameRange(1, 500);
+	exporter.setup(w, h, 25, GL_RGB, 0);
+	exporter.setFrameRange(0, 751);
 	exporter.setAutoExit(true);
-	exporter.setOutputDir( ofGetTimestampString() );
-	
+	exporter.setFilePattern( ofGetTimestampString() + "/" + sim_name + "/F_%05i.png" );
 }
 
 void ofApp::update(){
@@ -67,10 +57,9 @@ void ofApp::update(){
 	gn.setFrame( ofGetFrameNum()*0.001 );
 	gn.update();
 	
+	frame = (int)frame % 750;
+	string path = ad_util::data_path + "sim/" + sim_name + "/Linear01_" + ofToString( frame,0,5,'0' )+ ".abc";
 	frame++;
-	frame = (int)frame % 479;
-	
-	string path = ad_util::data_path + "sim/line_flow_2/Linear01_" + ofToString( frame,0,5,'0' )+ ".abc";
 	
 	ofxAlembic::Reader abc;
 	abc.open(path);
@@ -112,7 +101,7 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-	exporter.begin();{
+	exporter.begin( cam );{
 		
 		ofEnableAlphaBlending();
 		ofEnableSmoothing();
@@ -122,15 +111,19 @@ void ofApp::draw(){
 
 		ofPushMatrix();{
 			if(!bOrtho){
-				cam.begin();
+				ofScale(0.5, 0.5, 0.5);
+				//cam.begin();
 			}else{
 				ofSetupScreenOrtho();
 				ofTranslate(exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()/2);
-				ofScale(80, -80);
-				ofRotate(90, 0, 0, 1);
+				ofScale(80, 80, 80);
+//				ofRotate(90, 0, 0, 1);
 			}
 			
-			ofRotateY(rot);
+			ofRotateX(rot);
+			ofRotateZ(90);
+//			ofRotateX(90);
+
 			glPointSize( 1 );
 			points.draw();
 			
@@ -141,13 +134,13 @@ void ofApp::draw(){
 			//ofLine(ofPoint(0, 0, -0.1), ofPoint(0,0,0.1));
 
 			if(!bOrtho){
-				cam.end();
+				//cam.end();
 			}
 		}ofPopMatrix();
 	
 	} exporter.end();
 	
-	ofBackground(255);
+	ofBackground(0);
 	ofSetColor(255);
 	exporter.draw(0, 0);
 	draw_info();
@@ -238,26 +231,26 @@ void ofApp::keyPressed( int key ){
 //			cam.setFov(fov);
 //			break;
 
-		case OF_KEY_RIGHT:
-		{
-			int i = gn.getShaderType();
-			gn.setShaderType((ofxGpuNoise::ShaderType)++i);
-			break;
-		}
-		case OF_KEY_LEFT:
-		{
-			int i = gn.getShaderType();
-			gn.setShaderType((ofxGpuNoise::ShaderType)--i);
-			break;
-		}
-			
-		case OF_KEY_UP:
-			gn.setFreq( gn.getFreq()*2.0 );
-			break;
-			
-		case OF_KEY_DOWN:
-			gn.setFreq( gn.getFreq()*0.5 );
-			break;
+//		case OF_KEY_RIGHT:
+//		{
+//			int i = gn.getShaderType();
+//			gn.setShaderType((ofxGpuNoise::ShaderType)++i);
+//			break;
+//		}
+//		case OF_KEY_LEFT:
+//		{
+//			int i = gn.getShaderType();
+//			gn.setShaderType((ofxGpuNoise::ShaderType)--i);
+//			break;
+//		}
+//			
+//		case OF_KEY_UP:
+//			gn.setFreq( gn.getFreq()*2.0 );
+//			break;
+//			
+//		case OF_KEY_DOWN:
+//			gn.setFreq( gn.getFreq()*0.5 );
+//			break;
 			
 		default:
 			break;

@@ -115,7 +115,7 @@ void ofApp::setup_scene(){
         }
     }
     
-    frame = 50;
+    frame = 500;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -238,57 +238,64 @@ void ofApp::update(){
 #pragma mark NEAR_LINE
     if( 1 ){
         int num_line = 5;
+        int num_dupl = 5;
+        int vertex_per_point = num_line * num_dupl * 2;
         
         const vector<ofVec3f> &vs = points.getVertices();
         vector<ofFloatColor> &vc = points.getColors();
         
         const ofVec3f * input = &vs[0];
-        vector<ofVec3f> output;
-        output.assign( vs.size()*num_line, ofVec3f(-99999, -99999, -99999) );
+        vector<ofVec3f> outv;
+        outv.assign( vs.size()*vertex_per_point, ofVec3f(-99999, -99999, -99999) );
+        vector<ofFloatColor> outc;
+        outc.assign( vs.size()*vertex_per_point, ofFloatColor(0,0,0,0) );
         
-        calcNearestPoints(input, &output[0], vs.size(), num_line );
+        calcNearestPoints(input, &outv[0], &vc[0], &outc[0], vs.size(), num_line, num_dupl );
         
-        for (int i=0; i<vs.size(); i++) {
-            
-            ofFloatColor c = ofFloatColor(0.8, 0.8) - vc[i];
-            float alpha = c.a;
-            for (int j=0; j<num_line; j++) {
-                
-                int outid = i*num_line + j;
-                if( output[outid].x != -12345){
-                    
-                    c.a = alpha;
-                    
-                    const ofVec3f &p1 = vs[i];
-                    ofVec3f &p2 = output[outid];
-                    lines.addVertex( p1 );
-                    lines.addVertex( p2 );
-                    lines.addColor( c );
-                    lines.addColor( c );
-                    
-                    c.a = 0.06;
-                    
-                    int n = ofNoise( i, j ) * 5.0 + 2;
-                    for( int k=0; k<n; k++ ){
-                        float rate = 1.0 + k/2;
-                        
-                        ofVec3f d1 = p1;
-                        ofVec3f d2 = p2;
-                        d1.x += ofRandomf() * rate;
-                        d1.y += ofRandomf() * rate;
-                        d2.x += ofRandomf() * rate;
-                        d2.y += ofRandomf() * rate;
-                        
-                        lines.addVertex( d1 );
-                        lines.addVertex( d2 );
-                        lines.addColor( c );
-                        lines.addColor( c );
-                    }
-                }
-            }
-        }
+        lines.addVertices( outv );
+        lines.addColors( outc );
+        
+//        for (int i=0; i<vs.size(); i++) {
+//
+//            ofFloatColor c = ofFloatColor(0.8, 0.8) - vc[i];
+//            float alpha = c.a;
+//            for (int j=0; j<num_line; j++) {
+//
+//                int outid = i*num_line + j;
+//                if( output[outid].x != -12345){
+//                    
+//                    c.a = alpha;
+//                    
+//                    const ofVec3f &p1 = vs[i];
+//                    ofVec3f &p2 = output[outid];
+//                    lines.addVertex( p1 );
+//                    lines.addVertex( p2 );
+//                    lines.addColor( c );
+//                    lines.addColor( c );
+//                    
+//                    c.a = 0.06;
+//                    
+//                    int n = ofNoise( i, j ) * 5.0 + 2;
+//                    for( int k=0; k<n; k++ ){
+//                        float rate = 1.0 + k/2;
+//                        
+//                        ofVec3f d1 = p1;
+//                        ofVec3f d2 = p2;
+//                        d1.x += ofRandomf() * rate;
+//                        d1.y += ofRandomf() * rate;
+//                        d2.x += ofRandomf() * rate;
+//                        d2.y += ofRandomf() * rate;
+//                        
+//                        lines.addVertex( d1 );
+//                        lines.addVertex( d2 );
+//                        lines.addColor( c );
+//                        lines.addColor( c );
+//                    }
+//                }
+//            }
+//        }
     }
-    
+
     return;
 
     

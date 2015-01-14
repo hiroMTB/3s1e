@@ -79,12 +79,12 @@ public:
         
         const ofVec3f *input;
         ofVec3f *output;
-        //ofFloatColor * in_colors;
-        //ofFloatColor * out_colors;
+        ofFloatColor * in_colors;
+        ofFloatColor * out_colors;
 
         int total_size;
         int num_line;
-        //int num_dupl;
+        int num_dupl;
         
         /*
          *      input = all point
@@ -134,45 +134,46 @@ public:
                 multimap<float, ofVec3f>::iterator itr = near_p.begin();
                 
                 for(int j=0; itr!=near_p.end(); itr++, j++ ){
-                    output[i*num_line + j] = itr->second;
+                    
+                    ofVec3f &p2 = itr->second;
+
+                    if( p2.x != -12345){
+                        ofFloatColor c = ofFloatColor(0.8, 0.8) - in_colors[i];
+                        int outid = i*num_line*num_dupl*2 + j*num_dupl*2;
+
+                        output[outid] = pos1;
+                        output[outid+1] = p2;
+                        out_colors[outid] = c;
+                        out_colors[outid+1] = c;
+                        c.a = 0.06;
+                        
+                        for( int k=0; k<num_dupl-1; k++ ){
+                            float rate = 1.0 + k/2;
+                            ofVec3f r1( ofRandomf(), ofRandomf() );
+                            ofVec3f r2( ofRandomf(), ofRandomf() );
+
+                            int did = outid + 2 + k*2;
+                            output[ did ] = pos1 + r1*rate;
+                            output[ did + 1] = p2 + r2*rate;
+                            out_colors[ did ] = c; //ofFloatColor(0,0);
+                            out_colors[ did + 1] = c; //ofFloatColor(0,0);
+                        }
+                    }
                 }
-//                    ofVec3f &p2 = itr->second;
-//                    if( p2.x != -12345){
-//                        ofFloatColor c = ofFloatColor(0.8, 0.8) - in_colors[i];
-//                        int outid = i*num_line*num_dupl*2 + j*num_dupl*2;
-//
-//                        output[outid] = pos1;
-//                        output[outid+1] = p2;
-//                        out_colors[outid] = c;
-//                        out_colors[outid+1] = c;
-//                        c.a = 0.06;
-//                        
-//                        for( int k=0; k<num_dupl-1; k++ ){
-//                            float rate = 1.0 + k/2;
-//                            ofVec3f r1( ofRandomf(), ofRandomf() );
-//                            ofVec3f r2( ofRandomf(), ofRandomf() );
-//
-//                            int did = outid + 2 + k*2;
-//                            output[ did ] = pos1 + r1*rate;
-//                            output[ did + 1] = p2 + r2*rate;
-//                            out_colors[ did ] = c; //ofFloatColor(0,0);
-//                            out_colors[ did + 1] = c; //ofFloatColor(0,0);
-//                        }
-//                    }
-//                }
-//           }
-//        }
             }
         }
     };
 
-    void calcNearestPoints( const ofVec3f * input, ofVec3f * output, size_t n, int num_line){
+    void calcNearestPoints( const ofVec3f * input, ofVec3f * output, ofFloatColor * in_colors, ofFloatColor * out_colors, size_t n, int num_line, int num_dupl ){
         NearestPoints np;
         np.input = input;
         np.output = output;
+        np.in_colors = in_colors;
+        np.out_colors = out_colors;
         
         np.total_size = n;
         np.num_line = num_line;
+        np.num_dupl = num_dupl;
         parallel_for( blocked_range<int>(0,n), np );
     }
     

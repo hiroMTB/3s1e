@@ -60,10 +60,10 @@ void ofApp::setup(){
     ofSetVerticalSync( true );
     int w = sABC.getWidth();
     int h = sABC.getHeight();
-    exporter.setup(w, h, 25, GL_RGBA, 8);
+    exporter.setup(w, h, 25, GL_RGB, 0);
     exporter.setAutoExit(true);
-    exporter.setFrameRange(1, 3000);
-    exporter.setOutputDir( ofGetTimestampString() );
+    exporter.setFrameRange(0, 3000);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     ofSetWindowPosition(0, 0);
     ofSetWindowShape(w*0.5, h*0.5);
     //exporter.startExport();
@@ -87,8 +87,8 @@ void ofApp::update(){
 void ofApp::draw(){
     exporter.begin();{
         ofEnableAlphaBlending();
-        ofEnableAntiAliasing();
-        ofEnableSmoothing();
+        
+        
 
         ofBackground( 255 );
         grav_wall.draw();

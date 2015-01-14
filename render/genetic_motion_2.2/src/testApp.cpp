@@ -79,8 +79,8 @@ void testApp::update(){
 void testApp::draw(){
 	
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
 	ofBackground( 255 );
     
     ofSetColor( 255 );

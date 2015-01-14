@@ -11,8 +11,8 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
 	ofBackground( 255 );
 	ofEnableAlphaBlending();
-	ofEnableSmoothing();
-	ofEnableAntiAliasing();
+	
+	
 	
     cam.setDistance( 15.5 );
 	cam.setFov( 20 );

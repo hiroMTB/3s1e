@@ -40,8 +40,8 @@ void ofApp::setup(){
 
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     ofSetVerticalSync( true );
 
     glEnable( GL_MULTISAMPLE );
@@ -53,7 +53,8 @@ void ofApp::setup(){
 	
 	int exW = 5000;
 	int exH = 2500;
-    exporter.setup(exW, exH, 30, GL_RGBA, 4);
+    exporter.setup(exW, exH, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setOverwriteSequence(true);
 	
 	noise.setOctaves( 4 );
@@ -244,8 +245,8 @@ void ofApp::draw(){
     exporter.begin();
     
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     
 	ofBackground( 255 );
     ofSetColor( 255 );

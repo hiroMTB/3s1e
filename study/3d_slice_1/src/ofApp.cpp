@@ -96,8 +96,8 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0);
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     
     cam.begin(); {
         glPointSize( 1 );

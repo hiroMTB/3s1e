@@ -20,8 +20,8 @@ void testApp::setup(){
     
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     ofSetVerticalSync( true );
 
 }

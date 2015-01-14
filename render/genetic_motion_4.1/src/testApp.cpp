@@ -20,6 +20,8 @@ testApp::testApp(){
 
 void testApp::setup(){
 	
+    ofSeedRandom(1123);
+    
     in_angle = ofRandom( -360, 360 );
     out_angle = ofRandom( -360, 360 );
     
@@ -28,17 +30,27 @@ void testApp::setup(){
     
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+//    
     ofSetVerticalSync( true );
-
+    
+    string dir_name = ofGetTimestampString("%m%d_%H%M_%S");
+    
+    win.x = 1920*2;
+    win.y = 1080*2;
+    
+    exporter.setup( win.x, win.y, 25, GL_RGB, 0 );
+    exporter.setFilePattern(  dir_name + "/F_%05i.png");
+    exporter.setFrameRange( 0, 3001 );
+    exporter.setAutoExit( true );
+    
+    ofSetWindowShape(win.x/2, win.y/2);
+    ofSetWindowPosition(0, 0);
 }
 
 void testApp::update(){
-    int frame = ofGetFrameNum();
+    frame = ofGetFrameNum();// - current_setting_start_frame;
     float step_angle = (out_angle-in_angle)/ 3000.0;
-    int w = 0; //ofGetWidth();
-    int h = 0; //ofGetHeight();
     
     if( frame%500 == 0 ){
         change_settings();
@@ -54,18 +66,17 @@ void testApp::update(){
 		la.push_back( l );
 		
 		current_la_pos = l.pos;
-		
     }
     
     if( bStart ){
         for ( int i=0; i<la.size(); i++ ) {
             if( ofRandom(1.0)<0.3 ||i==la.size()-1 ){
                 la[i].dna.setBoundsMode( i%3 );
-                la[i].dna.mutate(  ofMap(mouseX, 0, ofGetWidth(), 0, 0.5)*0.4 );
+                la[i].dna.mutate(  ofMap(0, 0, ofGetWidth(), 0, 0.5)*0.4 );
             }else{
                 la[i].dna.setBoundsMode( i%3 );
                 la[i].dna.setMateMode( floor(ofRandom(0,4)) );
-                la[i].dna.mate( la[i+1].dna, ofMap(mouseX, 0, ofGetWidth(), 0, 0.1) *0.4 );
+                la[i].dna.mate( la[i+1].dna, ofMap(0, 0, ofGetWidth(), 0, 0.1) *0.4 );
             }
             
             la[i].add_result();
@@ -80,37 +91,44 @@ void testApp::update(){
 
 void testApp::draw(){
 	
-	ofBackground( 255 );
-    ofSetColor( 255 );
-    if( bOrtho ){
-        ofSetupScreenOrtho();
-    }
-    
-    ofPushMatrix();
-    ofTranslate( ofGetWidth()/2, ofGetHeight()/2 );
-    if( bRotate ){
-        ofRotate( ofGetFrameNum()*0.05, 1, 0, 0 );
-    }
-
-    if( bDraw_connection_between_agnet ){
-        draw_connection_between_agnet();
-    }
-    
-    
-    for ( int i=0; i<la.size(); i++ ) {
-        if( bDraw_agent ){
-            //if( ofRandom(1.0)>0.2 ){
+    exporter.begin(); {
+        ofClear(0);
+        ofBackground( 255 );
+        ofSetColor( 255 );
+        if( bOrtho ){
+            ofSetupScreenOrtho();
+        }
+        
+        ofPushMatrix();
+        ofTranslate( win.x/2, win.y );
+        if( bRotate ){
+            ofRotate( ofGetFrameNum()*0.05, 1, 0, 0 );
+        }
+        
+        if( bDraw_connection_between_agnet ){
+            draw_connection_between_agnet();
+        }
+        
+        
+        for ( int i=0; i<la.size(); i++ ) {
+            if( bDraw_agent ){
+                //if( ofRandom(1.0)>0.2 ){
                 la[i].draw();
-            //}
+                //}
+            }
+            if( bDraw_connection_inside_of_agent ){
+                la[i].draw_connection_inside_of_agent();
+            }
         }
-        if( bDraw_connection_inside_of_agent ){
-            la[i].draw_connection_inside_of_agent();
-        }
-	}
-	
-    ofPopMatrix();
-
-    saver.save();
+        ofPopMatrix();
+    }exporter.end();
+    
+    ofPushMatrix(); {
+        ofClear(0);
+        ofBackground(0);
+        ofSetColor(255);
+        exporter.draw(0, 0);
+    } ofPopMatrix();
     
     draw_info();
 }
@@ -170,7 +188,7 @@ void testApp::draw_connection_between_agnet(){
 void testApp::change_settings(){
     in_angle = ofRandom( 0, 360 );
     out_angle = in_angle + ofRandom( 100, 360 );
-    initial_radius = ofRandom( 300, 900 );
+    initial_radius = ofRandom( 300, 1800 );
     sequencial_add_speed = ofRandom( 6, 8 );
     current_setting_start_frame = ofGetFrameNum();
     center.set( 0, 0, 0 );
@@ -184,8 +202,7 @@ void testApp::draw_info(){
     ofSetColor( 0 );
     stringstream ss;
     ss << "fps       : " << (int)ofGetFrameRate() << "\n";
-    ss << "cur frame : " << saver.frame_cur << "\n";
-    ss << "end frame : " << saver.frame_end << "\n";
+    ss << "frame     : " << (int)ofGetFrameNum() << "\n";
     ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
     ss << "space key : start genetic calculation\n";
     ss << "m     key : start animation\n";
@@ -250,7 +267,11 @@ void testApp::keyPressed( int key ){
             break;
 
         case 'S':
-            saver.start( ofGetTimestampString(), "gm2.1_", 3000 );
+            bStart = true;
+            frame = 0;
+            ofSetWindowShape( win.x/8, win.y/8);
+            ofSetWindowPosition(0, 0);
+            exporter.startExport();
             break;
             
         default:

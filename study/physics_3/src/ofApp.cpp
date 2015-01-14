@@ -156,8 +156,6 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
     ofEnableDepthTest();
     ofBackground( 0 );
 

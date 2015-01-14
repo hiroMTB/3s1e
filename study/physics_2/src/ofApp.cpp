@@ -286,8 +286,8 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
+    
+    
     ofEnableDepthTest();
     ofEnableDepthTest();
     ofBackground( 255 );

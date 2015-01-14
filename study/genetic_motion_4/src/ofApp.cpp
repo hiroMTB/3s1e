@@ -28,8 +28,8 @@ void ofApp::setup(){
     
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     ofSetVerticalSync( true );
 
     glEnable( GL_MULTISAMPLE );

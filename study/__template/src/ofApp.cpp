@@ -5,9 +5,9 @@ void ofApp::setup(){
 
     ofSetVerticalSync( true );
     ofSetFrameRate(60);
-    ofEnableAntiAliasing();
+    
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
+    
     
     bStart = false;
     bDrawInfo = true;
@@ -22,8 +22,8 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     
     for (int i=0; i<num; i++) {
         exps.push_back( ofxExportImageSequence() );
-        exps[i].setup(w, h, 25, GL_RGBA, 8 );
-        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.tif");
+        exps[i].setup(w, h, 25, GL_RGB, 0 );
+        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.png");
         exps[i].setFrameRange( 1, 3000 );
         exps[i].setAutoExit( true );
     }

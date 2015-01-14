@@ -55,8 +55,9 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     int w = sABC.getWidth();
     int h = sABC.getHeight();
-    exporter.setFrameRange(1, 6000);
-    exporter.setup(w, h, 30, GL_RGBA, 8);
+    exporter.setFrameRange(0, 6000);
+    exporter.setup(w, h, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit(true);
 
     //exporter.startExport();
@@ -78,8 +79,8 @@ void ofApp::update(){
 void ofApp::draw(){
     exporter.begin();{
         ofEnableAlphaBlending();
-        ofEnableAntiAliasing();
-        ofEnableSmoothing();
+        
+        
 
         ofBackground( 255 );
         gravline.draw();

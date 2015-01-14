@@ -14,8 +14,8 @@ void ofApp::setup(){
 	
 	ofBackground( 255 );
 	ofEnableAlphaBlending();
-	ofEnableSmoothing();
-	ofEnableAntiAliasing();
+	
+	
 	
 	cam.setTarget( ofVec3f(0,0,0) );
 	cam.setDistance( 40 );
@@ -72,8 +72,8 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
 	
     ofBackground( 255 );
 

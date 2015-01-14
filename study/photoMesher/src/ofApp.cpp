@@ -84,11 +84,11 @@ void ofApp::setup(){
     //int h = svg.getHeight() + 1;
     int w = 5000;  // 7908.01;
     int h = 2500;  //4017.48;
-    exporter.setup( w, h, 25, GL_RGBA, 4);
-//    exporter.setup(1920, 1080, 25, GL_RGB, 4);
-    exporter.setFilePattern( ofGetTimestampString() + "/frame_%05i." + "tif" );
+    exporter.setup( w, h, 25, GL_RGBA, 0);
+//    exporter.setup(1920, 1080, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit(true);
-    exporter.setFrameRange(1,3000);
+    exporter.setFrameRange(0,3000);
     
     ofSetWindowPosition(0, 0);
     ofSetWindowShape( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()/2);
@@ -518,7 +518,7 @@ void ofApp::draw(){
             exporter.begin( cam ); {
                 ofEnableDepthTest();
                 ofEnableAlphaBlending();
-                ofEnableSmoothing();
+                
                 ofBackground( bg );
                 
                 // cam.enableOrtho();

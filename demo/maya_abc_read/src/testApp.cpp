@@ -36,8 +36,8 @@ void testApp::draw(){
     angle += 0.1;
     
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    ofEnableAntiAliasing();
+    
+    
     
     ofBackground( 255 );
 	cam.begin();

@@ -34,8 +34,8 @@ void ofApp::setup(){
     proj_surface.loadImage( ad_util::data_path + "img/projection_suface/B.png" );
     canvas.set( proj_surface.width, proj_surface.height );
     
-    exporter.setup(canvas.x, canvas.y, 25, GL_RGB, 8);
-    exporter.setOutputDir( ofGetTimestampString() );
+    exporter.setup(canvas.x, canvas.y, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setFrameRange(1, 3000);
     exporter.setAutoExit(true);
     
@@ -124,8 +124,8 @@ void ofApp::draw(){
     
     exporter.begin(cam);{
         ofEnableAlphaBlending();
-        ofEnableAntiAliasing();
-        ofEnableSmoothing();
+        
+        
         ofBackground( 255 );
         ofScale(1, -1);
         

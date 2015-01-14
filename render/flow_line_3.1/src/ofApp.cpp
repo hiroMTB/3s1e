@@ -15,6 +15,7 @@ void ofApp::setup(){
     ofSetVerticalSync( true );
 	ofSetFrameRate(60);
 	ofBackground( 255 );
+	ofEnableAlphaBlending();
 	
 	cam.setTarget( ofVec3f(0,0,0) );
 	cam.setDistance( 50 );
@@ -104,8 +105,8 @@ void ofApp::draw(){
 	exporter.begin( cam );{
 		
 		ofEnableAlphaBlending();
-		ofEnableSmoothing();
-		ofEnableAntiAliasing();
+		
+		
 		
 		ofBackground( 255 );
 

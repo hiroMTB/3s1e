@@ -20,6 +20,8 @@ testApp::testApp(){
 
 void testApp::setup(){
 	
+    ofSeedRandom(123);
+    
     in_angle = ofRandom( -360, 360 );
     out_angle = ofRandom( -360, 360 );
     
@@ -28,8 +30,8 @@ void testApp::setup(){
     
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
-//    ofEnableAntiAliasing();
+    
+//    
     ofSetVerticalSync( true );
     
     string dir_name = ofGetTimestampString("%m%d_%H%M_%S");
@@ -42,15 +44,15 @@ void testApp::setup(){
     exporter.setFrameRange( 0, 3001 );
     exporter.setAutoExit( true );
     
-    ofSetWindowShape(win.x/4, win.y/4);
+    ofSetWindowShape(win.x/2, win.y/2);
     ofSetWindowPosition(0, 0);
 }
 
 void testApp::update(){
-    int frame = ofGetFrameNum();
+    int frame = ofGetFrameNum() - current_setting_start_frame;
     float step_angle = (out_angle-in_angle)/ 3000.0;
     
-    if( frame%50 == 0 ){
+    if( frame%500 == 0 ){
         change_settings();
     }
 	
@@ -183,9 +185,14 @@ void testApp::draw_connection_between_agnet(){
 }
 
 void testApp::change_settings(){
-    in_angle = ofRandom( 0, 360 );
-    out_angle = in_angle + ofRandom( 100, 360 );
-    initial_radius = ofRandom( 300, 900 );
+    in_angle = ofRandom( -200, 0 );
+    if( in_angle>-90 ){
+        out_angle = in_angle - ofRandom( 180, 60 );
+    }else{
+        out_angle = in_angle + ofRandom( 180, 60 );
+    }
+    
+    initial_radius = ofRandom( 300, 1800 );
     sequencial_add_speed = ofRandom( 6, 8 );
     current_setting_start_frame = ofGetFrameNum();
     center.set( 0, 0, 0 );
@@ -199,6 +206,7 @@ void testApp::draw_info(){
     ofSetColor( 0 );
     stringstream ss;
     ss << "fps       : " << (int)ofGetFrameRate() << "\n";
+    ss << "frame     : " << (int)ofGetFrameNum() << "\n";
     ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
     ss << "space key : start genetic calculation\n";
     ss << "m     key : start animation\n";

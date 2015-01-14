@@ -5,7 +5,7 @@
 int main( ){
 
     ofAppGLFWWindow window;
-    window.setNumSamples(8);
+    window.setNumSamples( 0 );
 	ofSetupOpenGL(&window, 1024,768, OF_WINDOW);
     ofApp::init();
     ofRunApp( ofApp::app );

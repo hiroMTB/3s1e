@@ -120,7 +120,7 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofEnableDepthTest();
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
+    
     ofBackground( 255 );
 
 //    cam.enableOrtho();

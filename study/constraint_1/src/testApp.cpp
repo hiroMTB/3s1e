@@ -18,9 +18,9 @@ void testApp::setup() {
     
     int w = 5000;
     int h = 2500;
-    exporter.setup( w, h, 25, GL_RGB, 4);
-    exporter.setFrameRange(1, 3000);
-    exporter.setOutputDir( ofGetTimestampString() );
+    exporter.setup( w, h, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
+    exporter.setFrameRange( 0, 3000 );
     ofSetWindowShape( w/2, h/2 );
     ofSetWindowPosition(0, 0);
     
@@ -131,8 +131,8 @@ void testApp::draw() {
 
     exporter.begin( camera );
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
+    
+    
     ofBackground( 255 );
     
     glPointSize(1);

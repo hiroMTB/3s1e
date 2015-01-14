@@ -106,8 +106,8 @@ void ofApp::make_points(){
 void ofApp::draw(){
     
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
+    
+    
 
     ofBackground( 0, 0, 0, 0 );
     ofPushMatrix(); {

@@ -15,11 +15,11 @@ void ofApp::setup(){
     bDraw_info = true;
     bStart = true;
     
-    sABC.load( "svg_r/v2/FGH_r.svg" );
+    sABC.load( "svg_r/v2/ABC_r.svg" );
 
-	//global_pivot.set( 10, 2362 );          // ABC
+	global_pivot.set( 10, 2362 );          // ABC
     //global_pivot.set( -320.89, 2126.188 );    // DEF
-    global_pivot.set( 2243.349, -5639.81 );   // FGH
+    //global_pivot.set( 2243.349, -5639.81 );   // FGH
     ofSetCircleResolution( 4 );
 
     gpu_noise.setup();
@@ -75,10 +75,10 @@ void ofApp::setup(){
     int w = sABC.getWidth() + 1;
     int h = sABC.getHeight();
     cout << "svg canvas size: " << w << ", " << h << endl;
-    exporter.setup(w, h, 25, GL_RGBA, 8);
+    exporter.setup(w, h, 25, GL_RGB, 0);
     exporter.setAutoExit(true);
-    exporter.setFrameRange(1, 3000);
-    exporter.setOutputDir( ofGetTimestampString() );
+    exporter.setFrameRange(0, 3001);
+    exporter.setFilePattern(ofGetTimestampString() + "/F_%05i.png");
     ofSetWindowPosition(0, 0);
     ofSetWindowShape(w*0.5, h*0.5);
     exporter.startExport();
@@ -107,8 +107,8 @@ void ofApp::update(){
 void ofApp::draw(){
     exporter.begin();{
         ofEnableAlphaBlending();
-        ofEnableAntiAliasing();
-        ofEnableSmoothing();
+        
+        
 
         ofBackground( 255, 255, 255, 255 );
         grav_wall.draw();

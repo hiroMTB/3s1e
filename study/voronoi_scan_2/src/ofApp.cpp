@@ -6,8 +6,8 @@ void ofApp::setup(){
     ofSetLogLevel( OF_LOG_VERBOSE );
     
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
+    
+    
     
     
     mW = 2000;
@@ -52,8 +52,8 @@ void ofApp::setup(){
     voro.generate();
     
     ofSetVerticalSync(true);
-    exporter.setup(mW, mH, 25, GL_RGBA, 8);
-    exporter.setOutputDir(ofGetTimestampString());
+    exporter.setup(mW, mH, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit(true);
     
     ofSetWindowPosition(0, 0);

@@ -266,7 +266,7 @@ void ad_grav_wall::update_lines(){
 	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
 	
 #pragma mark GLOBAL_PIVOT_LINE
-	{
+    if(0){
         //float limit = 730;      // ABC
         // float limit = 1050;    // DEF
          float limit = 6050;  //FGH
@@ -503,7 +503,7 @@ void ad_grav_wall::update_lines(){
     }
 
 #pragma mark POLY_LINE
-    
+    if(0){
     for( int i=0; i<20; i++ ){
         
         for( int j=0; j<3; j++ ){
@@ -560,6 +560,7 @@ void ad_grav_wall::update_lines(){
                 }
             }
         }
+    }
     }
 }
 

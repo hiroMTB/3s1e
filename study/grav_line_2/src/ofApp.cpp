@@ -68,8 +68,8 @@ void ofApp::update(){
 
 void ofApp::draw(){
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
-    ofEnableSmoothing();
+    
+    
     ofBackground( 255 );
     ofSetColor(255);
     cam.begin();

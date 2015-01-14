@@ -26,8 +26,9 @@ void testApp::setup() {
 	int h = svg.getHeight() + 1;
 
 	cout << "canvas size: " << w << ", " << h << endl;
-	exporter.setFrameRange(3000);
-	exporter.setup(w, h, 25, GL_RGB, 4);
+	exporter.setFrameRange( 0, 3000 );
+	exporter.setup(w, h, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit( true );
 }
 
@@ -54,8 +55,8 @@ void testApp::draw() {
 
 	exporter.begin();{
 		ofEnableAlphaBlending();
-		ofEnableAntiAliasing();
-		ofEnableSmoothing();
+		
+		
 
 		ofBackground(0);
 		glPointSize(1);

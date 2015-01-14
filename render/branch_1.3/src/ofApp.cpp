@@ -12,9 +12,9 @@ void ofApp::setup(){
     ofSetLogLevel( OF_LOG_VERBOSE );
     ofSetVerticalSync( true );
     ofSetFrameRate(60);
-    ofEnableAntiAliasing();
+    
     ofEnableAlphaBlending();
-    ofEnableSmoothing();
+    
     setup_scene();
     layer_num = 1;
     setup_export_layer( win.x, win.y, layer_num );
@@ -112,8 +112,8 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     
     for (int i=0; i<num; i++) {
         exps.push_back( ofxExportImageSequence() );
-        exps[i].setup(w, h, 25, GL_RGBA, 8 );
-        exps[i].setFilePattern(  dir_name + "/F_%05i.tif");
+        exps[i].setup(w, h, 25, GL_RGB, 0 );
+        exps[i].setFilePattern(  dir_name + "/F_%05i.png");
         exps[i].setFrameRange( 1, max_frame+1 );
         exps[i].setAutoExit( true );
     }

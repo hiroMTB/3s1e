@@ -46,8 +46,8 @@ void ofApp::setup(){
     voro.setPoints( seeds);
     voro.generate();
     
-    exporter.setup(mW, mH, 25, GL_RGBA, 8);
-    exporter.setOutputDir(ofGetTimestampString());
+    exporter.setup(mW, mH, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit(true);
     
     ofSetWindowPosition(0, 0);

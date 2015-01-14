@@ -17,8 +17,8 @@ void ofApp::setup(){
 	
 	ofBackground( 255 );
 	ofEnableAlphaBlending();
-	ofEnableSmoothing();
-	ofEnableAntiAliasing();
+	
+	
 	
 	cam.setTarget( ofVec3f(0,0,0) );
 	cam.setDistance( 50 );
@@ -53,8 +53,9 @@ void ofApp::setup(){
 	int w = 5000;
 	int h = 2500;
 	
-	exporter.setup(w, h, 25, GL_RGB, 4);
-	exporter.setFrameRange(1, 500);
+	exporter.setup(w, h, 25, GL_RGB, 0);
+    exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
+    exporter.setFrameRange(0, 500);
 	exporter.setAutoExit(true);
 	exporter.setOutputDir( ofGetTimestampString() );
 	
@@ -115,8 +116,8 @@ void ofApp::draw(){
 	exporter.begin();{
 		
 		ofEnableAlphaBlending();
-		ofEnableSmoothing();
-		ofEnableAntiAliasing();
+		
+		
 		
 		ofBackground( 255 );
 

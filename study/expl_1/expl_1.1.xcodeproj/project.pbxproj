@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D25203D1A63599600962FC9 /* ad_graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D25203B1A63599600962FC9 /* ad_graph.cpp */; };
+		4D2520441A635C6200962FC9 /* ofxTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2520401A635C6200962FC9 /* ofxTransitions.cpp */; };
+		4D2520451A635C6200962FC9 /* ofxTweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2520421A635C6200962FC9 /* ofxTweener.cpp */; };
 		4D87FED51A632393009E525E /* ofxAlembicReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FDB41A632393009E525E /* ofxAlembicReader.cpp */; };
 		4D87FED61A632393009E525E /* ofxAlembicType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FDB61A632393009E525E /* ofxAlembicType.cpp */; };
 		4D87FED71A632393009E525E /* ofxAlembicUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FDB81A632393009E525E /* ofxAlembicUtil.cpp */; };
@@ -37,7 +40,13 @@
 		4D87FF001A6336FA009E525E /* ad_geom_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FEFE1A6336FA009E525E /* ad_geom_util.cpp */; };
 		4DBC87971A66525D00F40A16 /* libtbb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DBC87961A66525D00F40A16 /* libtbb.dylib */; };
 		4DBC87981A66526B00F40A16 /* libtbb.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DBC87961A66525D00F40A16 /* libtbb.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4DC004DE1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DB1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp */; };
+		4DC004DF1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DC1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm */; };
+		4DC004E01A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DD1A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp */; };
+		4DC005051A57EBDA00C1D6AB /* ofxGpuNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004FD1A57EBDA00C1D6AB /* ofxGpuNoise.cpp */; };
+		4DC005061A57EBDA00C1D6AB /* ofxGpuNoiseShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004FF1A57EBDA00C1D6AB /* ofxGpuNoiseShaders.cpp */; };
 		4DC0050F1A57EBEE00C1D6AB /* ad_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC0050D1A57EBEE00C1D6AB /* ad_util.cpp */; };
+		4DC005141A57EE7200C1D6AB /* ofxFastFboReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC005121A57EE7200C1D6AB /* ofxFastFboReader.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -91,6 +100,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D25203B1A63599600962FC9 /* ad_graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ad_graph.cpp; sourceTree = "<group>"; };
+		4D25203C1A63599600962FC9 /* ad_graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ad_graph.h; sourceTree = "<group>"; };
+		4D2520401A635C6200962FC9 /* ofxTransitions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTransitions.cpp; sourceTree = "<group>"; };
+		4D2520411A635C6200962FC9 /* ofxTransitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTransitions.h; sourceTree = "<group>"; };
+		4D2520421A635C6200962FC9 /* ofxTweener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTweener.cpp; sourceTree = "<group>"; };
+		4D2520431A635C6200962FC9 /* ofxTweener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTweener.h; sourceTree = "<group>"; };
 		4D87FDB31A632393009E525E /* ofxAlembic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAlembic.h; sourceTree = "<group>"; };
 		4D87FDB41A632393009E525E /* ofxAlembicReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAlembicReader.cpp; sourceTree = "<group>"; };
 		4D87FDB51A632393009E525E /* ofxAlembicReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAlembicReader.h; sourceTree = "<group>"; };
@@ -375,8 +390,18 @@
 		4D87FEFF1A6336FA009E525E /* ad_geom_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_geom_util.h; path = ../../../module/ad_geom_util.h; sourceTree = "<group>"; };
 		4DBC87961A66525D00F40A16 /* libtbb.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtbb.dylib; path = "../../../addons/tbb/lib/libc++/libtbb.dylib"; sourceTree = "<group>"; };
 		4DC004D71A57EBB500C1D6AB /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
+		4DC004DA1A57EBBB00C1D6AB /* ofxModifierKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxModifierKeys.h; sourceTree = "<group>"; };
+		4DC004DB1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_linux.cpp; sourceTree = "<group>"; };
+		4DC004DC1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxModifierKeys_impl_mac.mm; sourceTree = "<group>"; };
+		4DC004DD1A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_win.cpp; sourceTree = "<group>"; };
+		4DC004FD1A57EBDA00C1D6AB /* ofxGpuNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoise.cpp; sourceTree = "<group>"; };
+		4DC004FE1A57EBDA00C1D6AB /* ofxGpuNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoise.h; sourceTree = "<group>"; };
+		4DC004FF1A57EBDA00C1D6AB /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
+		4DC005001A57EBDA00C1D6AB /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		4DC0050D1A57EBEE00C1D6AB /* ad_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_util.cpp; path = ../../../module/ad_util.cpp; sourceTree = "<group>"; };
 		4DC0050E1A57EBEE00C1D6AB /* ad_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_util.h; path = ../../../module/ad_util.h; sourceTree = "<group>"; };
+		4DC005121A57EE7200C1D6AB /* ofxFastFboReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFastFboReader.cpp; sourceTree = "<group>"; };
+		4DC005131A57EE7200C1D6AB /* ofxFastFboReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxFastFboReader.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -448,6 +473,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D25203E1A635C6200962FC9 /* ofxTweener */ = {
+			isa = PBXGroup;
+			children = (
+				4D25203F1A635C6200962FC9 /* src */,
+			);
+			name = ofxTweener;
+			sourceTree = "<group>";
+		};
+		4D25203F1A635C6200962FC9 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4D2520401A635C6200962FC9 /* ofxTransitions.cpp */,
+				4D2520411A635C6200962FC9 /* ofxTransitions.h */,
+				4D2520421A635C6200962FC9 /* ofxTweener.cpp */,
+				4D2520431A635C6200962FC9 /* ofxTweener.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxTweener/src;
+			sourceTree = "<group>";
+		};
 		4D87FDB11A632393009E525E /* ofxAlembic */ = {
 			isa = PBXGroup;
 			children = (
@@ -947,12 +992,74 @@
 			path = ../../../addons/ofxExportImageSequence/src;
 			sourceTree = "<group>";
 		};
+		4DC004D81A57EBBB00C1D6AB /* ofxModifierKeys */ = {
+			isa = PBXGroup;
+			children = (
+				4DC004D91A57EBBB00C1D6AB /* src */,
+			);
+			name = ofxModifierKeys;
+			sourceTree = "<group>";
+		};
+		4DC004D91A57EBBB00C1D6AB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DC004DA1A57EBBB00C1D6AB /* ofxModifierKeys.h */,
+				4DC004DB1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp */,
+				4DC004DC1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm */,
+				4DC004DD1A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp */,
+			);
+			name = src;
+			path = ../../../addons/ofxModifierKeys/src;
+			sourceTree = "<group>";
+		};
+		4DC004E11A57EBDA00C1D6AB /* ofxGpuNoise */ = {
+			isa = PBXGroup;
+			children = (
+				4DC004FC1A57EBDA00C1D6AB /* src */,
+			);
+			name = ofxGpuNoise;
+			path = ../../ofxGpuNoise;
+			sourceTree = "<group>";
+		};
+		4DC004FC1A57EBDA00C1D6AB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DC004FD1A57EBDA00C1D6AB /* ofxGpuNoise.cpp */,
+				4DC004FE1A57EBDA00C1D6AB /* ofxGpuNoise.h */,
+				4DC004FF1A57EBDA00C1D6AB /* ofxGpuNoiseShaders.cpp */,
+				4DC005001A57EBDA00C1D6AB /* ofxGpuNoiseShaders.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4DC005101A57EE7200C1D6AB /* ofxFastFboReader */ = {
+			isa = PBXGroup;
+			children = (
+				4DC005111A57EE7200C1D6AB /* src */,
+			);
+			name = ofxFastFboReader;
+			sourceTree = "<group>";
+		};
+		4DC005111A57EE7200C1D6AB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DC005121A57EE7200C1D6AB /* ofxFastFboReader.cpp */,
+				4DC005131A57EE7200C1D6AB /* ofxFastFboReader.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxFastFboReader/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
 				4DBC87961A66525D00F40A16 /* libtbb.dylib */,
+				4D25203E1A635C6200962FC9 /* ofxTweener */,
 				4D87FEEC1A6329B7009E525E /* ofxSvg */,
 				4D87FDB11A632393009E525E /* ofxAlembic */,
+				4DC005101A57EE7200C1D6AB /* ofxFastFboReader */,
+				4DC004E11A57EBDA00C1D6AB /* ofxGpuNoise */,
+				4DC004D81A57EBBB00C1D6AB /* ofxModifierKeys */,
 				4DC004D51A57EBB500C1D6AB /* ofxExportImageSequence */,
 			);
 			name = addons;
@@ -1027,6 +1134,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				4D25203B1A63599600962FC9 /* ad_graph.cpp */,
+				4D25203C1A63599600962FC9 /* ad_graph.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1129,17 +1238,26 @@
 			files = (
 				4D87FEFB1A6329B7009E525E /* svgtiny.cpp in Sources */,
 				4D87FEFC1A6329B7009E525E /* svgtiny_gradient.cpp in Sources */,
+				4DC005141A57EE7200C1D6AB /* ofxFastFboReader.cpp in Sources */,
+				4DC005051A57EBDA00C1D6AB /* ofxGpuNoise.cpp in Sources */,
 				4D87FEFD1A6329B7009E525E /* svgtiny_list.cpp in Sources */,
 				4D87FF001A6336FA009E525E /* ad_geom_util.cpp in Sources */,
 				4D87FEF91A6329B7009E525E /* ofxSvg.cpp in Sources */,
 				4D87FED51A632393009E525E /* ofxAlembicReader.cpp in Sources */,
 				4D87FEFA1A6329B7009E525E /* src_colors.cpp in Sources */,
 				4D87FED81A632393009E525E /* ofxAlembicWriter.cpp in Sources */,
+				4DC005061A57EBDA00C1D6AB /* ofxGpuNoiseShaders.cpp in Sources */,
+				4DC004DF1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				4D87FED71A632393009E525E /* ofxAlembicUtil.cpp in Sources */,
+				4DC004E01A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp in Sources */,
 				4DC0050F1A57EBEE00C1D6AB /* ad_util.cpp in Sources */,
+				4DC004DE1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp in Sources */,
+				4D2520451A635C6200962FC9 /* ofxTweener.cpp in Sources */,
 				4D87FED61A632393009E525E /* ofxAlembicType.cpp in Sources */,
+				4D25203D1A63599600962FC9 /* ad_graph.cpp in Sources */,
+				4D2520441A635C6200962FC9 /* ofxTransitions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

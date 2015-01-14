@@ -8,6 +8,18 @@
 #include "tbb/blocked_range.h"
 using namespace tbb;
 
+
+class bLine{
+    
+public:
+    ofVec2f st;
+    ofVec2f end;
+    
+    void draw(){
+        ofLine( st, end );
+    }
+};
+
 class ofApp : public ofBaseApp{
 
 public:
@@ -25,26 +37,46 @@ public:
 
     void keyPressed(int key);
 
+
     bool bStart;
     bool bDebugDraw;
     bool bDrawInfo;
     int layer_num;
+    vector<ofxExportImageSequence> exps;
+    
     int sim_frame;
     
+    ofVboMesh n_points;
     ofVboMesh points;
     ofVboMesh lines;
+    ofVboMesh prep_lines;
+    ofVboMesh prep_lines_b;
+
+    ofVboMesh branchs;
+    ofVboMesh flowers;
+    ofVboMesh circles;
+    
     ofxSVG svg;
     ofxSVG svg_r;
     ofPoint win;
     ofPoint center;
     ofPoint st;
     ofPoint end;
+    
     float gAngle;
 
-    ofImage img;
-    ofxExportImageSequence exporter;
+    ofMesh circle;
 
+    vector<bLine> bLines;
+    
+    list<int> branchIds;
+    
+    ofImage img;
+    ofImage img2;
+    
+    
     struct NearestPoints {
+        
         const ofVec3f *input;
         ofVec3f *output;
         ofFloatColor * in_colors;
@@ -68,6 +100,8 @@ public:
             for( int i=range.begin(); i!=range.end(); ++i ){
                 
                 const ofVec3f &pos1 = input[i];
+                if( ofNoise(pos1.x*0.1, pos1.y*0.1) > 0.5 )
+                    continue;
                 
                 near_p.clear();
                 for( int line=0; line<num_line; line++ ){
@@ -159,5 +193,33 @@ public:
         np.frame = frame;
         parallel_for( blocked_range<int>(0,n), np );
     }
+    
+    
+    
+    
+    /*
+    struct TbbTestCase {
+        
+        const ofVec3f *input;
+        ofVec3f *output;
+        
+         // input = all point
+         // output = all point * 10
+        void operator()( const blocked_range<int>& range ) const {
+            for( int i=range.begin(); i!=range.end(); ++i ){
+                for( int j=0; j<10; j++ ){
+                    output[i*10+j] = input[i] + ofVec3f(1+j,1+j,1+j);
+                }
+            }
+        }
+    };
+    
+    void calcTestCase( const ofVec3f * input, ofVec3f * output, size_t n ){
+        TbbTestCase tc;
+        tc.input = input;
+        tc.output = output;
+        parallel_for( blocked_range<int>(0,n), tc );
+    }
+    */
 };
 

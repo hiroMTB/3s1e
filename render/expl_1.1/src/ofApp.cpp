@@ -15,7 +15,6 @@ void ofApp::setup(){
     bStart = false;
     bDrawInfo = true;
     bDebugDraw = true;
-    frame = 0;
     layer_num = 1;
     setup_scene();
     setup_export_layer( win.x, win.y, layer_num );
@@ -114,7 +113,7 @@ void ofApp::setup_scene(){
         }
     }
     
-    frame = 0;
+    sim_frame = 300;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -124,22 +123,22 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     for (int i=0; i<num; i++) {
         exps.push_back( ofxExportImageSequence() );
         exps[i].setup(w, h, 25, GL_RGB, 0 );
-        exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.png");
-        exps[i].setFrameRange( 0, 751 );
+        exps[i].setFilePattern(  dir_name + "/F_%05i.png");
+        exps[i].setFrameRange( sim_frame, 750 );
         exps[i].setAutoExit( true );
     }
 
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(win.x/4, win.y/4);
-//    exps[0].startExport();
+    ofSetWindowShape(win.x/2, win.y/2);
+
+    //exps[0].startExport();
 }
 
 void ofApp::update(){
 
-    frame++;
-  	frame = frame%750;
-    string path_L = "sim/v4/L/pL_" + ofToString( frame,0,5,'0' )+ ".abc";
-    string path_R = "sim/v4/R/pR_" + ofToString( frame,0,5,'0' )+ ".abc";
+  	sim_frame = sim_frame%751;
+    string path_L = "sim/v4/L/pL_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
+    string path_R = "sim/v4/R/pR_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
 
     points.clearVertices();
     points.clearColors();
@@ -164,7 +163,6 @@ void ofApp::update(){
     
 #pragma mark LOAD_PARTICLE
     
-    float scale = 105;
     
     {
         ofxAlembic::Reader abc;
@@ -175,10 +173,8 @@ void ofApp::update(){
         abc.get( 0, pos );
         
         for (int i=0; i<pos.size(); i++) {
-//            if(i%4 == 0){
-                points.addVertex( pos[i] );
-//                n_points.addVertex( pos[i] );
-//            }
+            points.addVertex( pos[i] );
+            // n_points.addVertex( pos[i] );
         }
     }
     
@@ -189,20 +185,21 @@ void ofApp::update(){
         vector<ofVec3f> pos;
         abc.get( 0, pos );
         for (int i=0; i<pos.size(); i++) {
-            if(i%4 == 0){
-                points.addVertex( pos[i] );
-//                n_points.addVertex( pos[i] );
-            }
+            points.addVertex( pos[i] );
+            // n_points.addVertex( pos[i] );
         }
     }
     
+    float scale = 72;
+
     // adjust
     vector<ofVec3f> & vs = points.getVertices();
 //    vector<ofVec3f> & n_vs = n_points.getVertices();
     
     for( int i=0; i<vs.size(); i++){
         vs[i] *= scale;
-        vs[i].z = 0;
+        // vs[i].z = 0;
+        vs[i].rotate( 90, ofVec3f(0,1,0) );
         vs[i].rotate( -gAngle, ofVec3f(0,0,1) );
         vs[i] += center;
         
@@ -231,7 +228,7 @@ void ofApp::update(){
 #pragma mark NEAR_LINE
     if( 1 ){
         int num_line = 10;
-        int num_dupl = 5;
+        int num_dupl = 3;
         int vertex_per_point = num_line * num_dupl * 2;
         
         const vector<ofVec3f> &vs = points.getVertices();
@@ -243,7 +240,7 @@ void ofApp::update(){
         vector<ofFloatColor> outc;
         outc.assign( vs.size()*vertex_per_point, ofFloatColor(0,0,0,0) );
         
-        calcNearestPoints(input, &outv[0], &vc[0], &outc[0], vs.size(), num_line, num_dupl );
+        calcNearestPoints(input, &outv[0], &vc[0], &outc[0], vs.size(), num_line, num_dupl, sim_frame );
         
         lines.addVertices( outv );
         lines.addColors( outc );
@@ -316,7 +313,7 @@ void ofApp::update(){
                     near_p.insert( pair1 );
                 }
                 
-                for( int j=0; j<np; j++ ){
+                for( int j=i+1; j<np; j++ ){
                     if( i==j ) continue;
                     
                     const ofVec3f &pos2 = vs[j];
@@ -667,6 +664,8 @@ void ofApp::draw(){
     draw_layer_0();
     draw_preview();
     draw_info();
+    
+    sim_frame++;
 }
 
 void ofApp::draw_layer_0(){
@@ -683,7 +682,7 @@ void ofApp::draw_layer_0(){
 
         //if( bDebugDraw )
 //        if( ofGetFrameNum()==0)
-//            svg.draw();
+            svg.draw();
 
 //        ofPushMatrix(); {
             {
@@ -744,9 +743,9 @@ void ofApp::draw_info(){
     if( !bDrawInfo ) return;
     stringstream ss;
     ss << ad_util::getFrameInfoString();
-//    ss << "num vert  : " << points.getNumVertices() << "\n";
-//    ss << "num color : " << points.getNumColors() << "\n";
-    
+    ss << "num vert  : " << points.getNumVertices() << "\n";
+    ss << "num color : " << points.getNumColors() << "\n";
+    ss << "sim frame : " << sim_frame << "\n";
     ofSetColor(0);
     ofDrawBitmapString( ss.str(), 20, 20);
 }

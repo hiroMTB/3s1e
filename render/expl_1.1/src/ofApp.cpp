@@ -63,8 +63,11 @@ void ofApp::setup_scene(){
 
     
     // img
-    img.loadImage("img/fixed_point/lg/losglaciares04.jpg");
-    img2.loadImage("img/fixed_point/lg/losglaciares05.jpg");
+    string img_name_1 = "img/photo/4.jpg";
+    string img_name_2 = "img/fixed_point/lg/losglaciares04.jpg";
+
+    img.loadImage( img_name_1 );
+    img2.loadImage( img_name_2 );
     
     // svg
     svg.load("svg/expl/A_G.svg");
@@ -111,6 +114,8 @@ void ofApp::setup_scene(){
             }
         }
     }
+    
+    frame = 500;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -121,13 +126,13 @@ void ofApp::setup_export_layer( int w, int h, int num ){
         exps.push_back( ofxExportImageSequence() );
         exps[i].setup(w, h, 25, GL_RGB, 0 );
         exps[i].setFilePattern(  dir_name + "/L" + ofToString(i) +  "/F_%05i.png");
-        exps[i].setFrameRange( 1, 751 );
+        exps[i].setFrameRange( 0, 751 );
         exps[i].setAutoExit( true );
     }
 
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w/4, h/4);
-    exps[0].startExport();
+    ofSetWindowShape(win.x/4, win.y/4);
+//    exps[0].startExport();
 }
 
 void ofApp::update(){
@@ -169,24 +174,46 @@ void ofApp::update(){
     
         vector<ofVec3f> pos;
         abc.get( 0, pos );
-        points.addVertices( pos );
-        n_points.addVertices( pos );
+        
+        for (int i=0; i<pos.size(); i++) {
+//            if(i%4 == 0){
+                points.addVertex( pos[i] );
+//                n_points.addVertex( pos[i] );
+//            }
+        }
     }
     
-    {
+    if(1){
         ofxAlembic::Reader abc;
         abc.open(path_R);
         //abc.dumpNames();
         vector<ofVec3f> pos;
         abc.get( 0, pos );
-        points.addVertices( pos );
-        n_points.addVertices( pos );
+        for (int i=0; i<pos.size(); i++) {
+//            if(i%1 == 0){
+                points.addVertex( pos[i] );
+//                n_points.addVertex( pos[i] );
+//            }
+        }
     }
     
+    // adjust
+    vector<ofVec3f> & vs = points.getVertices();
+//    vector<ofVec3f> & n_vs = n_points.getVertices();
+    
+    for( int i=0; i<vs.size(); i++){
+        vs[i] *= scale;
+        vs[i].z = 0;
+        vs[i].rotate( -gAngle, ofVec3f(0,0,1) );
+        vs[i] += center;
+        
+//        n_vs[i] *= scale;
+//        n_vs[i].z = 0;
+    }
     
     /*
     vector<ofFloatColor> cs;
-    cs.assign(points.getNumVertices(), ofFloatColor(0.1, 0.8) );
+    cs.assign(points.getNumVertices(), ofFloatColor(0.1, 0.8) git );
     points.addColors( cs );
     n_points.addColors( cs );
     */
@@ -194,37 +221,222 @@ void ofApp::update(){
     int w = img.getWidth();
     int h = img.getHeight();
     vector<ofFloatColor> vc;
+    int np = points.getNumVertices();
+    vc.assign(np, ofFloatColor(0));
+    points.addColors( vc );
     for (int i=0; i<points.getNumVertices(); i++) {
         int x = i%w;
         int y = i/w;
         ofFloatColor c = img.getPixelsRef().getColor(x, y);
-        c.setBrightness( ofNoise(i)*0.3 + 0.1 );
-        c.setHueAngle( c.getHueAngle() - 20 );
+//        c.setBrightness( ofNoise(i)*0.3 + 0.1 );
+//        c.setHueAngle( c.getHueAngle() - 20 );
         c.a = 0.8;
-        vc.push_back(c);
+        points.setColor( np-i, c );
     }
-    points.addColors( vc );
-    
-    // adjust
-    vector<ofVec3f> & vs = points.getVertices();
-    vector<ofVec3f> & n_vs = n_points.getVertices();
 
-    for( int i=0; i<vs.size(); i++){
-        vs[i] *= scale;
-        vs[i].z = 0;
-        vs[i].rotate( -gAngle, ofVec3f(0,0,1) );
-        vs[i] += center;
+    
+#pragma mark NEAR_LINE
+    if( 1 ){
+        int num_line = 5;
+        int num_dupl = 5;
+        int vertex_per_point = num_line * num_dupl * 2;
         
-        n_vs[i] *= scale;
-        n_vs[i].z = 0;
+        const vector<ofVec3f> &vs = points.getVertices();
+        vector<ofFloatColor> &vc = points.getColors();
+        
+        const ofVec3f * input = &vs[0];
+        vector<ofVec3f> outv;
+        outv.assign( vs.size()*vertex_per_point, ofVec3f(-99999, -99999, -99999) );
+        vector<ofFloatColor> outc;
+        outc.assign( vs.size()*vertex_per_point, ofFloatColor(0,0,0,0) );
+        
+        calcNearestPoints(input, &outv[0], &vc[0], &outc[0], vs.size(), num_line, num_dupl );
+        
+        lines.addVertices( outv );
+        lines.addColors( outc );
+        
+//        for (int i=0; i<vs.size(); i++) {
+//
+//            ofFloatColor c = ofFloatColor(0.8, 0.8) - vc[i];
+//            float alpha = c.a;
+//            for (int j=0; j<num_line; j++) {
+//
+//                int outid = i*num_line + j;
+//                if( output[outid].x != -12345){
+//                    
+//                    c.a = alpha;
+//                    
+//                    const ofVec3f &p1 = vs[i];
+//                    ofVec3f &p2 = output[outid];
+//                    lines.addVertex( p1 );
+//                    lines.addVertex( p2 );
+//                    lines.addColor( c );
+//                    lines.addColor( c );
+//                    
+//                    c.a = 0.06;
+//                    
+//                    int n = ofNoise( i, j ) * 5.0 + 2;
+//                    for( int k=0; k<n; k++ ){
+//                        float rate = 1.0 + k/2;
+//                        
+//                        ofVec3f d1 = p1;
+//                        ofVec3f d2 = p2;
+//                        d1.x += ofRandomf() * rate;
+//                        d1.y += ofRandomf() * rate;
+//                        d2.x += ofRandomf() * rate;
+//                        d2.y += ofRandomf() * rate;
+//                        
+//                        lines.addVertex( d1 );
+//                        lines.addVertex( d2 );
+//                        lines.addColor( c );
+//                        lines.addColor( c );
+//                    }
+//                }
+//            }
+//        }
     }
 
+    return;
+
     
-#pragma PREP_LINE
-    {
-        int n = 1000;
+    if(0){
         int np = points.getNumVertices()-1;
-        ofFloatColor c(0,0.5);
+        const vector<ofVec3f> &vs = points.getVertices();
+        const vector<ofFloatColor> &vc = points.getColors();
+        
+        for( int i=0; i<np; i++ ){
+            
+            const ofVec3f &pos1 = vs[np-i];
+            
+            float dist2center1 = ad_geom_util::dist_pl(pos1, st, end);
+            float area_limit = 0; // + ofSignedNoise(i, ofGetFrameNum()*0.1) * 100;
+            
+            if( dist2center1<area_limit )
+                continue;
+            
+            {
+                int num_line = ofNoise(i*0.1, ofGetFrameNum()*0.5)*30 + 5;
+                
+                multimap<float, ofVec3f> near_p;
+                pair<float, ofVec3f> pair1( 999999999999, ofVec3f(-12345,0,0) );
+                for( int line=0; line<num_line; line++ ){
+                    near_p.insert( pair1 );
+                }
+                
+                for( int j=0; j<np; j++ ){
+                    if( i==j ) continue;
+                    
+                    const ofVec3f &pos2 = vs[j];
+                    
+                    float dist = pos1.distance( pos2 );
+                    if( dist>2 ){
+                        multimap<float, ofVec3f>::iterator itr = near_p.end();
+                        
+                        itr--;
+                        if( dist < itr->first ){
+                            std::pair<float, ofVec3f> pair2( dist, pos2 );
+                            near_p.insert( pair2 );
+                            
+                            multimap<float, ofVec3f>::iterator end = near_p.end();
+                            near_p.erase( --end );
+                        }
+                    }
+                }
+                multimap<float, ofVec3f>::iterator itr = near_p.begin();
+                
+                for(; itr!=near_p.end(); itr++ ){
+                    ofVec3f &pos2 = itr->second;
+                    if(pos2.x == -12345) continue;
+                    
+                    float d = pos1.distance(pos2);
+                    float limit = 600;
+                    
+                    if( d<10 || limit<d  ) continue;
+                    
+                    ofFloatColor c = ofFloatColor(0.8, 0.8) - vc[i];
+                    
+                    lines.addVertex( pos1 );
+                    lines.addVertex( pos2 );
+                    lines.addColor( c );
+                    lines.addColor( c );
+                    
+                    c.a = 0.1;
+                    
+                    int n = ofNoise( i, ofGetFrameNum() ) * 20.0 + 2;
+                    for( int k=0; k<n; k++ ){
+                        float rate = 1.0 + k/2;
+                        
+                        ofVec3f d1 = pos1;
+                        ofVec3f d2 = pos2;
+                        d1.x += ofRandomf() * rate;
+                        d1.y += ofRandomf() * rate;
+                        d2.x += ofRandomf() * rate;
+                        d2.y += ofRandomf() * rate;
+                        
+                        lines.addVertex( d1 );
+                        lines.addVertex( d2 );
+                        lines.addColor( c );
+                        lines.addColor( c );
+                    }
+                }
+            }
+        }
+    }
+    
+#pragma mark RANDOM_LINE
+
+    if(0){
+        const vector<ofVec3f> &vs = points.getVertices();
+        const vector<ofFloatColor> &vc = points.getColors();
+
+        int np = vs.size()-1;
+        int n1 = 60000;
+        
+        for (int i=0; i<n1; i++) {
+            
+            int id1 = ofRandomuf() * np;
+            int id2 = id1 + ofRandomf() * 300;
+            
+            id2 = abs(id2);
+            id2 %= np;
+            
+            const ofVec3f &v1 = vs[id1];
+            const ofVec3f &v2 = vs[id2];
+            
+            float dist2center1 = ad_geom_util::dist_pl(v1, st, end);
+            float dist2center2 = ad_geom_util::dist_pl(v2, st, end);
+            
+            float area_limit = 50 + ofSignedNoise(i, ofGetFrameNum()*0.1) * 100;
+            
+            if( dist2center1<area_limit )// || dist2center2<area_limit)
+                continue;
+            
+            float len = v1.distance(v2);
+            
+            if( 5<len && len<100 ){
+                
+                ofFloatColor c = vc[id1];
+                c *= 0.8;
+                c.a = 0.3;
+                
+                for (int k=0; k<10; k++) {
+                    
+                    ofVec3f r1( ofRandomf(), ofRandomf() );
+                    ofVec3f r2( ofRandomf(), ofRandomf() );
+                    lines.addVertex( v1 + r1 );
+                    lines.addVertex( v2 + r2 );
+                    lines.addColor( c );
+                    lines.addColor( c );
+                }
+            }
+        }
+    }
+    
+#pragma mark PREP_LINE
+    if(0){
+        int n = 2000;
+        int np = points.getNumVertices()-1;
+        ofFloatColor c(0,0.75);
         
         for (int i=0; i<n; i++) {
             
@@ -280,9 +492,11 @@ void ofApp::update(){
             }
         }
     }
+
+    
 #pragma mark PREP_LINE_B
     
-    {
+    if(0){
      
         for (int i=0; i<bLines.size(); i++) {
 
@@ -317,7 +531,7 @@ void ofApp::update(){
     
     
 #pragma CIRCLES
-    {
+    if(0){
         int np = points.getNumVertices();
         int n = (float)np*0.01;
         
@@ -374,7 +588,7 @@ void ofApp::update(){
     ofVec2f rf_center = (rf_st + rf_end) * 0.5;
     
 #pragma Branch
-    {
+    if(0){
         int np = n_points.getNumVertices();
 
         {
@@ -422,7 +636,7 @@ void ofApp::update(){
 
 
 #pragma FLOWER
-        {
+        if(0){
             ofFloatColor c(0, 0.9);
             int n = 1200;
             for (int i=0; i<n; i++) {
@@ -457,56 +671,69 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    ofBackground(255);
     draw_layer_0();
     draw_preview();
     draw_info();
 }
 
 void ofApp::draw_layer_0(){
+    
+    ofDisableAntiAliasing();
+    ofDisableSmoothing();
+    ofEnableAlphaBlending();
+
     exps[0].begin(); {
         ofClear(0);
         ofBackground(255);
         
-        svg_r.draw();
+        //svg_r.draw();
 
         //if( bDebugDraw )
-        if( ofGetFrameNum()==0)
-            svg.draw();
+//        if( ofGetFrameNum()==0)
+//            svg.draw();
 
-        ofPushMatrix(); {
+//        ofPushMatrix(); {
             {
-                glLineWidth(1);
-                prep_lines.setMode( OF_PRIMITIVE_LINES );
-                prep_lines.draw();
                 
-                glPointSize(3);
-                prep_lines.setMode( OF_PRIMITIVE_POINTS );
-                prep_lines.draw();
-            
+                //ofEnableAntiAliasing();
+                //ofEnableSmoothing();
+//                glPointSize(4);
+//                points.draw();
+                
                 glLineWidth(1);
-                prep_lines_b.draw();
+                lines.draw();
+
+//                glLineWidth(2);
+//                prep_lines.setMode( OF_PRIMITIVE_LINES );
+//                prep_lines.draw();
+                
+//                glPointSize(3);
+//                prep_lines.setMode( OF_PRIMITIVE_POINTS );
+//                prep_lines.draw();
             
-                glLineWidth(1);
-                circles.draw();
+//                glLineWidth(1);
+//                prep_lines_b.draw();
+            
+//                glLineWidth(1);
+//                circles.draw();
+                
             }
             
             {
-                ofTranslate(center);
-                ofRotateZ( -gAngle );
+//                ofTranslate(center);
+//                ofRotateZ( -gAngle );
                 
-                glLineWidth(1);
-                branchs.draw();
-                flowers.draw();
+//                glLineWidth(1);
+//                branchs.draw();
+//                flowers.draw();
                 
             }
-        } ofPopMatrix();
+//        } ofPopMatrix();
         
-        ofPushMatrix(); {
-            glPointSize(1);
-            points.draw();
-        } ofPopMatrix();
-        
+//        ofPushMatrix(); {
+//            glPointSize(2);
+//            points.draw();
+//        } ofPopMatrix();
         
     } exps[0].end();
 }

@@ -38,6 +38,8 @@
 		4D87FEFC1A6329B7009E525E /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FEF61A6329B7009E525E /* svgtiny_gradient.cpp */; };
 		4D87FEFD1A6329B7009E525E /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FEF81A6329B7009E525E /* svgtiny_list.cpp */; };
 		4D87FF001A6336FA009E525E /* ad_geom_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D87FEFE1A6336FA009E525E /* ad_geom_util.cpp */; };
+		4DBC87971A66525D00F40A16 /* libtbb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DBC87961A66525D00F40A16 /* libtbb.dylib */; };
+		4DBC87981A66526B00F40A16 /* libtbb.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DBC87961A66525D00F40A16 /* libtbb.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4DC004DE1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DB1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp */; };
 		4DC004DF1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DC1A57EBBB00C1D6AB /* ofxModifierKeys_impl_mac.mm */; };
 		4DC004E01A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DC004DD1A57EBBB00C1D6AB /* ofxModifierKeys_impl_win.cpp */; };
@@ -90,6 +92,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4DBC87981A66526B00F40A16 /* libtbb.dylib in CopyFiles */,
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +388,7 @@
 		4D87FEF81A6329B7009E525E /* svgtiny_list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
 		4D87FEFE1A6336FA009E525E /* ad_geom_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_geom_util.cpp; path = ../../../module/ad_geom_util.cpp; sourceTree = "<group>"; };
 		4D87FEFF1A6336FA009E525E /* ad_geom_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_geom_util.h; path = ../../../module/ad_geom_util.h; sourceTree = "<group>"; };
+		4DBC87961A66525D00F40A16 /* libtbb.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtbb.dylib; path = "../../../addons/tbb/lib/libc++/libtbb.dylib"; sourceTree = "<group>"; };
 		4DC004D71A57EBB500C1D6AB /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		4DC004DA1A57EBBB00C1D6AB /* ofxModifierKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxModifierKeys.h; sourceTree = "<group>"; };
 		4DC004DB1A57EBBB00C1D6AB /* ofxModifierKeys_impl_linux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_linux.cpp; sourceTree = "<group>"; };
@@ -436,6 +440,7 @@
 				4D87FEE51A632393009E525E /* libhdf5.a in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
+				4DBC87971A66525D00F40A16 /* libtbb.dylib in Frameworks */,
 				4D87FEE31A632393009E525E /* libAlembicUtil.a in Frameworks */,
 				E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */,
 				E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */,
@@ -1048,6 +1053,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4DBC87961A66525D00F40A16 /* libtbb.dylib */,
 				4D25203E1A635C6200962FC9 /* ofxTweener */,
 				4D87FEEC1A6329B7009E525E /* ofxSvg */,
 				4D87FDB11A632393009E525E /* ofxAlembic */,
@@ -1415,10 +1421,12 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
-					/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/ofxAlembic/libs/alembic/lib/osx,
+					../../../addons/ofxAlembic/libs/alembic/lib/osx,
+					../../../addons/tbb/lib,
+					"/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/tbb/lib/libc++",
 				);
 				PRODUCT_NAME = expl_1.1Debug;
-				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxAlembic/libs/alembic/include/;
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAlembic/libs/alembic/include/ ../../../addons/tbb/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1502,10 +1510,12 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
-					/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/ofxAlembic/libs/alembic/lib/osx,
+					../../../addons/ofxAlembic/libs/alembic/lib/osx,
+					../../../addons/tbb/lib,
+					"/Users/matobahiroshi/Desktop/2015_02_3s1e/dev/of_v0.8.4/addons/tbb/lib/libc++",
 				);
 				PRODUCT_NAME = expl_1.1;
-				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxAlembic/libs/alembic/include/;
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAlembic/libs/alembic/include/ ../../../addons/tbb/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

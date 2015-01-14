@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxDna.h"
-#include "ad_image_saver.h"
+#include "ofxExportImageSequence.h"
 
 class LineAgent {
 public:		
@@ -188,7 +188,8 @@ public:
     
 	ofVec3f center, current_la_pos;
     ofVboMesh connection_between_agent;
-	
-	
-    ad_image_saver saver;
+		    
+    ofxExportImageSequence exporter;
+    
+    ofPoint win;
 };

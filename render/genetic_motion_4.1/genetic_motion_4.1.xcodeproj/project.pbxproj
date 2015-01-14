@@ -65,6 +65,7 @@
 		008853B015CD237300DBB2AB /* ofxDna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDna.h; path = ../../../addons/ofxDna/src/ofxDna.h; sourceTree = SOURCE_ROOT; };
 		4D4CE7A919EBEBE4005A7C3A /* ad_image_saver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ad_image_saver.cpp; sourceTree = "<group>"; };
 		4D4CE7AA19EBEBE4005A7C3A /* ad_image_saver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ad_image_saver.h; sourceTree = "<group>"; };
+		4D5C01461A65EA7C003F0D5F /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };
 		4DF4905019CE31580027CB11 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		4DF4905119CE31580027CB11 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DF4905419CE317C0027CB11 /* ofxDna.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDna.cpp; sourceTree = "<group>"; };
@@ -148,9 +149,27 @@
 			path = ../../../module;
 			sourceTree = "<group>";
 		};
+		4D5C01441A65EA7C003F0D5F /* ofxExportImageSequence */ = {
+			isa = PBXGroup;
+			children = (
+				4D5C01451A65EA7C003F0D5F /* src */,
+			);
+			name = ofxExportImageSequence;
+			sourceTree = "<group>";
+		};
+		4D5C01451A65EA7C003F0D5F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4D5C01461A65EA7C003F0D5F /* ofxExportImageSequence.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxExportImageSequence/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4D5C01441A65EA7C003F0D5F /* ofxExportImageSequence */,
 				008853AE15CD237300DBB2AB /* ofxDna */,
 			);
 			name = addons;
@@ -487,6 +506,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = genetic_motion_4.1Debug;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -573,6 +593,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = genetic_motion_4.1;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

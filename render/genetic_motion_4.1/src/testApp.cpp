@@ -29,18 +29,28 @@ void testApp::setup(){
 	ofSetFrameRate( 60 );
     ofEnableAlphaBlending();
     ofEnableSmoothing();
-    ofEnableAntiAliasing();
+//    ofEnableAntiAliasing();
     ofSetVerticalSync( true );
-
+    
+    string dir_name = ofGetTimestampString("%m%d_%H%M_%S");
+    
+    win.x = 1920*2;
+    win.y = 1080*2;
+    
+    exporter.setup( win.x, win.y, 25, GL_RGB, 0 );
+    exporter.setFilePattern(  dir_name + "/F_%05i.png");
+    exporter.setFrameRange( 0, 3001 );
+    exporter.setAutoExit( true );
+    
+    ofSetWindowShape(win.x/4, win.y/4);
+    ofSetWindowPosition(0, 0);
 }
 
 void testApp::update(){
     int frame = ofGetFrameNum();
     float step_angle = (out_angle-in_angle)/ 3000.0;
-    int w = 0; //ofGetWidth();
-    int h = 0; //ofGetHeight();
     
-    if( frame%500 == 0 ){
+    if( frame%50 == 0 ){
         change_settings();
     }
 	
@@ -54,7 +64,6 @@ void testApp::update(){
 		la.push_back( l );
 		
 		current_la_pos = l.pos;
-		
     }
     
     if( bStart ){
@@ -80,37 +89,43 @@ void testApp::update(){
 
 void testApp::draw(){
 	
-	ofBackground( 255 );
-    ofSetColor( 255 );
-    if( bOrtho ){
-        ofSetupScreenOrtho();
-    }
-    
-    ofPushMatrix();
-    ofTranslate( ofGetWidth()/2, ofGetHeight()/2 );
-    if( bRotate ){
-        ofRotate( ofGetFrameNum()*0.05, 1, 0, 0 );
-    }
-
-    if( bDraw_connection_between_agnet ){
-        draw_connection_between_agnet();
-    }
-    
-    
-    for ( int i=0; i<la.size(); i++ ) {
-        if( bDraw_agent ){
-            //if( ofRandom(1.0)>0.2 ){
+    exporter.begin(); {
+        ofBackground( 255 );
+        ofSetColor( 255 );
+        if( bOrtho ){
+            ofSetupScreenOrtho();
+        }
+        
+        ofPushMatrix();
+        ofTranslate( win.x/2, win.y );
+        if( bRotate ){
+            ofRotate( ofGetFrameNum()*0.05, 1, 0, 0 );
+        }
+        
+        if( bDraw_connection_between_agnet ){
+            draw_connection_between_agnet();
+        }
+        
+        
+        for ( int i=0; i<la.size(); i++ ) {
+            if( bDraw_agent ){
+                //if( ofRandom(1.0)>0.2 ){
                 la[i].draw();
-            //}
+                //}
+            }
+            if( bDraw_connection_inside_of_agent ){
+                la[i].draw_connection_inside_of_agent();
+            }
         }
-        if( bDraw_connection_inside_of_agent ){
-            la[i].draw_connection_inside_of_agent();
-        }
-	}
-	
-    ofPopMatrix();
-
-    saver.save();
+        
+        ofPopMatrix();
+    }exporter.end();
+    
+    ofPushMatrix(); {
+        ofBackground(0);
+        ofSetColor(255);
+        exporter.draw(0, 0);
+    } ofPopMatrix();
     
     draw_info();
 }
@@ -184,8 +199,6 @@ void testApp::draw_info(){
     ofSetColor( 0 );
     stringstream ss;
     ss << "fps       : " << (int)ofGetFrameRate() << "\n";
-    ss << "cur frame : " << saver.frame_cur << "\n";
-    ss << "end frame : " << saver.frame_end << "\n";
     ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
     ss << "space key : start genetic calculation\n";
     ss << "m     key : start animation\n";
@@ -250,7 +263,8 @@ void testApp::keyPressed( int key ){
             break;
 
         case 'S':
-            saver.start( ofGetTimestampString(), "gm2.1_", 3000 );
+            bStart = true;
+            exporter.startExport();
             break;
             
         default:

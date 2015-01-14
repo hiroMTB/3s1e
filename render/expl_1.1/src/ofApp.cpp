@@ -68,7 +68,7 @@ void ofApp::setup_scene(){
         }
     }
     
-    sim_frame = 1;
+    sim_frame = 700;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -101,8 +101,9 @@ void ofApp::update(){
     
 #pragma mark LOAD_PARTICLE
     float scale = 72;
-    
+    float density = 0.5;
     {
+        // L load
         ofxAlembic::Reader abc;
         abc.open(path_L);
      
@@ -112,11 +113,27 @@ void ofApp::update(){
             pos[i].x = 0;
             pos[i] *= scale;
             
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) > 0.5 )
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density )
                 points.addVertex(pos[i]);
         }
     }
 
+    {
+        // R load
+        ofxAlembic::Reader abc;
+        abc.open(path_R);
+        
+        vector<ofVec3f> pos;
+        abc.get( 0, pos );
+        for (int i=0; i<pos.size(); i++) {
+            pos[i].x = 0;
+            pos[i] *= scale;
+            
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density )
+                points.addVertex(pos[i]);
+        }
+    }
+    
     int np = points.getNumVertices();
     int w = img.getWidth();
     int h = img.getHeight();

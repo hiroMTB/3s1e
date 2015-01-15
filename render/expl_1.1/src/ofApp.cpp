@@ -17,7 +17,7 @@ void ofApp::setup(){
 #ifdef A_G_SETTING
     ofSeedRandom(4441);
 #else
-    ofSeedRandom(4441);
+    ofSeedRandom(1247);
 #endif
     
     bStart = false;

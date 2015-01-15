@@ -29,7 +29,6 @@ void ofApp::setup(){
 
     lines.setUsage( GL_DYNAMIC_DRAW );
     lines.setMode( OF_PRIMITIVE_LINES );
-
 	
 	bool ok = img.loadImage( ad_util::data_path  + "img/gns3.jpg");	// 2333 * 1477px
 	if( !ok ) cout << "image load failer" << endl;
@@ -98,6 +97,86 @@ void ofApp::update(){
 		points.addColor( c );
 	}
 
+	
+#pragma mark ANGLE_LIMIT
+	lines.clearVertices();
+	lines.clearColors();
+	
+	int np = points.getNumVertices()-1;
+	if( np > 0){
+		for( int i=0; i<40000; i++){
+			
+			int id1 = ofRandomuf() * np;
+			int id2 = ofRandomuf() * np;
+			
+			ofVec3f v1(0, 0, 0);
+			v1.y += ofRandomf() * 10;
+			ofVec3f v2 = points.getVertex(id2);
+			
+			float len = v1.distance(v2);
+			ofVec3f dir = v1- v2;
+			
+			float angle = dir.angle( ofVec3f(0,1,0));
+			float limit = 1;
+
+			if( 80<angle && angle<100 ){
+				limit = 4;
+			}else if( 60<angle && angle<120 ){
+				limit = 3;
+			}else if( 45<angle && angle<135 ){
+				limit = 2;
+			}else{
+				limit = 1;
+			}
+			
+			if( 0 < len && len<limit){
+					for( int k=0; k<20; k++){
+						
+						ofVec3f r1( ofRandomf(), ofRandomf() );
+						ofVec3f r2( ofRandomf(), ofRandomf() );
+						
+						lines.addVertex( v1 + r1*0.02 );
+						lines.addVertex( v2 + r2*0.02 );
+						lines.addColor( ofFloatColor(0, 0.2) );
+						lines.addColor( ofFloatColor(0, 0.2) );
+					}
+//				}
+			}
+		}
+	}
+
+#pragma mark LENGTH_LIMIT
+	
+	if( np > 0){
+		for( int i=0; i<20000; i++){
+			
+			int id1 = ofRandomuf() * np;
+			int id2 = ofRandomuf() * np;
+			
+			ofVec3f v1 = points.getVertex(id1);
+			ofVec3f v2 = points.getVertex(id2);
+			
+			if( abs(v1.x)<6 && abs(v2.x)<6 )
+				continue;
+			
+			float len = v1.distance(v2);
+			float limit = 10;
+			
+			if( 0 < len && len<limit){
+				for( int k=0; k<20; k++){
+					
+					ofVec3f r1( ofRandomf(), ofRandomf() );
+					ofVec3f r2( ofRandomf(), ofRandomf() );
+					
+					lines.addVertex( v1 + r1*0.02 );
+					lines.addVertex( v2 + r2*0.02 );
+					lines.addColor( ofFloatColor(0, 0.2) );
+					lines.addColor( ofFloatColor(0, 0.2) );
+				}
+			}
+		}
+	}
+	
 	abc.close();
 }
 
@@ -112,7 +191,7 @@ void ofApp::draw(){
 
 		ofPushMatrix();{
 			if(!bOrtho){
-				ofScale(0.5, 0.5, 0.5);
+//				ofScale(0.5, 0.5, 0.5);
 				//cam.begin();
 			}else{
 				ofSetupScreenOrtho();
@@ -125,7 +204,10 @@ void ofApp::draw(){
 			ofRotateZ(90);
 //			ofRotateX(90);
 
-			glPointSize( 1 );
+			glLineWidth(1);
+			lines.draw();
+			
+			glPointSize( 3 );
 			points.draw();
 			
 			//ofSetColor(0);

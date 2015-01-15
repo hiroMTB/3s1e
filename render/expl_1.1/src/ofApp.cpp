@@ -4,13 +4,21 @@
 #include "ofxAlembic.h"
 #include "ad_graph.h"
 
+//#define A_G_SETTING 1
+#define RENDER 1
+
 void ofApp::setup(){
 
     ofSetVerticalSync( true );
     ofSetFrameRate(25);
     
     ofEnableAlphaBlending();
+
+#ifdef A_G_SETTING
     ofSeedRandom(4441);
+#else
+    ofSeedRandom(4441);
+#endif
     
     bStart = false;
     bDrawInfo = true;
@@ -18,7 +26,6 @@ void ofApp::setup(){
     layer_num = 1;
     setup_scene();
     setup_export_layer( win.x, win.y, layer_num );
-
 }
 
 void ofApp::setup_scene(){
@@ -34,8 +41,11 @@ void ofApp::setup_scene(){
     img.loadImage( img_name_1 );
     
     // svg
+#ifdef A_G_SETTING
     svg.load("svg/expl/A_G.svg");
-    svg_r.load("svg/expl/A_G_render.svg");
+#else
+    svg.load("svg/expl/G_M.svg");
+#endif
 
     win.x = (int)svg.getWidth();
     win.y = (int)svg.getHeight();
@@ -68,7 +78,11 @@ void ofApp::setup_scene(){
         }
     }
     
-    sim_frame = 700;
+#ifndef A_G_SETTING
+    gAngle = -gAngle;
+#endif
+    
+    sim_frame = 1;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -79,12 +93,17 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     exporter.setFrameRange( sim_frame, 750 );
     exporter.setAutoExit( true );
 
-    //ofSetWindowShape(win.x/2, win.y/2);
+#ifdef RENDER
     ofSetWindowShape(200, 200);
     ofSetWindowPosition(0, 0);
-
     exporter.startExport();
     bDebugDraw = false;
+#else
+    ofSetWindowShape(win.x/2, win.y/2);
+    ofSetWindowPosition(0, 0);
+    bDebugDraw = true;
+#endif
+    
 }
 
 void ofApp::update(){
@@ -101,7 +120,6 @@ void ofApp::update(){
     
 #pragma mark LOAD_PARTICLE
     float scale = 72;
-    float density = 0.5;
     {
         // L load
         ofxAlembic::Reader abc;
@@ -112,9 +130,12 @@ void ofApp::update(){
         for (int i=0; i<pos.size(); i++) {
             pos[i].x = 0;
             pos[i] *= scale;
-            
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density )
-                points.addVertex(pos[i]);
+
+#ifdef A_G_SETTING
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < 0.5 ) points.addVertex(pos[i]);
+#else
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) > 0.5 ) points.addVertex(pos[i]);
+#endif
         }
     }
 
@@ -129,8 +150,12 @@ void ofApp::update(){
             pos[i].x = 0;
             pos[i] *= scale;
             
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density )
-                points.addVertex(pos[i]);
+#ifdef A_G_SETTING
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < 0.5 ) points.addVertex(pos[i]);
+#else
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) > 0.5 ) points.addVertex(pos[i]);
+#endif
+
         }
     }
     
@@ -174,7 +199,11 @@ void ofApp::update(){
 
 void ofApp::draw(){
     draw_layer_0();
-    if( !exporter.isExporting() ) draw_preview();
+
+#ifndef RENDER
+    draw_preview();
+#endif
+
     draw_info();
     
     sim_frame++;
@@ -196,6 +225,11 @@ void ofApp::draw_layer_0(){
             ofTranslate(center);
             ofRotate( -gAngle, 0,0,1 );
             ofRotate( 90, 0, 1, 0 );
+            
+#ifndef A_G_SETTING
+//            ofRotate( 180, 0, 1, 0 );   //  switch L/R
+//            ofRotate( 180, 1, 0, 0 );   //  switch TOP/BOTTOM
+#endif
 
             glLineWidth(1);
             lines.draw();

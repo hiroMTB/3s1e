@@ -34,7 +34,6 @@ public:
     ofVboMesh points;
     ofVboMesh lines;
     ofxSVG svg;
-    ofxSVG svg_r;
     ofPoint win;
     ofPoint center;
     ofPoint st;

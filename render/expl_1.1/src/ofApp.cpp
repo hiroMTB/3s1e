@@ -37,7 +37,7 @@ void ofApp::setup_scene(){
 
     
     // img
-    string img_name_1 = "img/photo/4.jpg";
+    string img_name_1 = "img/photo/2.jpg";
     img.loadImage( img_name_1 );
     
     // svg
@@ -82,7 +82,7 @@ void ofApp::setup_scene(){
     gAngle = -gAngle;
 #endif
     
-    sim_frame = 1;
+    sim_frame = 750;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -109,8 +109,8 @@ void ofApp::setup_export_layer( int w, int h, int num ){
 void ofApp::update(){
 
   	sim_frame = sim_frame%751;
-    string path_L = "sim/v4/L/pL_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
-    string path_R = "sim/v4/R/pR_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
+    string path_L = "sim/L/pL_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
+    string path_R = "sim/R/pR_" + ofToString( sim_frame,0,5,'0' )+ ".abc";
 
     points.clearVertices();
     points.clearColors();
@@ -173,6 +173,8 @@ void ofApp::update(){
         points.setColor( np-i-1, c );
     }
 
+    return;
+    
 #pragma mark NEAR_LINE
     if( 1 ){
         int num_line = 10;
@@ -231,11 +233,11 @@ void ofApp::draw_layer_0(){
 //            ofRotate( 180, 1, 0, 0 );   //  switch TOP/BOTTOM
 #endif
 
-            glLineWidth(1);
-            lines.draw();
+            //glLineWidth(1);
+            //lines.draw();
 
-            //glPointSize(2);
-            //points.draw();
+            glPointSize(2);
+            points.draw();
         } ofPopMatrix();
         
     } exporter.end();

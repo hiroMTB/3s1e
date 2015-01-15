@@ -31,7 +31,7 @@ void ofApp::setup_scene(){
     max_frame = 1500;
     
     svg.load( "svg_r/v3_b/A_r.svg");
-    win.x = svg.getWidth();
+    win.x = svg.getWidth()+1;
     win.y = svg.getHeight();
     cout << "svg : " << win << endl;
     
@@ -97,8 +97,8 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     }
     
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w*0.75, h*0.75);
-    //exps[0].startExport();
+    ofSetWindowShape(w*0.25, h*0.25);
+    exps[0].startExport();
 }
 
 void ofApp::update(){
@@ -161,7 +161,7 @@ void ofApp::draw_layer_0(){
         ofTranslate( start );
         ofRotateZ( -gAngle );
 
-        ofLine( Branch::root, Branch::root + tree[0].dirn * Branch::dist_limit );
+        //ofLine( Branch::root, Branch::root + tree[0].dirn * Branch::dist_limit );
 
         for (int i=0; i<tree.size(); i++) {
             tree[i].draw();

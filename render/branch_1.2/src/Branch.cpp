@@ -154,7 +154,7 @@ void Branch::set_param(){
     // X jump
     if( ofRandomuf()>0.995 ){
         if( b_type != 6 && b_type != 9 && b_type != 7 && b_type != 8 ){
-            fw_len *= ofRandom(2, 10);
+            fw_len *= ofRandom(2, 8);
 
             if( ofRandomuf() > 0.1 ){
                 bMainBranch = true;

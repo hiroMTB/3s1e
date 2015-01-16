@@ -118,7 +118,7 @@ public:
                 for(int j=0; itr!=near_p.end(); itr++, j++ ){
                     
                     ofVec3f &p2 = itr->second;
-                    c.a = alpha;
+                    c.a = 0.1;
                     if( p2.x != -12345){
                         int outid = i*num_line*num_dupl*2 + j*num_dupl*2;
 
@@ -126,10 +126,10 @@ public:
                         output[outid+1] = p2;
                         out_colors[outid] = c;
                         out_colors[outid+1] = c;
-                        c.a = 0.4;
+                        c.a = 0.01;
                         
                         for( int k=0; k<num_dupl-1; k++ ){
-                            float rate = 1.0 + k/2;
+                            float rate = 2;
                             ofVec3f r1( ofRandomf(), ofRandomf() );
                             ofVec3f r2( ofRandomf(), ofRandomf() );
 

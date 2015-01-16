@@ -4,7 +4,7 @@
 #include "ofxAlembic.h"
 #include "ad_graph.h"
 
-//#define A_G_SETTING 1
+#define A_G_SETTING 1
 #define RENDER 1
 
 void ofApp::setup(){
@@ -82,7 +82,7 @@ void ofApp::setup_scene(){
     gAngle = -gAngle;
 #endif
     
-    sim_frame = 750;
+    sim_frame = 1;
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -120,6 +120,10 @@ void ofApp::update(){
     
 #pragma mark LOAD_PARTICLE
     float scale = 72;
+    float density = 0.5;
+    int imgw = img.getWidth();
+    int imgh = img.getHeight();
+
     {
         // L load
         ofxAlembic::Reader abc;
@@ -131,11 +135,14 @@ void ofApp::update(){
             pos[i].x = 0;
             pos[i] *= scale;
 
-#ifdef A_G_SETTING
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < 0.5 ) points.addVertex(pos[i]);
-#else
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) > 0.5 ) points.addVertex(pos[i]);
-#endif
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density ){
+                points.addVertex(pos[i]);
+                int imgId = (i+sim_frame) * 5;
+                int x = imgId%imgw;
+                int y = imgId/imgw;
+                ofFloatColor c = img.getPixelsRef().getColor(x, y);
+                points.addColor( c );
+            }
         }
     }
 
@@ -143,42 +150,27 @@ void ofApp::update(){
         // R load
         ofxAlembic::Reader abc;
         abc.open(path_R);
-        
         vector<ofVec3f> pos;
         abc.get( 0, pos );
         for (int i=0; i<pos.size(); i++) {
             pos[i].x = 0;
             pos[i] *= scale;
             
-#ifdef A_G_SETTING
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < 0.5 ) points.addVertex(pos[i]);
-#else
-            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) > 0.5 ) points.addVertex(pos[i]);
-#endif
-
+            if( ofNoise(pos[i].z*0.1, pos[i].y*0.1) < density ){
+                points.addVertex(pos[i]);
+                int imgId = (i+sim_frame)*5 + 100000;
+                int x = imgId%imgw;
+                int y = imgId/imgw;
+                ofFloatColor c = img.getPixelsRef().getColor(x, y);
+                points.addColor( c );
+            }
         }
     }
     
-    int np = points.getNumVertices();
-    int w = img.getWidth();
-    int h = img.getHeight();
-    vector<ofFloatColor> vc;
-    vc.assign(np, ofFloatColor(0));
-    points.addColors( vc );
-    for (int i=0; i<np; i++) {
-        int x = i%w;
-        int y = i/w;
-        ofFloatColor c = img.getPixelsRef().getColor(x, y);
-        c.a = 0.8;
-        points.setColor( np-i-1, c );
-    }
-
-    return;
-    
 #pragma mark NEAR_LINE
     if( 1 ){
-        int num_line = 10;
-        int num_dupl = 5;
+        int num_line = 8;
+        int num_dupl = 4;
         int vertex_per_point = num_line * num_dupl * 2;
         
         const vector<ofVec3f> &vs = points.getVertices();
@@ -233,11 +225,11 @@ void ofApp::draw_layer_0(){
 //            ofRotate( 180, 1, 0, 0 );   //  switch TOP/BOTTOM
 #endif
 
-            //glLineWidth(1);
-            //lines.draw();
+            glLineWidth(1);
+            lines.draw();
 
-            glPointSize(2);
-            points.draw();
+            //glPointSize(2);
+            //points.draw();
         } ofPopMatrix();
         
     } exporter.end();

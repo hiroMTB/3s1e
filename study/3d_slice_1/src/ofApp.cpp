@@ -16,7 +16,7 @@ void ofApp::setup(){
     lines.setMode( OF_PRIMITIVE_LINES );
     points.setMode( OF_PRIMITIVE_POINTS );
     
-    abc.open( ad_util::data_path + "3d/pine_tree.abc");
+    abc.open( ad_util::data_path + "3d/hornet.abc");
     abc.get(1, mesh);
 }
 

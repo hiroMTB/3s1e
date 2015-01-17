@@ -28,4 +28,6 @@ public:
     vector<ofxExportImageSequence> exps;
 	
 	ofxVectorGraphics vg;
+    
+    ofPoint win;
 };

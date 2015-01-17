@@ -12,7 +12,10 @@ void ofApp::setup(){
     bDrawInfo = true;
     layer_num = 3;
     sel_layer = 0;
-    setup_export_layer( 1920, 1080, layer_num );
+ 
+    win.x = 1920;
+    win.y = 1080;
+    setup_export_layer( win.x, win.y, layer_num );
 	
 }
 
@@ -28,8 +31,8 @@ void ofApp::setup_export_layer( int w, int h, int num ){
         exps[i].setAutoExit( true );
     }
 
+    ofSetWindowShape(w, h);
     ofSetWindowPosition(0, 0);
-    ofSetWindowShape(w/2, h/2);
 }
 
 void ofApp::update(){
@@ -49,22 +52,48 @@ void ofApp::draw_layer_0(){
     exps[0].begin(); {
         ofClear(0);
 		ofBackground(0);
+        ofSetColor(255);
 
-		ofSetColor(255);
+        ofTranslate( win.x/2, win.y/2 );
 		vg.beginShape();
 		vg.setLineWidth(1);
 		ofNoFill();
 		
-		ofPoint p1( ofNoise( ),100);
-		ofPoint p2(300,200);
-		ofPoint p3(600,800);
-		ofPoint p4(900,100);
+        float frame = ofGetFrameNum()/2;
+		ofPoint p1( -1, 0);
+        //ofPoint p2( ofNoise(3, frame*0.01), ofSignedNoise(4, frame*0.01));
+        //ofPoint p3( ofNoise(5, frame*0.01), ofSignedNoise(6, frame*0.01));
+        ofPoint p2( sin(frame*0.1+0)/2+0.5, sin(frame*0.1-1.7) );
+        ofPoint p3( sin(frame*0.1+3.14)/2+0.5, -sin(frame*0.1+1.7) );
+        //ofPoint p2( 1, sin(frame*0.1-1.7) );
+        //ofPoint p3( 1, sin(frame*0.1+1.7) );
 
-		//vg.curve( p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y );
+        ofPoint p4( 1, 0);
+
+        p1 *= 500;
+        p4 *= 500;
+        
+        p2 *= 200;
+        p3 *= -200;
+        
+        p2 += p1;
+        p3 += p4;
+        
+        if( 1 ){
+            ofSetColor(0,0,255,150);
+            ofCircle(p1, 4);
+            ofCircle(p2, 4);
+            ofCircle(p3, 4);
+            ofCircle(p4, 4);
+            
+            ofLine(p1, p2);
+            ofLine(p3, p4);
+        }
+
+        ofSetColor(250, 250);
+        //vg.curve( p2.x, p2.y, p1.x, p1.y, p4.x, p4.y, p3.x, p3.y );
 		vg.bezier( p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y );
 		
-		//ofBezier(, <#float y0#>, <#float x1#>, <#float y1#>, <#float x2#>, <#float y2#>, <#float x3#>, <#float y3#>);
-    
     } exps[0].end();
 }
 

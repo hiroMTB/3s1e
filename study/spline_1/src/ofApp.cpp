@@ -16,7 +16,7 @@ void ofApp::setup(){
     win.x = 1920;
     win.y = 1080;
     setup_export_layer( win.x, win.y, layer_num );
-	
+	setup_spline();
 }
 
 void ofApp::setup_export_layer( int w, int h, int num ){
@@ -35,13 +35,57 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     ofSetWindowPosition(0, 0);
 }
 
-void ofApp::update(){
+void ofApp::setup_spline(){
 
+	int n = 1000;
+	
+	for( int i=0; i<n; i++ ){
+		vector<ofVec3f> vs;
+		ofVec3f v( 0,0,0 );
+		vs.push_back( v );
+
+		v.x = 100 + ofRandom(0, 100);
+		vs.push_back( v );
+
+		for (int j=2; j<6; j++) {
+			ofVec3f v( vs[j-1].x + ofRandom(100,200) + j*10, 0 );
+			vs.push_back( v );
+		}
+		
+		points.push_back(vs);
+		
+		sps.push_back( ofxSimpleSpline() );
+		sps[i].setSubdivisions(10);
+		sps[i].setControlVertices( points[i] );
+	}
+}
+
+void ofApp::update(){
+	
+	for (int i=0; i<points.size(); i++) {
+
+		float r = ofNoise( i, (float)i*0.01 );
+		float freq = ofNoise( i*2, (float)i*0.02 )*0.1;
+		r *= 120;
+		r += 30;
+		
+		for (int j=1; j<points[i].size(); j++) {
+			float rr = r + j;
+			points[i][j].y = sin(ofGetFrameNum()*freq + j) * rr;
+		}
+	}
+	
+	for (int i=0; i<sps.size(); i++) {
+		sps[i].setControlVertices( points[i] );
+		sps[i].update();
+	}
 
 }
 
 void ofApp::draw(){
 
+	ofEnableAlphaBlending();
+	
     ofBackground(255);
     draw_layer_0();
     draw_preview();
@@ -52,47 +96,17 @@ void ofApp::draw_layer_0(){
     exps[0].begin(); {
         ofClear(0);
 		ofBackground(0);
-        ofSetColor(255);
 
-        ofTranslate( win.x/2, win.y/2 );
-		vg.beginShape();
-		vg.setLineWidth(1);
+        ofTranslate( 100, win.y/2 );
+		ofRotateZ( -30.0 );
+
 		ofNoFill();
-		
-        float frame = ofGetFrameNum()/2;
-		ofPoint p1( -1, 0);
-        //ofPoint p2( ofNoise(3, frame*0.01), ofSignedNoise(4, frame*0.01));
-        //ofPoint p3( ofNoise(5, frame*0.01), ofSignedNoise(6, frame*0.01));
-        ofPoint p2( sin(frame*0.1+0)/2+0.5, sin(frame*0.1-1.7) );
-        ofPoint p3( sin(frame*0.1+3.14)/2+0.5, -sin(frame*0.1+1.7) );
-        //ofPoint p2( 1, sin(frame*0.1-1.7) );
-        //ofPoint p3( 1, sin(frame*0.1+1.7) );
+		ofSetColor(220, 30);
 
-        ofPoint p4( 1, 0);
-
-        p1 *= 500;
-        p4 *= 500;
-        
-        p2 *= 200;
-        p3 *= -200;
-        
-        p2 += p1;
-        p3 += p4;
-        
-        if( 1 ){
-            ofSetColor(0,0,255,150);
-            ofCircle(p1, 4);
-            ofCircle(p2, 4);
-            ofCircle(p3, 4);
-            ofCircle(p4, 4);
-            
-            ofLine(p1, p2);
-            ofLine(p3, p4);
-        }
-
-        ofSetColor(250, 250);
-        //vg.curve( p2.x, p2.y, p1.x, p1.y, p4.x, p4.y, p3.x, p3.y );
-		vg.bezier( p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y );
+		for (int i=0; i<sps.size(); i++) {
+			ofRotateZ( 60.0/sps.size() );
+			sps[i].draw();
+		}
 		
     } exps[0].end();
 }

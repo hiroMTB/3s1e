@@ -2,14 +2,15 @@
 
 #include "ofMain.h"
 #include "ofxExportImageSequence.h"
-#include "ofxVectorGraphics.h"
+#include "ofxSimpleSpline.h"
 
 class ofApp : public ofBaseApp{
 
 public:
     void setup();
-        void setup_export_layer( int w, int h, int num );
-
+	void setup_export_layer( int w, int h, int num );
+	void setup_spline();
+	
     void update();
     
     void draw();
@@ -26,8 +27,10 @@ public:
     int layer_num;
     int sel_layer;
     vector<ofxExportImageSequence> exps;
+	    	
+	ofPoint win;
 	
-	ofxVectorGraphics vg;
-    
-    ofPoint win;
+	vector<ofxSimpleSpline> sps;
+	vector< vector<ofVec3f> > points;
+	
 };

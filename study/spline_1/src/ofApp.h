@@ -10,6 +10,7 @@ public:
     void setup();
 	void setup_export_layer( int w, int h, int num );
 	void setup_spline();
+    void add_spline();
 	
     void update();
     
@@ -26,11 +27,20 @@ public:
     bool bDrawInfo;
     int layer_num;
     int sel_layer;
-    vector<ofxExportImageSequence> exps;
+    ofxExportImageSequence exporter;
 	    	
 	ofPoint win;
 	
 	vector<ofxSimpleSpline> sps;
 	vector< vector<ofVec3f> > points;
-	
+
+    vector< list<ofxSimpleSpline> > sps_p;
+
+
+    int hisnum;
+    
+    ofImage img;
+
+    ofVboMesh cps;
+    
 };

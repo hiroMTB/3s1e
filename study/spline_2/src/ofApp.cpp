@@ -3,6 +3,8 @@
 
 //#define RENDER 1
 
+#define ANTI_SWING 1
+
 void ofApp::setup_export_layer( int w, int h, int num ){
     
     string dir_name = ofGetTimestampString("%m%d_%H%M_%S");
@@ -21,8 +23,6 @@ void ofApp::setup_export_layer( int w, int h, int num ){
     ofSetWindowPosition(0, 0);
 #endif
 
-    
-    
 }
 
 void ofApp::setup(){
@@ -40,32 +40,22 @@ void ofApp::setup(){
     img.loadImage( ad_util::data_path + "img/rk/Mx80_2_org.jpg" );
     
     
-    for (int i=0; i<100; i++) {
+    for (int i=0; i<10; i++) {
     
 #pragma mark WHIP
         whips.push_back( Whip() );
         Whip & w = whips[whips.size()-1];
-        w.freq = ofNoise(1, i*2)*0.01 + ofRandomuf()*0.01;
-        w.freq *= ofNoise(4, i) >0.9 ? 1 : -1;
-        w.amp = 1.0/w.freq * 0.002;
-        w.amp = abs(w.amp);
-        
-        if( ofNoise(3, i) >0.95 ){
-            w.amp *= 1.2;
-        }
-        
-        if( ofNoise(4, i) >0.99 ){
-            w.freq *= 2.0;
-        }
-        
-        w.length = ofNoise(3, i*0.011)* 0.02 + 0.02f;
+        w.freq = 0.032 + ofRandomf()*0.01;
+        w.amp = 1.0 + ofRandomf()*0.1;
+
+        w.length = ofNoise(3, i*0.011)* 0.03 + 0.03f;
         
         RopeSimulation * rs = new RopeSimulation(
                                  100,						// 80 Particles (Masses)
-                                 ofRandom(0.05, 0.07),					// Each Particle Has A Weight Of 50 Grams
-                                 ofRandom(8000.0f, 12000.0f),				// springConstant In The Rope
-                                 w.length,      // Normal Length Of Springs In The Rope
-                                 ofRandom(0.01, 0.015),					// Spring Inner Friction Constant
+                                 0.05,					// Each Particle Has A Weight Of 50 Grams
+                                 20000.0f,				// springConstant In The Rope
+                                 w.length,                      // Normal Length Of Springs In The Rope
+                                 0.1,					// Spring Inner Friction Constant
                                  Vector3D(0, -9.81f, 0), // Gravitational Acceleration
                                  0.001f,					// Air Friction Constant
                                  0.0f,					// Ground Repel Constant
@@ -93,10 +83,6 @@ void ofApp::setup(){
         
         list<ofxSimpleSpline> sps;
         curve_history.push_back(sps);
-        
-        
-
-        
     }
 
 #ifdef RENDER
@@ -113,8 +99,8 @@ void ofApp::setup(){
 void ofApp::update(){
 
     // rope sim
-    float dt = 0.004;
-    float maxPossible_dt = 0.001f;
+    float dt = 0.006;
+    float maxPossible_dt = 0.002f;
 
     // This Is Needed To Prevent Pass Over Of A Non-Precise dt Value
     int numOfIterations = (int)(dt / maxPossible_dt) + 1;					// Calculate Number Of Iterations To Be Made At This Update Depending On maxPossible_dt And dt
@@ -125,7 +111,6 @@ void ofApp::update(){
 
         Vector3D swing;
 
-        
         const Whip & w = whips[i];
         
         swing.x = sin( ofGetFrameNum() * w.freq) * w.amp;
@@ -204,7 +189,7 @@ void ofApp::update(){
 
     
     // History
-    hisnum = 10;
+    hisnum = 3;
     if( ofGetFrameNum() % 5 == 0 ){
         for (int i=0; i<curve.size(); i++) {
             curve_history[i].push_back( *curve[i] );
@@ -244,13 +229,14 @@ void ofApp::draw(){
                     
                     Mass* mass1 = ropesim[i]->getMass(0);
                     Vector3D* pos1 = &mass1->pos;
-                    ofVec3f swing(pos1->x, pos1->y, pos1->z);
-                    swing *= scale;
                     
                     ofPushMatrix();
                     ofTranslate(phase/ropesim.size()*i, 0 );
+#ifdef ANTI_SWING
+                    ofVec3f swing(pos1->x, pos1->y, pos1->z);
+                    swing *= scale;
                     ofTranslate( -swing );
-                    
+#endif
                     glLineWidth(1);
                     glBegin(GL_LINE_STRIP);
                     for (int a = 0; a < ropesim[i]->numOfMasses*0.9; ++a){
@@ -267,7 +253,7 @@ void ofApp::draw(){
         }
         
 #pragma mark PREP_LINE
-        if( 1 ){
+        if( 0 ){
             float start_a = 30;
             float max_a = 70;
             
@@ -282,7 +268,11 @@ void ofApp::draw(){
                 int num_cv = curve[i]->controlVertices->size();
                 for (int j=1; j<num_cv; j++) {
                     float step_a = (max_a-start_a) / curve[i]->controlVertices->size();
-                    ofVec3f p1 = curve[i]->controlVertices->at( j ) - swing;
+
+                    ofVec3f p1 = curve[i]->controlVertices->at( j );
+#ifdef ANTI_SWING
+                    p1 -= swing;
+#endif
                     ofVec3f p2(0, p1.y, 0);
                     ofSetColor(10,  start_a + j*step_a);
                     ofSetLineWidth(1);
@@ -305,13 +295,15 @@ void ofApp::draw(){
                 if( i>= draw_curve_num )
                     break;
                 
-                ofVec3f swing = curve[i]->controlVertices->at(0);
                 ofPushMatrix();
                 ofTranslate(phase/curve.size()*i, 0 );
                 int angleId = ofNoise(9, i*0.5)*curve.size();
                 ofRotateZ( angleId*angle/curve.size() - angle*0.5);
-                ofTranslate(-swing);
                 
+#ifdef ANTI_SWING
+                ofVec3f swing = curve[i]->controlVertices->at(0);
+                ofTranslate(-swing);
+#endif
                 int nv = curve[i]->lineVbo.getNumVertices();
                 
                 int vCount = draw_curve_num - i;
@@ -323,7 +315,7 @@ void ofApp::draw(){
         }
         
 #pragma mark HISTORY
-        {
+        if( 0 ){
             ofDisableAntiAliasing();
             glPointSize(1);
             for (int i=0; i<curve_history.size(); i++) {
@@ -332,10 +324,14 @@ void ofApp::draw(){
                 list<ofxSimpleSpline>::iterator itr = curve_history[i].begin();
                 for (; itr!=curve_history[i].end(); itr++) {
                     ofPushMatrix();
-                    ofVec3f swing = itr->controlVertices->at(0);
+                    
                     int angleId = ofNoise(9, i*0.5)*curve.size();
                     ofRotateZ( angleId*angle/curve.size() - angle*0.5);
+
+#ifdef ANTI_SWING
+                    ofVec3f swing = itr->controlVertices->at(0);
                     ofTranslate( -swing );
+#endif
                     itr->draw( GL_POINTS );
                     ofPopMatrix();
                 }
@@ -345,19 +341,22 @@ void ofApp::draw(){
 
         
 #pragma mark CP_POINTS
-        {
+        if( 0 ){
             ofDisableAntiAliasing();
             float start_a = 50;
             float max_a = 150;
             for (int i=0; i<curve.size(); i++) {
                 float step_a = (max_a-start_a) / curve[i]->controlVertices->size();
-                ofVec3f swing = curve[i]->controlVertices->at(0);
                 ofPushMatrix();
                 ofTranslate(phase/curve.size()*i, 0 );
                 
                 int angleId = ofNoise(9, i*0.5)*curve.size();
                 ofRotateZ( angleId*angle/curve.size() - angle*0.5);
+
+#ifdef ANTI_SWING
+                ofVec3f swing = curve[i]->controlVertices->at(0);
                 ofTranslate(-swing);
+#endif
                 
                 glPointSize(2);
                 for (int j=1; j<cvs[i]->size(); j++) {

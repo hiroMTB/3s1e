@@ -25,5 +25,7 @@ public:
     static void draw_axis( float length=100 );
     
     static void draw_plane( float size= 100 );
+	
+	static void push_notification( string title, string msg );	
 };
 

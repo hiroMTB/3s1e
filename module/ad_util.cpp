@@ -62,3 +62,8 @@ void ad_util::draw_plane( float size ){
         ofSetRectMode( OF_RECTMODE_CORNER );
     } ofPopMatrix();
 }
+
+void ad_util::push_notification(string title, string msg){
+	string cmd = "osascript -e 'display notification \"" + msg + "\" with title \"" + title + "\" sound name \"Submarine\"'";
+	system ( cmd.c_str() );
+}

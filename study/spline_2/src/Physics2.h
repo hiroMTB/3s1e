@@ -83,6 +83,8 @@ public:
 
 	float airFrictionConstant;							//a constant of air friction applied to masses
 
+    float springLength;
+    
 	RopeSimulation(										//a long long constructor with 11 parameters starts here
 		int numOfMasses,								//1. the number of masses
 		float m,										//2. weight of each mass
@@ -106,7 +108,8 @@ public:
 		this->groundRepulsionConstant = groundRepulsionConstant;
 		this->groundAbsorptionConstant = groundAbsorptionConstant;
 		this->groundHeight = groundHeight;
-
+        this->springLength = springLength;
+        
 		for (int a = 0; a < numOfMasses; ++a)			//To set the initial positions of masses loop with for(;;)
 		{
             masses[a]->pos.x = 0;//a*springLength * cos(initial_rad);		//Set x position of masses[a] with springLength distance to its neighbor
@@ -189,26 +192,40 @@ public:
 
 	}
 
-	void simulate(float dt)								//simulate(float dt) is overriden because we want to simulate 
+	void simulate(float dt)								//simulate(float dt) is overriden because we want to simulate
 														//the motion of the ropeConnectionPos
 	{
+
 		Simulation::simulate(dt);						//the super class shall simulate the masses
 
-		ropeConnectionPos += ropeConnectionVel * dt;	//iterate the positon of ropeConnectionPos
-
-		if (ropeConnectionPos.y < groundHeight)			//ropeConnectionPos shall not go under the ground
-		{
-			ropeConnectionPos.y = groundHeight;
-			ropeConnectionVel.y = 0;
-		}
+        //ropeConnectionPos = _ropeConnectionPos;
+        
+//		ropeConnectionPos += ropeConnectionVel * dt;	//iterate the positon of ropeConnectionPos
+//
+//		if (ropeConnectionPos.y < groundHeight)			//ropeConnectionPos shall not go under the ground
+//		{
+//			ropeConnectionPos.y = groundHeight;
+//			ropeConnectionVel.y = 0;
+//		}
 
 		masses[0]->pos = ropeConnectionPos;				//mass with index "0" shall position at ropeConnectionPos
 		masses[0]->vel = ropeConnectionVel;				//the mass's velocity is set to be equal to ropeConnectionVel
-	}
 
-	void setRopeConnectionVel(Vector3D ropeConnectionVel)	//the method to set ropeConnectionVel
-	{
-		this->ropeConnectionVel = ropeConnectionVel;
-	}
+//        masses[numOfMasses-1]->vel.x *= 0.5;
+//      masses[numOfMasses-1]->vel.y *= 0.5;
+
+//        masses[numOfMasses-1]->pos.x = 0;
+//        masses[numOfMasses-1]->pos.y = -numOfMasses * springLength;
+    }
+
+//	void setRopeConnectionVel(Vector3D ropeConnectionVel)	//the method to set ropeConnectionVel
+//	{
+//		this->ropeConnectionVel = ropeConnectionVel;
+//	}
+
+    void setRopeConnectionPos(Vector3D _ropeConnectionPos)	//the method to set ropeConnectionPos
+    {
+        this->ropeConnectionPos = _ropeConnectionPos;
+    }
 
 };

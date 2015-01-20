@@ -13,6 +13,8 @@ public:
     float freq;
     float amp;
     float length;
+    
+    int age;
 };
 
 class ofApp : public ofBaseApp
@@ -22,6 +24,8 @@ public:
     void setup();
     void setup_export_layer( int w, int h, int num );
 
+    void add_whip();
+    
     void update();
 	void draw();
     void keyPressed( int key );
@@ -46,6 +50,10 @@ public:
     ofPoint win;    
 
     vector<Whip> whips;
+    
+    int sim_frame;
+
+    int curve_resolution;
 };
 
 

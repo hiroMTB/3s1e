@@ -15,105 +15,53 @@ void ofApp::setup(){
 	frame=0;
 	rot = 0;
 	ofSetVerticalSync( true );
-	ofSetFrameRate(30);
+	ofSetFrameRate( 25 );
 	ofSetCircleResolution( 100 );
 	
-	rf_points.setUsage( GL_DYNAMIC_DRAW );
-	rf_points.setMode( OF_PRIMITIVE_POINTS );
-	
-	r_lines.setUsage( GL_DYNAMIC_DRAW );
-	r_lines.setMode( OF_PRIMITIVE_LINES );
-
-	load_svg();
-	
+    //load_svg( ad_util::data_path + "/svg/solo/v4/C.svg" );
+    load_svg();
+    setup_window( win.x, win.y );
+    
 	bool ok = img.loadImage( ad_util::data_path  + "img/rk/Mx80_1_org.jpg");
 	if( !ok ) cout << "image load failer" << endl;
 	
-	// Initial Particle
-	for (int i=0; i<300; i++) {
-		add_particle();
-	}
-	
-	exporter.setup(win.x, win.y, 25, GL_RGB, 0);
-	exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
-	exporter.setFrameRange(0, 500);
-	exporter.setAutoExit(true);
-	
-	ofSetWindowShape( win.x, win.y );
-	ofSetWindowPosition( 0, 0 );
-	
+    reset();
+    
 #ifdef RENDER
-	exporter.startExport();
+    ofSetWindowShape(200, 400);
+    ofSetWindowPosition(0, 0);
+    exporter.startExport();
 #else
-	
+    ofSetWindowShape( win.x, win.y);
+    ofSetWindowPosition( 0, 0 );
 #endif
 
 }
 
-void ofApp::load_svg(){
-	{
-		/*
-		 *      SVG load
-		 */
-#ifdef OPEN_DIALOG
-		string path = "";
-		ofFileDialogResult openFileResult= ofSystemLoadDialog("Select a svg file");
-		if (openFileResult.bSuccess){
-			ofLogVerbose("getPath(): "  + openFileResult.getPath());
-			ofFile file (openFileResult.getPath());
-			
-			if (file.exists()){
-				string fileExtension = ofToUpper(file.getExtension());
-				if (fileExtension == "svg" || fileExtension == "SVG" )
-					path = openFileResult.getPath();
-			}else{
-				ofLogVerbose("file not exist");
-				ofExit();
-			}
-		}else {
-			ofLogVerbose("User hit cancel");
-			ofExit();
-		}
-#else
-		string path = "svg/A.svg";
-#endif
-		
-		svg.load( path );
-		win.x = round( svg.getWidth()) ;
-		win.y = round( svg.getHeight() );
-		cout << "svg : " << win << endl;
-		
-		int n = svg.getNumPath();
-		if( n==0 ) ofExit();
-		
-		for (int i=0; i<n; i++) {
-			ofPath &p = svg.getPathAt(i);
-			if( p.getStrokeColor().r == 255){
-				vector<ofPolyline> polys = p.getOutline();
-				for (int j=0; j<polys.size(); j++) {
-					const vector<ofVec3f> &vs = polys[j].getVertices();
-					if( vs.size() == 2 ){
-						ofVec3f st = vs[0];
-						ofVec3f end = vs[1];
-						ofVec3f dir = end-st;
-						gAngle = dir.angle(ofVec3f(1,0,0) );
-						if(dir.y > 0)
-							gAngle = -gAngle;
-						start = st;
-						
-						max_dist = dir.length();
-						cout << "gAngle : " << gAngle << endl;
-						cout << "start : " << start << endl;
-						cout << "max_dist : " << max_dist << endl;
-					}
-				}
-			}
-		}
-	}
+void ofApp::reset(){
+
+    frame = 0;
+    
+    // clear
+    splines.clear();
+    vines.clear();
+    
+    rf_points.clear();
+    rf_points.setUsage( GL_DYNAMIC_DRAW );
+    rf_points.setMode( OF_PRIMITIVE_POINTS );
+    
+    r_lines.clear();
+    r_lines.setUsage( GL_DYNAMIC_DRAW );
+    r_lines.setMode( OF_PRIMITIVE_LINES );
+
+    // Initial Particle
+    for (int i=0; i<10; i++) {
+        add_particle();
+    }
 }
 
 void ofApp::add_particle(){
-	
+    
 	// Add Particle
 	int index = rf_points.getNumVertices();
 	rf_points.addVertex( ofVec3f(0,0,0) );
@@ -130,7 +78,7 @@ void ofApp::add_particle(){
 	// Add Spline
 	ofxSimpleSpline ss;
 	ss.subdivisions = 20;
-	int cv_num = round( ofRandom(3, 7));
+	int cv_num = round( ofRandom(5, 8));
 	ss.cv.resize( cv_num );
 	ss.cv[0] = ofVec3f(0,0,0);
 	for(int i=1; i<cv_num; i++){
@@ -152,64 +100,28 @@ void ofApp::add_particle(){
 	
 	for( int i=0; i<v.num_cv; i++ ){
 		v.speeds.push_back( ofVec3f(0,0,0) );
-		v.speeds[i].x = ofNoise( i, index*0.1 ) * 40.0;
-		v.speeds[i].y = ofSignedNoise( i, index*0.1 ) * 5.0;
+        v.speeds[i].x = 2.0*(float)i/v.num_cv + ofNoise( 1, i*0.5 + index*0.1 )*50.0;
+		v.speeds[i].y = ofRandomf() * 45.0;
 		
-		if( ofNoise(i) > 0.8 )
+		if( ofNoise(i+index) > 0.8 )
 			v.speeds[i].x *= ofRandom(1.2, 2);
 		if( ofRandomuf() > 0.8 )
 			v.speeds[i].y *= ofRandom(1.2, 2);
 		
-		v.accels.push_back( ofVec3f(0,0,0) );
-	}
-	
+        v.speeds[i].x *= spread_vec.x;
+        v.speeds[i].y *= spread_vec.y;
+
+        if( i== v.num_cv-1){
+            v.speeds[i] *= 1.2;
+        }
+
+        v.accels.push_back( ofVec3f(0,0,0) );
+
+        v.phase.push_back( ofRandom(-3.14, 3.14) );
+        v.freq.push_back( ofRandom(-1.0, 1.0) );
+    }
+    
 	vines.push_back(v);
-}
-
-void ofApp::update_particle(){
-	
-	vector<ofVec3f> & vs = rf_points.getVertices();
-	const vector<ofFloatColor> & cols = rf_points.getColors();
-	
-	// Move Spline Top
-	for (int i=0; i<vs.size(); i++ ) {
-
-		// TOP
-		int topId = vines[i].num_cv-1;
-		vines[i].past_top = splines[i].cv[topId];
-
-		vines[i].accels[topId].x = ofNoise( 1, ofGetFrameNum()*0.01, i*0.5 );
-		vines[i].accels[topId].y = ofSignedNoise( 2, ofGetFrameNum()*0.01, i*0.5 ) * 0.5;
-		vines[i].speeds[topId] += vines[i].accels[topId];
-		vs[i] += vines[i].speeds[topId];
-		vines[i].speeds[topId] *= 0.75;
-		splines[i].cv[topId] = vs[i];
-		
-		
-		ofVec3f dpos = vs[i] - vines[i].past_top;
-		dpos *= 0.1;
-		
-		// 1 ~ TOP-1
-		for( int j=1; j<vines[i].num_cv-1; j++ ){
-			splines[i].cv[j] += dpos;
-			splines[i].cv[j].x += ofNoise(2, j, ofGetFrameRate()*0.1, i ) * 2.0;
-			splines[i].cv[j].y += ofSignedNoise(j, ofGetFrameRate()*0.1, i ) * 0.75;
-		}
-	
-		// update Color
-		vector<ofFloatColor> & cols = splines[i].lineVbo.getColors();
-		const vector<ofFloatColor> & cols_p = rf_points.getColors();
-		for( int j=0; j<cols.size(); j++ ){
-			cols[j] = cols_p[i];
-			cols[j].a = 0.01 + (float)j/cols.size() * 0.7;
-		}
-
-		
-		// update spline
-		splines[i].update();
-		
-		vines[i].age++;
-	}
 }
 
 void ofApp::update(){
@@ -220,8 +132,84 @@ void ofApp::update(){
     r_lines.clearVertices();
     r_lines.clearColors();
 	
-	add_particle();
-	update_particle();
+    for (int i=0; i<12; i++) {
+        add_particle();
+    }
+	
+    update_particle();
+}
+
+void ofApp::update_particle(){
+    
+    vector<ofVec3f> & vs = rf_points.getVertices();
+    const vector<ofFloatColor> & cols = rf_points.getColors();
+    
+    // Move Spline Top
+    for (int i=0; i<vs.size(); i++ ) {
+        
+        // TOP
+        {
+            int topId = vines[i].num_cv-1;
+            if(topId < 0) break;
+            vines[i].past_top = splines[i].cv[topId];
+            
+            //
+            float phase_adder = 1.0/25.0 * vines[i].freq[topId];
+            vines[i].phase[topId] += phase_adder;
+            
+            ofVec3f add;
+            add.x = 0.05 + ofNoise( ofGetFrameNum()+i, cols[i].r*0.03, i*1.2 );
+            add.y = sin( vines[i].phase[topId]  ) * 0.6;
+            add.x *= spread_vec.x;
+            add.y *= spread_vec.y;
+            
+            vines[i].accels[topId] = add;
+            vines[i].speeds[topId] += vines[i].accels[topId];
+            vs[i] += vines[i].speeds[topId];
+            splines[i].cv[topId] = vs[i];
+            
+            vines[i].speeds[topId] *= 0.85;
+        }
+        
+        // 1 ~ TOP-1
+        for( int j=1; j<vines[i].num_cv-1; j++ ){
+            
+            float phase_adder = 1.0/25.0 * vines[i].freq[j];
+            vines[i].phase[j] += phase_adder;
+            
+            
+            float rate = (float)j/vines[i].num_cv;
+            ofVec3f add;
+            add.x = 0.02*rate + ofNoise(2, j, ofGetFrameRate(), i*1.5 );
+            add.y = sin( vines[i].phase[j]  );
+
+            float ampy = 0.1 + 0.3*rate;
+            float ampx = 0.4;
+
+            add.x *= ampx;
+            add.y *= ampy;
+            add.x *= spread_vec.x;
+            add.y *= spread_vec.y;
+
+            vines[i].speeds[j] += add;
+            splines[i].cv[j] += vines[i].speeds[j];
+            vines[i].speeds[j] *= 0.85;
+        }
+        
+        // update Color
+        vector<ofFloatColor> & cols = splines[i].lineVbo.getColors();
+        const vector<ofFloatColor> & cols_p = rf_points.getColors();
+        for( int j=0; j<cols.size(); j++ ){
+            cols[j] = cols_p[i];
+            cols[j].a = 0.01 + (float)j/cols.size() * 0.5;
+        }
+        
+        
+        // update spline
+        splines[i].update();
+        
+        vines[i].age++;
+    }
 }
 
 void ofApp::draw(){
@@ -232,14 +220,12 @@ void ofApp::draw(){
     exporter.begin();{
 		
 		ofEnableAlphaBlending();
-		ofBackground( 255 );
-		ofPushMatrix();{
-			
-			
-			ofTranslate( 10, exporter.getFbo().getHeight()/2 );
+		ofBackground( 0 );
+        bg_shape.draw(0, 0);
 
-			if( !exporter.isExporting() )
-				ad_util::draw_axis();
+        ofPushMatrix();{
+            ofTranslate( start );
+            ofRotate( -gAngle );
             
 #ifdef SPLINE
 			ofSetColor(255);
@@ -249,7 +235,7 @@ void ofApp::draw(){
 #endif
 			
 #ifdef CP_POINT
-            ofSetColor(5, 100);
+            ofSetColor(225, 20);
             for( int i=0; i<splines.size(); i++ ){
                 glPointSize(1);
                 glBegin( GL_POINTS );
@@ -277,15 +263,17 @@ void ofApp::draw(){
 				ofLine( vs[i], vs[i] + dir );
 
 				ofSetColor( c, 200 );
+                ofNoFill();
 				ofCircle(vs[i], radius );
 				
-				if( ofRandomuf()>0.95 ){
+				if( ofRandomuf()>0.9 ){
 					dir *= ofRandom(2.0, 3.0);
 					ofSetColor( c*0.3, 200 );
 					ofLine( vs[i], vs[i] + dir );
 					
-					ofSetColor( c, 200 );
-					ofCircle(vs[i]+dir, radius*ofRandom(0.1, 0.4) );
+                    ofFill();
+					ofSetColor( c, 150 );
+					ofCircle(vs[i]+dir, 2 );
 				}
 			}
 #endif
@@ -295,46 +283,31 @@ void ofApp::draw(){
             glPointSize( 1 );
 			rf_points.draw();
             
+            
+            if( !exporter.isExporting() ){
+                ad_util::draw_axis();
+                ofNoFill();
+                ofSetColor(255, 0, 0);
+                ofCircle(0, 0, 50);
+            }
+
+            ofFill();
 		}ofPopMatrix();
-	
+
+        mask.draw();
+
+        if( !exporter.isExporting() ){
+            red_guide.draw(0,0);
+            green_guide.draw(0,0);
+        }
+
 	} exporter.end();
-	
+
     ofBackground(40);
-	ofSetColor(255);
-	exporter.draw(0, 0);
+    if( !exporter.isExporting() ){
+        ofSetColor(255);
+        exporter.draw(0, 0);
+    }
 	draw_info();
 }
 
-void ofApp::draw_info(){
-	ofPushMatrix();
-	ofSetColor( 0 );
-	stringstream ss;
-	ss << "fps       : " << (int)ofGetFrameRate() << "\n";
-	ss << "frame     : " << (int)frame << "\n";
-	ss << "exporter frame : " << exporter.getFrameNum() << "\n";
-	ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
-	ss << "particles : " << rf_points.getNumVertices() << "\n";
-	ss << "\n";
-    ofDrawBitmapString(ss.str(), 20, 20 );
-	ofPopMatrix();
-}
-
-void ofApp::keyPressed( int key ){
-	
-	switch( key ) {
-		case ' ':
-			bStart = !bStart;
-			break;
-			
-		case 'S':
-			bStart = true;
-			exporter.startExport();
-			ofSetWindowShape(exporter.getFbo().getWidth()/4, exporter.getFbo().getHeight()/4 );
-			ofSetWindowPosition(0, 0);
-			break;
-			
-		case 'r':
-			rot += 90;
-			break;
-	}
-}

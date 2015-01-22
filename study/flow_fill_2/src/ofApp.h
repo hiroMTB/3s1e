@@ -6,7 +6,7 @@
 #include "ofxGpuNoise.h"
 #include "ofxExportImageSequence.h"
 #include "ofxSimpleSpline.h"
-#include "ofxSvg.h"
+
 
 class Vine{
 
@@ -20,14 +20,20 @@ public:
 	ofVec3f past_top;
 	vector<ofVec3f> speeds;
 	vector<ofVec3f> accels;
+    vector<float> freq;
+    vector<float> phase;
+
 };
 
 class ofApp : public ofBaseApp{
     
 public:
 	void setup();
-	void load_svg();
-	void update();
+	void load_svg( string path = "" );
+    void setup_window( int x, int y );
+
+    void reset();
+    void update();
 	void update_particle();
 	void update_spline();
 	void add_particle();
@@ -36,28 +42,35 @@ public:
 	void keyPressed( int key );
 	void draw_info();
 	
+
+    static ofColor orange;
+
 	bool bStart;
-	
 	float frame;
     float rot;
+    float max_dist;
+    float gAngle;
 
-    ofVboMesh rf_points;
-    ofVboMesh r_lines;
-	
-	ofImage img;
+    ofVec3f start;
+    ofVec3f end;
+
 	vector<ofxSimpleSpline> splines;
 	vector<Vine> vines;
-	
+    ofVboMesh rf_points;
+    ofVboMesh r_lines;
+
 	ofxExportImageSequence exporter;
+    ofPoint win;
+    
+    ofImage img;
 
-	static ofColor orange;
-	
-	ofxSVG svg;
-	ofPoint win;
-	
-	ofVec3f start;
-	ofVec3f end;
+    ofPath bg_shape;
+    ofPath red_guide;
+    ofPath green_guide;
+    ofPath mask;
 
-	float max_dist;
-	float gAngle;
+    ofVec2f spread_vec;
+    
+    char surface_char;
+    
 };

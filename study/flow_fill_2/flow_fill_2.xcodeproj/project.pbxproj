@@ -410,7 +410,7 @@
 		F6D1AAE31A6EF7E5000372B1 /* svgtiny_gradient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_gradient.cpp; sourceTree = "<group>"; };
 		F6D1AAE41A6EF7E5000372B1 /* svgtiny_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svgtiny_internal.h; sourceTree = "<group>"; };
 		F6D1AAE51A6EF7E5000372B1 /* svgtiny_list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
-		F6D1AAEB1A6EF9F0000372B1 /* ofApp_misc.impl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ofApp_misc.impl; sourceTree = "<group>"; };
+		F6D1AAEB1A6EF9F0000372B1 /* ofApp_misc.impl */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofApp_misc.impl; sourceTree = "<group>"; };
 		F6D627361A398A9A00225C46 /* ofxGpuNoiseShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGpuNoiseShaders.cpp; sourceTree = "<group>"; };
 		F6D627371A398A9A00225C46 /* ofxGpuNoiseShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuNoiseShaders.h; sourceTree = "<group>"; };
 		F6D6273B1A398AC400225C46 /* ofxExportImageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxExportImageSequence.h; sourceTree = "<group>"; };

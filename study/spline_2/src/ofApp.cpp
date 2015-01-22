@@ -1,8 +1,7 @@
 #include "ofApp.h"
 #include "ad_util.h"
 
-#define RENDER 1
-
+//#define RENDER 1
 //#define HISTORY
 #define CP_POINTS
 //#define PREP_LINE
@@ -310,7 +309,7 @@ void ofApp::draw(){
                 
                 int vCount = 10 + ofGetFrameNum(); ///curve_resolution;
                 if( vCount > 0){
-                    curve[i]->draw( GL_LINE_STRIP, MIN(vCount, nv) );
+					curve[i]->draw();
                 }
                 ofPopMatrix();
             }

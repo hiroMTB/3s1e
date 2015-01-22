@@ -27,20 +27,17 @@ public:
     bool bDrawInfo;
     int layer_num;
     int sel_layer;
-    ofxExportImageSequence exporter;
-	    	
+	int hisnum;
+
 	ofPoint win;
 	
 	vector<ofxSimpleSpline> sps;
+	vector< list<ofxSimpleSpline> > sps_p;
 	vector< vector<ofVec3f> > points;
 
-    vector< list<ofxSimpleSpline> > sps_p;
-
-
-    int hisnum;
-    
+	ofVboMesh cps;
     ofImage img;
 
-    ofVboMesh cps;
-    
+	ofxExportImageSequence exporter;
+	
 };

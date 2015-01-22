@@ -39,7 +39,7 @@ void ofApp::setup_export_layer( int w, int h, int num ){
 
 void ofApp::setup_spline(){
 
-	int n = 3000;
+	int n = 30;
 	
 	for( int i=0; i<n; i++ ){
 		vector<ofVec3f> vs;
@@ -57,8 +57,7 @@ void ofApp::setup_spline(){
 		points.push_back(vs);
 		
 		sps.push_back( ofxSimpleSpline() );
-		sps[i].setSubdivisions(10);
-		sps[i].setControlVertices( points[i] );
+		sps[i].subdivisions = 10;
 
         list<ofxSimpleSpline> listsp;
         sps_p.push_back(listsp);
@@ -67,14 +66,14 @@ void ofApp::setup_spline(){
 
 void ofApp::add_spline(){
     
-    if( sps[0].controlVertices->size() > 750 ){
+    if( sps[0].cv.size() > 750 ){
         return;
     }
     
     for (int i=0; i<sps.size(); i++) {
 
-        int ncv = sps[i].controlVertices->size();
-        const ofVec3f &vp = sps[i].controlVertices->at(ncv-1);
+        int ncv = sps[i].cv.size();
+        const ofVec3f &vp = sps[i].cv[ncv-1];
         ofVec3f add = ofVec3f( 10, 0, 0) ;
         
         float n = ofNoise( 1, ofGetFrameNum()*0.1 );
@@ -82,7 +81,7 @@ void ofApp::add_spline(){
             add *= 6;
         }
         
-        sps[i].controlVertices->push_back( vp + add );
+        sps[i].cv.push_back( vp + add );
     }
 }
 
@@ -113,7 +112,7 @@ void ofApp::update(){
 
     
     for (int i=0; i<sps.size(); i++) {
-        sps[i].setControlVertices( points[i] );
+        sps[i].cv = points[i];
     }
     
     
@@ -126,12 +125,11 @@ void ofApp::update(){
             int x = i*120 % imgW;
             int y = j / imgW;
             ofFloatColor c = img.getColor(x, y);
-            c.a = 0.001 + j*0.00005;
+            c.a = 0.1 + j*0.1;
             cols.push_back( c );
         }
         
-        sps[i].lineVbo.setColorData(&cols[0], cols.size(), GL_DYNAMIC_DRAW );
-        //sps[i].lineVbo.updateColorData(&cols[0], cols.size());
+		sps[i].lineVbo.addColors(cols);
     }
     
     add_spline();
@@ -199,7 +197,7 @@ void ofApp::draw_layer_0(){
 
             ofSetColor( 200, 5);
             cps.clearVertices();
-            cps.addVertices( *sps[i].controlVertices );
+            cps.addVertices( sps[i].cv );
             cps.draw();
         }
         

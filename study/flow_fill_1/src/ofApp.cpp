@@ -3,7 +3,7 @@
 
 void ofApp::setup(){
 	
-	bStart = false;
+	bStart = true;
     frame=0;
     rot = 0;
 	
@@ -38,7 +38,8 @@ void ofApp::setup(){
     exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setFrameRange(0, 500);
 	exporter.setAutoExit(true);
-
+//	exporter.startExport();
+	
     ofSetWindowShape( w, h );
     ofSetWindowPosition( 0, 0 );
 }
@@ -91,7 +92,7 @@ void ofApp::update(){
             c.r = 0.5;
         }
             
-        c.a = 0.3;
+        c.a = 0.7;
         points.addColor( c );
         c.a = 0.05;
         points_a.addColor( c );
@@ -113,22 +114,26 @@ void ofApp::update(){
     // MOVE
     for (int i=0; i<splines.size(); i++) {
         for (int j=0; j<splines[i].cv.size()-1; j++) {
-            splines[i].cv[j].z += ofSignedNoise( 1, i*0.1, j*0.1 ) * 1.1;
-            splines[i].cv[j].y += ofNoise( 2, i*0.1, j*0.1 ) * 2.75;
-        }
+//            splines[i].cv[j].z += ofSignedNoise( 1, i*0.1, j*0.1 ) * 1.0;
+//            splines[i].cv[j].y += ofNoise( 2, i*0.1, j*0.1 ) * 2.5;
+//            splines[i].cv[j].x += ofSignedNoise( 3, i*0.1 + j*0.1 ) * 1.2;
+		}
         
         splines[i].update();
-        
         
         // RMX
         spRmxs[i].clearVertices();
 
         int nv = splines[i].lineVbo.getNumVertices();
 
+
+		if( ofRandomf() > 0.5 )
+			continue;
+		
         const vector<ofFloatColor> & cs = points.getColors();
         for (int j=0; j<nv-5; j++) {
             
-            if( ofNoise( ofGetFrameNum()*0.1, i*0.1, j*0.1) > 0.5 ){
+            if( ofNoise( ofGetFrameNum()*0.5, i, j*0.3) > 0.8 ){
                 int index = j;
                 const ofVec3f v1 = splines[i].lineVbo.getVertex( index );
                 spRmxs[i].addVertex( v1 );
@@ -189,7 +194,9 @@ void ofApp::draw(){
             ofRotate(90, 0, 1, 0);
             ofRotate(rot, 0, 1, 0);
 			
-			ad_util::draw_axis();
+			
+			//if( !exprorter.isExporting() )
+			//	ad_util::draw_axis();
             
 
 //            ofEnableAntiAliasing();
@@ -198,8 +205,7 @@ void ofApp::draw(){
 //                ofSetColor(ofFloatColor(1)-cs[i], 80);
 //                splines[i].draw();
 //            }
-
-            
+			
             ofEnableAntiAliasing();
             for (int i=0; i<spRmxs.size(); i++) {
                 spRmxs[i].draw();
@@ -209,7 +215,7 @@ void ofApp::draw(){
 
             
             ofDisableAntiAliasing();
-            ofSetColor(10, 70);
+            ofSetColor(10, 100);
             for( int i=0; i<splines.size(); i++ ){
                 glPointSize(1);
                 glBegin( GL_POINTS );

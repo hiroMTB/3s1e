@@ -1,0 +1,183 @@
+//
+//  ofApp_misc.cpp
+//  flow_fill_2
+//
+//  Created by mtb on 20/01/15.
+//
+//
+
+#include "ofApp.h"
+#include "ad_util.h"
+#include "ofxSvg.h"
+
+void ofApp::load_svg( string path ){
+    ofxSVG svg;
+
+    if( path == ""){
+        ofFileDialogResult openFileResult= ofSystemLoadDialog("Select a svg file");
+        if (openFileResult.bSuccess){
+            ofLogVerbose("getPath(): "  + openFileResult.getPath());
+            ofFile file (openFileResult.getPath());
+            
+            if (file.exists()){
+                string fileExtension = ofToUpper(file.getExtension());
+                if (fileExtension == "svg" || fileExtension == "SVG" )
+                    path = openFileResult.getPath();
+            }else{
+                ofLogVerbose("file not exist");
+                ofExit();
+            }
+        }else {
+            ofLogVerbose("User hit cancel");
+            ofExit();
+        }
+    }
+    
+    svg.load( path );
+
+    win.x = ceil( svg.getWidth()) ;
+    win.y = ceil( svg.getHeight() );
+    if( (int)win.x%4 != 0){
+        win.x += 4 - (int)win.x%4;
+    }
+
+    cout << "\nLoading svg : " << win << " " << path <<  endl;
+    
+    int n = svg.getNumPath();
+    if( n==0 ) ofExit();
+    
+    for (int i=0; i<n; i++) {
+        ofPath &p = svg.getPathAt(i);
+        
+        // RED : X Dir Line
+        if( p.getStrokeColor() == ofFloatColor::red ){
+
+            red_guide = p;
+            
+            vector<ofPolyline> polys = p.getOutline();
+            for (int j=0; j<polys.size(); j++) {
+                const vector<ofVec3f> &vs = polys[j].getVertices();
+                if( vs.size() == 2 ){
+                    ofVec3f st = vs[0];
+                    ofVec3f end = vs[1];
+                    ofVec3f dir = end-st;
+                    gAngle = dir.angle(ofVec3f(1,0,0) );
+                    if(dir.y > 0)
+                        gAngle = -gAngle;
+                    start = st;
+                    max_dist = dir.length();
+                    spread_vec.x = dir.length();
+                    cout << "LOAD Red Guide" << endl;
+                }
+            }
+        // GREEN : Y Dir Line
+        }else if( p.getStrokeColor() == ofFloatColor::green ){
+            green_guide = p;
+            vector<ofPolyline> polys = p.getOutline();
+            for (int j=0; j<polys.size(); j++) {
+                const vector<ofVec3f> &vs = polys[j].getVertices();
+                
+                if( vs.size() == 2 ){
+                    ofVec3f st = vs[0];
+                    ofVec3f end = vs[1];
+                    ofVec3f dir = end-st;
+                    spread_vec.y = dir.length();
+                    cout << "LOAD Green Guide" << endl;
+                }
+            }
+        }else if( p.getStrokeColor() == ofFloatColor::blue ){
+            blue_guide = p;
+            vector<ofPolyline> polys = p.getOutline();
+            for (int j=0; j<polys.size(); j++) {
+                const vector<ofVec3f> &vs = polys[j].getVertices();
+                
+                if( vs.size() == 3 ){
+                    ofVec3f dir1 = vs[0] - vs[1];
+                    ofVec3f dir2 = vs[2] - vs[1];
+                    spreadAngle = dir1.angle( dir2 );
+                    cout << "LOAD BLUE Guide" << endl;
+                    cout << "spreadAngle : " << spreadAngle << endl;
+                }
+            }
+        }else if( p.getFillColor() == ofFloatColor::white ){
+            bg_shape = p;
+            cout << "LOAD Background" << endl;
+        }else if( p.getFillColor() == ofFloatColor::black ){
+            mask = p;
+            cout << "LOAD Mask" << endl;            
+        }
+    }
+    
+    spread_vec *= 0.0005;
+    //spread_vec.normalize();
+    
+    
+}
+
+
+void ofApp::draw_info(){
+    ofPushMatrix();
+    stringstream ss;
+    ss << "fps       : " << (int)ofGetFrameRate() << "\n";
+    ss << "frame     : " << (int)frame << "\n";
+    ss << "exporter frame : " << exporter.getFrameNum() << "\n";
+    ss << "resolution: " << ofGetWidth() << ", " << ofGetHeight() << "\n" << "\n";
+    ss << "particles : " << rf_points.getNumVertices() << "\n";
+    ss << "\n";
+    ofSetColor( 150 );
+    ofDrawBitmapString(ss.str(), 20, 20 );
+    ofPopMatrix();
+}
+
+void ofApp::keyPressed( int key ){
+    
+    switch( key ) {
+        case ' ':
+            bStart = !bStart;
+            break;
+            
+        case 'S':
+            bStart = true;
+            exporter.startExport();
+            ofSetWindowShape(exporter.getFbo().getWidth()/4, exporter.getFbo().getHeight()/4 );
+            ofSetWindowPosition(0, 0);
+            break;
+            
+        case 'r':
+            rot += 90;
+            break;
+            
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+        case 'G':
+        case 'H':
+        case 'I':
+        case 'J':
+        case 'K':
+        case 'L':
+        case 'M':
+            surface_char = key;
+            string svgName = ad_util::data_path + "svg/solo/v4/" + surface_char + ".svg";
+            load_svg( svgName );
+            
+            setup_window( win.x, win.y );
+            reset();
+            break;
+    }
+}
+
+
+void ofApp::setup_window( int x, int y ){
+    exporter.setup(x, y, 25, GL_RGB, 0);
+    string pat = ofGetTimestampString() + "/F_%05i.png";
+    exporter.setFilePattern( pat );
+    exporter.setFrameRange(1, 1500);
+    exporter.setAutoExit(true);
+}
+
+
+

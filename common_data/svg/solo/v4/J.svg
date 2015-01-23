@@ -3,10 +3,12 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="1216px" height="1617px" viewBox="0 0 1216 1617" enable-background="new 0 0 1216 1617" xml:space="preserve">
-<path d="M1216,0v1617H0V0l1015.873,1615.801l53.992-111.979l6.998-421.947l137.983-281.965L995.435,692.112l-105.547,27.801
-	L362.953,55.992L0,0H1216z"/>
+<path d="M-11.5-11v1644h1248V-11H-11.5z M1076.863,1081.875l-6.998,421.947l-53.992,111.979L0,0l362.953,55.992l526.936,663.921
+	l105.547-27.801l219.411,107.798L1076.863,1081.875z"/>
 <path fill="#FFFFFF" d="M362.953,55.992L0,0l1015.873,1615.801l53.992-111.979l6.998-421.947l137.983-281.965L995.435,692.112
 	l-105.547,27.801L362.953,55.992z"/>
 <line fill="none" stroke="#FF0000" stroke-miterlimit="10" x1="1015.873" y1="1615.801" x2="464.941" y2="-127.94"/>
 <line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="1064.297" y1="641.599" x2="374.375" y2="859.578"/>
+<polyline fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" points="923.105,1468.248 1015.873,1615.801 
+	1069.865,1503.822 "/>
 </svg>

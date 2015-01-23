@@ -3,9 +3,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="855px" height="2104px" viewBox="0 0 855 2104" enable-background="new 0 0 855 2104" xml:space="preserve">
-<path d="M855,2104l-855-1.263V47.994l146.806,2041.487l2.179,6.258v6.998l704.91-1319.835L211.973,0h641.921L855,2104z M0,0v47.994
-	L211.973,0H0z"/>
-<path fill="#FFFFFF" d="M211.973,0L0,47.994l146.806,2041.487l2.179,6.258v6.998l704.91-1319.835L211.973,0z"/>
-<line fill="none" stroke="#FF0000" stroke-miterlimit="10" x1="148.969" y1="2104" x2="528.692" y2="-41.268"/>
+<path d="M-20-19.5v2142h898v-2142H-20z M148.987,2102.737v-6.998l-2.179-6.258L0,47.994L211.973,0l641.924,782.902L148.987,2102.737
+	z"/>
+<path fill="#FFFFFF" d="M211.973,0L0,47.994l146.81,2041.487l2.179,6.258v6.998l704.91-1319.835L211.973,0z"/>
+<line fill="none" stroke="#FF0000" stroke-miterlimit="10" x1="148.969" y1="2104" x2="522" y2="-41.268"/>
 <line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="686.334" y1="753.147" x2="68.604" y2="643.807"/>
+<polyline fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" points="128.344,1832.746 148.969,2104 
+	280.846,1855.848 "/>
 </svg>

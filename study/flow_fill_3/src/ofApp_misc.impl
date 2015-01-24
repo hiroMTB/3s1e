@@ -66,7 +66,7 @@ void ofApp::load_svg( string path ){
                         gAngle = -gAngle;
                     start = st;
                     max_dist = dir.length();
-                    spread_vec.x = dir.length() * 0.3;
+                    spread_vec.x = dir.length() * 0.36;
                     cout << "LOAD Red Guide" << endl;
                 }
             }
@@ -175,7 +175,7 @@ void ofApp::setup_window( int x, int y ){
     exporter.setup(x, y, 25, GL_RGB, 0);
     string pat = ofGetTimestampString() + "/F_%05i.png";
     exporter.setFilePattern( pat );
-    exporter.setFrameRange(1, 1500);
+    exporter.setFrameRange(1, 1501);
     exporter.setAutoExit(true);
 }
 

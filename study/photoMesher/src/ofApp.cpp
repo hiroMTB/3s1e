@@ -24,13 +24,14 @@ void ofApp::setup(){
 	ofSetFrameRate( 60 );
     bg.set(0);
     
-    camDist = 7300;
+    camDist = 5000;
     cam.setPosition(1, 0, camDist);
     cam.lookAt(ofVec3f(0,0,0), ofVec3f(0,1,0));
     cam.setFov( 15 );
     
     // 01, 03, 06, 10, 12
-    img.loadImage( "img/coffee_2.tif"); //losglaciares10.jpg");
+    //img.loadImage( "img/coffee_2.tif"); //losglaciares10.jpg");
+    img.loadImage( ad_util::data_path + "img/fixed_point/lg/losglaciares10.jpg");
     load_mesh( img );
     int nw = img.getWidth() / 2;
     int nh = img.getHeight() / 2;
@@ -84,11 +85,10 @@ void ofApp::setup(){
     //int h = svg.getHeight() + 1;
     int w = 5000;  // 7908.01;
     int h = 2500;  //4017.48;
-    exporter.setup( w, h, 25, GL_RGBA, 0);
-//    exporter.setup(1920, 1080, 25, GL_RGB, 0);
+    exporter.setup( w, h, 25, GL_RGB, 0);
     exporter.setFilePattern( ofGetTimestampString() + "/F_%05i.png");
     exporter.setAutoExit(true);
-    exporter.setFrameRange(0,3000);
+    exporter.setFrameRange(1,3001);
     
     ofSetWindowPosition(0, 0);
     ofSetWindowShape( exporter.getFbo().getWidth()/2, exporter.getFbo().getHeight()/2);
@@ -155,7 +155,7 @@ void ofApp::load_mesh( ofFloatImage &img ){
 			lines.addColor( c );
 #endif
             
-            hole_factors.push_back(600*ofNoise(rnd+x*0.1, rnd+y*0.1) + 3);
+            hole_factors.push_back(600*ofNoise(rnd+x*0.005, rnd+y*0.005) + 3);
 			index++;
         }
     }
@@ -238,13 +238,13 @@ void ofApp::update(){
                 float nB = nB1 + nB2;
                 
                 if( !bThruAccel ){
-                    accel[index].x = nR * rate * 0.3;
-                    accel[index].y = nG * rate * 0.3;
+                    accel[index].x = nR * rate * 0.05;
+                    accel[index].y = nG * rate * 0.05;
                     //accel[index].z = nB * rate * 0.05;
                     speed[index] += accel[index];
                 }else{
-                    speed[index].x = nR * rate * 0.02;
-                    speed[index].y = nG * rate * 0.02;
+                    speed[index].x = nR * rate * 0.005;
+                    speed[index].y = nG * rate * 0.005;
                     //speed[index].z = nB * rate * 0.02;
                 }
                 
@@ -257,7 +257,7 @@ void ofApp::update(){
                 float nG = nG1*nB2;
                 float nB = nB1*nR2;
                 
-                rate *= 0.005;
+                rate *= 0.002;
                 cols[index].r += (nR * rate);
                 cols[index].g += (nG * rate);
                 cols[index].b += (nB * rate);
@@ -301,7 +301,7 @@ void ofApp::set_indices(){
                float n3g = gn3.getNoiseuf(x,y,1);
                float n3b = gn3.getNoiseuf(x,y,2);
 
-               float hole  = n1r*n1r*n1r + n3r*n3g*n3b  + ofRandomuf()*0.1;
+               float hole  = n1r*n1r*n1r + n3r*n3g*n3b  + ofRandomuf()*1.2;
                hole_factors[index] -= hole;
 
                if( hole_factors[index] > 0 ){
@@ -354,15 +354,17 @@ void ofApp::set_indices(){
                    
                    ofVec3f rv( n3r-0.5, n3b-0.5, 0);
                    rv *= 0.05;
-                   rv.y += 0.001;
+                   rv.y = 0.01;
                    speed[index] += rv;
                    
                    vs[index].x += gn.getNoisef(index, 1);
                    vs[index].y += gn.getNoiseuf(index, 2);
-                   cols[index].a    -= 0.0001;
+                   cols[index].a    -= 0.0025;
 
                    float red_rate = ofRandomuf()*0.01;
-                   cols[index].r += red_rate;
+                   static ofFloatColor orange = ofColor( 255, 80, 0, 200);
+                   //cols[index].r += red_rate;
+                   cols[index] = cols[index]*0.99 + orange*0.01;
                    
                    if( 1 ){
                        float low_limit = 10;
@@ -372,26 +374,26 @@ void ofApp::set_indices(){
                        aid = index + 1;
                        if( aid <=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r  += red_rate;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
                        
                        aid = index + 2;
                        if( aid<=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r  += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
                        // LEFT
                        aid = index - 1;
                        if( aid >=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                            cols[aid].r  += red_rate;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
                        
                        aid = index - 2;
                        if( aid>=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r  += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
 
@@ -399,50 +401,49 @@ void ofApp::set_indices(){
                        aid = index + mW;
                        if( index+mW<=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
                        aid = index + mW*2;
                        if( aid<=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
                        aid = index + mW + 1;
                        if( aid <=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
-                       }
+                           cols[index] = cols[index]*0.99 + orange*0.01;                       }
 
                        aid = index + mW - 1;
                        if( aid<=max_index && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
                        
                        // DOWN
                        aid = index - mW;
                        if( aid>=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
                        aid = index - mW*2;
                        if( aid>=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
                        
                        aid = index - mW + 1;
                        if( aid>=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
 
                        aid = index - mW - 1;
                        if( aid>=0 && hole_factors[aid]>low_limit ){
                            vs[aid] += rv;
-                           cols[aid].r += red_rate/2;
+                           cols[index] = cols[index]*0.99 + orange*0.01;
                        }
                    }
                }

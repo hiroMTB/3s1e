@@ -7,7 +7,6 @@
 #include "ofxExportImageSequence.h"
 #include "ofxSimpleSpline.h"
 
-
 class Vine{
 
 public:

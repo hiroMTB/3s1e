@@ -3,7 +3,7 @@
 
 
 //#define OPEN_DIALOG
-//#define RENDER
+#define RENDER
 #define SPLINE
 #define CP_POINT
 #define CIRCLE
@@ -268,7 +268,7 @@ void ofApp::draw(){
                 }
                 
                 ofNoFill();
-				float rate = vines[i].age/550.0;
+				float rate = vines[i].age/1350.0;
 				int radius = vines[i].radius + ofRandom(1, 5);
 				float angle =  ofRandomf() * 360.0;
 				ofVec3f dir = ofVec3f(cos(angle), sin(angle), 0) * radius;

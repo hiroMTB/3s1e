@@ -18,8 +18,6 @@ void ofApp::setup(){
 	ofBackground( 255 );
 	ofEnableAlphaBlending();
 	
-	
-	
 	cam.setTarget( ofVec3f(0,0,0) );
 	cam.setDistance( 50 );
 	cam.lookAt( ofVec3f(0,0,0), ofVec3f(1, 0, 0) );

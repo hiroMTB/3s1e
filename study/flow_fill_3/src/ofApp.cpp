@@ -1,12 +1,11 @@
 #include "ofApp.h"
 #include "ad_util.h"
 
-
-//#define OPEN_DIALOG
-#define RENDER
+//#define RENDER
 #define SPLINE
-#define CP_POINT
+//#define CP_POINT
 #define CIRCLE
+//#define SINGLE
 
 ofColor ofApp::orange = ofColor( 255, 80, 0, 200);
 
@@ -55,7 +54,7 @@ void ofApp::reset(){
     r_lines.setMode( OF_PRIMITIVE_LINES );
 
     // Initial Particle
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<1; i++) {
         add_particle();
     }
 }
@@ -95,18 +94,20 @@ void ofApp::add_particle(){
 	// Add Vine
 	Vine v;
 	v.radius = ofRandom(2, 20);
-    v.angle = index % (int)(round)(spreadAngle+1);
+	v.angle =  spreadAngle * ofRandomuf(); //index % (int)spreadAngle;
 	v.num_cv = cv_num;
 	
 	for( int i=0; i<v.num_cv; i++ ){
 		v.speeds.push_back( ofVec3f(0,0,0) );
-        v.speeds[i].x = 2.0*(float)i/v.num_cv + ofNoise( 1, i*0.5 + index*0.1 )*50.0;
-		v.speeds[i].y = ofRandomf() * 45.0;
+		v.speeds[i].x = 50*(float)i/v.num_cv;  // + ofNoise( 1, i*0.5 + index*0.1 )*50.0;
+		v.speeds[i].y = 0; //ofRandomf() * 45.0;
 		
 		if( ofNoise(2, i+index) > 0.8 )
 			v.speeds[i].x *= ofRandom(1.2, 2.3);
-		if( ofRandomuf() > 0.8 )
-			v.speeds[i].y *= ofRandom(1.5, 2);
+		
+		//if( ofRandomuf() > 0.4 )
+		//v.speeds[i].y *= ofRandom(1, 3);
+		v.speeds[i].y = 0;
 		
         v.speeds[i].x *= spread_vec.x;
         v.speeds[i].y *= spread_vec.y;
@@ -132,9 +133,11 @@ void ofApp::update(){
     r_lines.clearVertices();
     r_lines.clearColors();
 	
-    for (int i=0; i<spreadAngle*0.5; i++) {
-        add_particle();
+#ifndef SINGLE
+    for (int i=0; i<3; i++) {
+      add_particle();
     }
+#endif
 	
     update_particle();
 }
@@ -157,8 +160,8 @@ void ofApp::update_particle(){
             vines[i].phase[topId] += phase_adder;
             
             ofVec3f add;
-            add.x = 0.05 + ofNoise( ofGetFrameNum()+i, cols[i].r*0.03, i*1.2 );
-            add.y = sin( vines[i].phase[topId]  ) * 0.6;
+			add.x = 1.05; // + ofNoise( ofGetFrameNum()+i, cols[i].r*0.03, i*1.2 );
+            add.y = sin( vines[i].phase[topId]  ) * 1.2;
             add.x *= spread_vec.x;
             add.y *= spread_vec.y;
             
@@ -166,33 +169,39 @@ void ofApp::update_particle(){
             vines[i].speeds[topId] += vines[i].accels[topId];
             vs[i] += vines[i].speeds[topId];
             splines[i].cv[topId] = vs[i];
-            
-            vines[i].speeds[topId] *= 0.85;
+			vines[i].speeds[topId] *= 0.85;
         }
         
         // 1 ~ TOP-1
         for( int j=1; j<vines[i].num_cv-1; j++ ){
-            
+			
+			// inverse
+			int index = vines[i].num_cv-1 - j;
+			ofVec3f next_pos = splines[i].cv[index+1];
+			ofVec3f dir = next_pos - splines[i].cv[index];
+			
             float phase_adder = 1.0/25.0 * vines[i].freq[j];
-            vines[i].phase[j] += phase_adder;
-            
-            
-            float rate = (float)j/vines[i].num_cv;
+            vines[i].phase[index] += phase_adder;
+			
+			int nv = vines[i].num_cv-1;
+            float rate = 0.3 + 0.7*(float)j/(nv);
             ofVec3f add;
-            add.x = 0.02*rate + ofNoise(2, j, ofGetFrameRate(), i*1.5 );
-            add.y = sin( vines[i].phase[j]  );
+			add.x = (rate + ofNoise(2, j, ofGetFrameRate(), i*1.5 ) ) * 0.8;
+            add.y = (rate * sin( vines[i].phase[index] )) * 2.0;
 
-            float ampy = 0.1 + 0.3*rate;
+            float ampy = 0.1 + rate * 0.5;
             float ampx = 0.4;
 
             add.x *= ampx;
             add.y *= ampy;
             add.x *= spread_vec.x;
             add.y *= spread_vec.y;
+			
+			add += dir*0.002;
 
-            vines[i].speeds[j] += add;
-            splines[i].cv[j] += vines[i].speeds[j];
-            vines[i].speeds[j] *= 0.85;
+            vines[i].speeds[index] += add;
+            splines[i].cv[index] += vines[i].speeds[index];
+            vines[i].speeds[index] *= 0.85;
         }
         
         // update Color
@@ -230,23 +239,26 @@ void ofApp::draw(){
 			ofSetColor(255);
             for( int i=0; i<splines.size(); i++ ){
                 ofPushMatrix();
-                ofRotateZ( vines[i].angle -spreadAngle*0.5 );
-                splines[i].draw();
+#ifndef SINGLE
+				ofRotateZ( vines[i].angle -spreadAngle*0.5 );
+#endif
+				splines[i].draw();
                 ofPopMatrix();
             }
 #endif
 			
 #ifdef CP_POINT
-            ofSetColor(225, 20);
+            ofSetColor(5, 200);
             for( int i=0; i<splines.size(); i++ ){
                 ofPushMatrix();
-                ofRotateZ( vines[i].angle-spreadAngle*0.5 );
-
-                glPointSize(1);
+#ifndef SINGLE
+				ofRotateZ( vines[i].angle-spreadAngle*0.5 );
+#endif
+                glPointSize(3);
                 glBegin( GL_POINTS );
                 for (int j=0; j< splines[i].cv.size(); j++) {
                     const ofVec3f &v = splines[i].cv[j];
-                    glVertex3f( v.x, v.y, v.z );
+					glVertex3f( v.x, v.y, v.z );
                 }
                 glEnd();
                 ofPopMatrix();
@@ -259,7 +271,9 @@ void ofApp::draw(){
 
 			for( int i=0; i<vs.size(); i++ ){
                 ofPushMatrix();
-                ofRotateZ( vines[i].angle-spreadAngle*0.5);
+#ifndef SINGLE
+				ofRotateZ( vines[i].angle-spreadAngle*0.5);
+#endif
 
                 if( !exporter.isExporting() ){
                     ofSetLineWidth(1);
@@ -297,9 +311,11 @@ void ofApp::draw(){
             
             for( int i=0; i<vs.size(); i++ ){
                 ofPushMatrix();
-                ofRotateZ( vines[i].angle-spreadAngle*0.5);
+#ifndef SINGLE
+				ofRotateZ( vines[i].angle-spreadAngle*0.5);
+#endif
                 ofSetColor( cols[i] );
-                glPointSize(1);
+                glPointSize(3);
                 glBegin( GL_POINTS );
                 int last_index = splines[i].cv.size();
                 const ofVec3f &v = splines[i].cv[last_index];
@@ -328,7 +344,7 @@ void ofApp::draw(){
         if( !exporter.isExporting() ){
             red_guide.draw(0,0);
             green_guide.draw(0,0);
-            blue_guide.draw(0,0);
+            //blue_guide.draw(0,0);
         }
 
 	} exporter.end();

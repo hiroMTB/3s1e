@@ -94,7 +94,7 @@ void ofApp::load_svg( string path ){
                 if( vs.size() == 3 ){
                     ofVec3f dir1 = vs[0] - vs[1];
                     ofVec3f dir2 = vs[2] - vs[1];
-                    spreadAngle = dir1.angle( dir2 );
+					spreadAngle = 120; //dir1.angle( dir2 ) * 1.1;
                     cout << "LOAD BLUE Guide" << endl;
                     cout << "spreadAngle : " << spreadAngle << endl;
                 }
@@ -109,8 +109,9 @@ void ofApp::load_svg( string path ){
     }
     
     spread_vec *= 0.0005;
-    //spread_vec.normalize();
-    
+//	spread_vec.x = 0.48;
+	spread_vec.y = 0.3;
+    //spread_vec.normalize();s
     
 }
 

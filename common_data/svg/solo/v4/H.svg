@@ -6,7 +6,7 @@
 <path d="M-12.5-10.5v1422h1465v-1422H-12.5z M265.557,1399.912l-100.986-242.971L0.59,1.087l3.999-1L1445.41,1091.951
 	L265.557,1399.912z"/>
 <path fill="#FFFFFF" d="M1445.41,1091.951L265.557,1399.912l-100.986-242.971L0.59,1.087l3.999-1L1445.41,1091.951z"/>
-<line fill="none" stroke="#FF0000" stroke-miterlimit="10" x1="1445.41" y1="1091.951" x2="-190.864" y2="723.59"/>
+<line fill="none" stroke="#FF0000" stroke-miterlimit="10" x1="1445.41" y1="1091.951" x2="-264.5" y2="707.013"/>
 <line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="690.652" y1="364.213" x2="476.147" y2="1259.705"/>
 <polyline fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" points="1307.568,1127.93 1445.41,1091.951 
 	1321.718,998.215 "/>

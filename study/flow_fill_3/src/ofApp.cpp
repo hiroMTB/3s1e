@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "ad_util.h"
 
-//#define RENDER
+#define RENDER
 #define SPLINE
 //#define CP_POINT
 #define CIRCLE
@@ -93,7 +93,7 @@ void ofApp::add_particle(){
 	
 	// Add Vine
 	Vine v;
-	v.radius = ofRandom(2, 20);
+	v.radius = ofRandom(1, 10);
 	v.angle =  spreadAngle * ofRandomuf(); //index % (int)spreadAngle;
 	v.num_cv = cv_num;
 	
@@ -112,6 +112,8 @@ void ofApp::add_particle(){
         v.speeds[i].x *= spread_vec.x;
         v.speeds[i].y *= spread_vec.y;
 
+		v.speeds[i] *= 0.5;
+		
         if( i== v.num_cv-1){
             v.speeds[i] *= 1.2;
         }
@@ -164,7 +166,9 @@ void ofApp::update_particle(){
             add.y = sin( vines[i].phase[topId]  ) * 1.2;
             add.x *= spread_vec.x;
             add.y *= spread_vec.y;
-            
+			
+			add *= 0.5;
+			
             vines[i].accels[topId] = add;
             vines[i].speeds[topId] += vines[i].accels[topId];
             vs[i] += vines[i].speeds[topId];
@@ -198,7 +202,9 @@ void ofApp::update_particle(){
             add.y *= spread_vec.y;
 			
 			add += dir*0.002;
-
+			
+			add *= 0.5;
+			
             vines[i].speeds[index] += add;
             splines[i].cv[index] += vines[i].speeds[index];
             vines[i].speeds[index] *= 0.85;

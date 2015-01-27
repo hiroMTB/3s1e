@@ -9,7 +9,7 @@
 #include "ofApp.h"
 #include "ad_util.h"
 
-bool ofApp::bRender = false;
+bool ofApp::bRender = true;
 float ofApp::density = 0;
 
 ofApp * ofApp::app = NULL;
@@ -22,13 +22,13 @@ void ofApp::setup(){
     ofSetCircleResolution( 4 );
     ofSetVerticalSync( true );
     
-    // ABC
-    grav_wall.impulse = -1.2;
-    density = 1.3;
-
-    // DEF
+    // ABC / KLM
     //grav_wall.impulse = -1.2;
-    //density = 1.1;
+    //density = 1.3;
+
+    // DEF / HIJ
+    grav_wall.impulse = -1.2;
+    density = 1.1;
 
     // G
     //grav_wall.impulse = -4.5;
@@ -100,11 +100,7 @@ void ofApp::draw(){
         ofBackground( 255 );
         grav_wall.draw_lines();
         //mask.draw(0, 0);
-        if( !exps[0].isExporting() ){
-            for (int i=0; i<wall_path.size(); i++) {
-                wall_path[i].draw(0, 0);
-            }
-        }
+        
     }exps[0].end();
 
     exps[1].begin();{

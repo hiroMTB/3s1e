@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="2202.725px" height="2643.67px" viewBox="0 0 2202.725 2643.67" enable-background="new 0 0 2202.725 2643.67"
+	 xml:space="preserve">
+<g id="particlelines">
+	<line id="pl4" fill="none" stroke="#000000" stroke-miterlimit="10" x1="2202.704" y1="1979.542" x2="1675.77" y2="2643.456"/>
+	<path id="pl3a" fill="none" stroke="#000000" stroke-miterlimit="10" d="M1999.747,1779.763L293.962,2279.7"/>
+	<line id="pl3b" fill="none" stroke="#000000" stroke-miterlimit="10" x1="293.962" y1="2279.7" x2="1999.747" y2="1779.763"/>
+	<line id="pl2b" fill="none" stroke="#000000" stroke-miterlimit="10" x1="853.892" y1="782.888" x2="148.964" y2="2102.522"/>
+	<path id="pl2a" fill="none" stroke="#000000" stroke-miterlimit="10" d="M148.98,2102.722L853.892,782.888"/>
+</g>
+<g id="waterlines">
+	<line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="1.895" y1="-827.665" x2="211.973" y2="344.769"/>
+	<line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="211.973" y1="344.769" x2="477.178" y2="1488.241"/>
+	<line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="477.178" y1="1488.241" x2="956.026" y2="2085.675"/>
+	<line fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="956.026" y1="2085.675" x2="2589.863" y2="2791.279"/>
+</g>
+<g id="mask">
+	<path d="M-36.99-33.53v2714.583h2281.25V-33.53H-36.99z M1675.77,2643.456L293.943,2279.501l-144.979-176.979l-2.187-13.254
+		L-0.02,47.78L211.953-0.214l641.919,782.902l1145.854,996.875l202.979,199.979L1675.77,2643.456z"/>
+</g>
+</svg>

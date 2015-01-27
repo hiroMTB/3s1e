@@ -487,7 +487,7 @@ void ad_grav_wall::update_lines(){
                             ofVec3f d1 = pos1;
                             ofVec3f d2 = onLine;
                             d1.x += ofRandomf() * rate;
-                            d1.y += ofRandomf() * rate;
+                            d1.y += ofRandomf() * rate;w
                             d2.x += ofRandomf() * rate;
                             d2.y += ofRandomf() * rate;
                             

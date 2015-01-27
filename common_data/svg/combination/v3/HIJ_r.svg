@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="1803.775px" height="2069.746px" viewBox="3.301 0 1803.775 2069.746" enable-background="new 3.301 0 1803.775 2069.746"
+	 xml:space="preserve">
+<g id="pl">
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="268.267" y1="2069.746" x2="167.281" y2="1826.775"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="167.281" y1="1826.775" x2="3.301" y2="670.919"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="1448.121" y1="1761.783" x2="7.302" y2="669.919"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="7.302" y1="669.919" x2="1448.121" y2="1761.783"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="1608.103" y1="1615.802" x2="592.228" y2="0"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="592.228" y1="0" x2="1608.101" y2="1615.802"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="955.181" y1="55.993" x2="1482.117" y2="719.914"/>
+</g>
+<g id="mask_1_">
+	<path d="M-18.104-18.627v2104h1846v-2104H-18.104z M1669.092,1081.869l-6.998,421.947l-53.992,111.986l-159.98,145.98
+		L268.267,2069.746l-100.986-242.971L3.301,670.919l4-1L592.228,0l362.953,55.993l526.936,663.92l105.547-27.801l219.412,107.791
+		L1669.092,1081.869z"/>
+</g>
+<g id="wl">
+	
+		<line id="wl3" fill="none" stroke="#00FF00" stroke-width="6" stroke-miterlimit="10" x1="-413.408" y1="1819.749" x2="783.496" y2="1258.126"/>
+	
+		<line id="wl2" fill="none" stroke="#00FF00" stroke-width="6" stroke-miterlimit="10" x1="783.496" y1="1258.126" x2="1160.338" y2="903.609"/>
+	
+		<line id="wl1" fill="none" stroke="#00FF00" stroke-width="6" stroke-miterlimit="10" x1="1160.338" y1="903.609" x2="1635.039" y2="0"/>
+</g>
+<g id="wall">
+	<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="3.301" y1="670.919" x2="167.281" y2="1826.775"/>
+	
+		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="167.281" y1="1826.775" x2="393.286" y2="2370.537"/>
+	
+		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="955.181" y1="55.993" x2="1482.117" y2="719.914"/>
+	
+		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="1482.117" y1="719.914" x2="1946.535" y2="597.587"/>
+	
+		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="955.181" y1="55.993" x2="1025.224" y2="-328.326"/>
+	<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="3.301" y1="670.919" x2="-322.317" y2="444.863"/>
+</g>
+</svg>

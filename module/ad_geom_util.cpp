@@ -41,5 +41,5 @@ bool ad_geom_util::isOnline( ofVec3f p0, ofVec3f p1, ofVec3f p2 ){
     ofVec3f dir1 = p2 - p1;
     ofVec3f dir2 = p0 - p1;
     float angle = dir1.angle( dir2 );
-    return angle == 0 && dir2.length()<dir1.length();
+    return (-2<angle&&angle<2)  && (dir2.length()<dir1.length() );
 }

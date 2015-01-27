@@ -10,7 +10,6 @@
 
 #include "ofMain.h"
 #include "ad_grav_wall.h"
-#include "ad_image_saver.h"
 #include "ofxGpuNoise.h"
 #include "ofxSvg.h"
 #include "ofxExportImageSequence.h"
@@ -19,6 +18,9 @@ class ofApp : public ofBaseApp{
     
 public:
 	
+    static bool bRender;
+    static float density;
+    
 	static ofApp * app;
 	static ofApp * init(){ app = new ofApp(); return app; }
 	
@@ -28,6 +30,10 @@ public:
     void draw_info();
     void keyPressed( int key );
 	
+    void load_svg( string path );
+    void load_noise();
+    void setup_window( int w, int h );
+    
 	inline float getNoise( int index, int ch=0 ){
 		index %= noise_size;
 		return (float)noise[index*3 + ch]/255.0;
@@ -41,19 +47,20 @@ public:
     bool bStart;
     bool bInit;
     bool bDraw_info;
+    int mode;
     float frame;
+    int noise_size;
+    unsigned char * noise;
     
+    ofPoint global_pivot;
+    ofPoint win;
     ofEasyCam cam;
-    ad_grav_wall grav_wall;
-    ad_image_saver saver;
-	
 	ofxGpuNoise gpu_noise;
-	int noise_size;
-	unsigned char * noise;
-    
-    ofxSVG sABC;
-    ofxExportImageSequence exporter;
-
-	ofPoint global_pivot;
+    ofxSVG svg;
     ofImage img;
+    ofPath mask;
+    vector<ofPath> wall_path;
+    vector<ofxExportImageSequence> exps;
+
+    ad_grav_wall grav_wall;
 };

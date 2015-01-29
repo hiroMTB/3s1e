@@ -46,7 +46,6 @@ public:
     void draw_lines();
     void draw_points();
     void draw_guide();
-    void setGrav( float g);
     void toggleCollision( float rate );
     void reset_attr();
     void change_attr();
@@ -65,8 +64,9 @@ public:
 	bool bReleased;
     int near_line_num;
     float frame;
-    float impulse;
-    
+    vector<float> impulses;
+	vector<float> impulse_rate;
+	
     ofImage * colref;
     ofVboMesh points;
     ofVboMesh lines;

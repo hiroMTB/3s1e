@@ -24,9 +24,11 @@ int ad_grav_wall::pid = 0;
 ad_grav_wall::ad_grav_wall()
 :bInitPhysics(false),
 bReleased(false),
-impulse(-0.0),
 near_line_num(12)
-{}
+{
+	impulses.assign( 2, 0 );
+	impulse_rate.assign( 2, 0 );
+}
 
 void ad_grav_wall::setup( ofImage * img,  ofCamera *cam ){
     if( !bInitPhysics ){
@@ -35,7 +37,7 @@ void ad_grav_wall::setup( ofImage * img,  ofCamera *cam ){
         world.setGravity( ofVec3f(0, 0, 0) );
         
         for( int i=1; i<=30; i++ ){
-            float size = 0.3 + i*0.02;
+            float size = 1 + i*0.1;
             btSphereShape * s = ofBtGetSphereCollisionShape( 1 );
             s->setLocalScaling( btVector3(size, size, size) );
             sphereShapes.push_back( s );
@@ -58,8 +60,10 @@ void ad_grav_wall::setup( ofImage * img,  ofCamera *cam ){
 }
 
 void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
-    
-    gvWall * gvw = new gvWall(p1, p2);
+	
+	gvWall * gvw = new gvWall(p1, p2);
+	vector<gvWall*> * gvlist = new vector<gvWall*>;
+	gvlist->push_back( gvw );
 
     /*
      *     add Attractors
@@ -107,19 +111,19 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
         float massNoise = ofNoise(pid*0.1, pos.y) + ofNoise(pid*0.0011, pos.y*0.0013 ) + ofNoise(pid*0.00027, pos.y*0.00021 ) + ofRandomuf() + ofRandomuf();
         float mass = 5.0 - massNoise;
         mass = MAX(0.2, mass);
-        
-        if( ofRandomuf() > 0.8 ){
-            mass += ofRandom(0.5, 1);
-
-            if( ofRandomuf() > 0.9 ){
-                mass += ofRandom(1, 3);
-                
-                if( ofRandomuf() > 0.9 ){
-                    mass += ofRandom(2, 4);
-                }
-            }
-        }
-        
+		
+//        if( ofRandomuf() > 0.8 ){
+//            mass += ofRandom(0.5, 1);
+//
+//            if( ofRandomuf() > 0.9 ){
+//                mass += ofRandom(0.5, 1);
+//                
+//                //if( ofRandomuf() > 0.9 ){
+//                //    mass += ofRandom(2, 4);
+//                //}
+//            }
+//        }
+		
         float size = ofNoise(i+300,mass)*30.0 + i*0.001;
         size = ofMap(size, 0, 30.0, 0, 29, true);
         
@@ -135,7 +139,7 @@ void ad_grav_wall::create_line( ofVec2f p1, ofVec2f p2, float density ){
         
         int mask = wall_col_group;
         s->add( particle_col_group, mask );
-        s->getRigidBody()->setUserPointer( gvw );
+        s->getRigidBody()->setUserPointer( gvlist );
         shapes.push_back( s );
         points.addVertex( pos );
         
@@ -199,17 +203,11 @@ void ad_grav_wall::update(){
 }
 
 void ad_grav_wall::update_attrs(){
-    
+		
     btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
 
     if( bDrawAttrLine ){
-        vector<ofVec3f> vs;
-        vs.assign( objs.size()*2, ofVec3f(0,0,0) );
-        attrLines.clear();
-        attrLines.addVertices(vs);
-        vector<ofFloatColor> cs;
-        cs.assign( objs.size()*2, ofFloatColor(0,0,0,0) );
-        attrLines.addColors( cs );
+        attrLines.clearVertices();
     }
     
     // gravity
@@ -219,52 +217,77 @@ void ad_grav_wall::update_attrs(){
             btTransform &trans = objs[i]->getWorldTransform();
             btVector3 &bpos = trans.getOrigin();
             ofVec3f pos(bpos.x(), bpos.y(), bpos.z());
-            gvWall * gl = static_cast<gvWall*>( objs[i]->getUserPointer() );
-            if( gl == NULL )
-                continue;
-
-            ofVec3f grav_dir = ad_geom_util::vec_pl(pos, gl->p1, gl->p2 );
-            ofVec3f grav_dirn = grav_dir.normalized();
 			
-            btVector3 grav(grav_dirn.x, grav_dirn.y, grav_dirn.z );
-            float len = grav_dir.length();
-            
-            btRigidBody* body = btRigidBody::upcast(objs[i]);
-            float invMass = body->getInvMass();
-            btVector3 force;
-            
-            switch( gravType ){
-                    
-                case 0:
-                    force  = grav * invMass / (len*len) * 100.0;
-                    break;
-                case 1:
-                    force = grav * invMass * (len*len*0.00001 + 0.001);
-                    break;
-            }
-            
-            body->applyCentralForce( force * impulse * 400.0 );
-            if( bDrawAttrLine ){
-                attrLines.setVertex( i*2, pos );
-                attrLines.setVertex( i*2+1, pos+grav_dir );
-                attrLines.setColor( i*2, ofFloatColor(0) );
-                attrLines.setColor( i*2+1, ofFloatColor(0) );
-            }
-        }
+			vector<gvWall*> * gwlist = static_cast<vector<gvWall*>*>( objs[i]->getUserPointer() );
+			if( gwlist == NULL )
+				continue;
+			
+			int n = gwlist->size();
+			
+			btRigidBody* body = btRigidBody::upcast(objs[i]);
+			float invMass = body->getInvMass();
+			btVector3 force;
+			force.setZero();
+			
+			for (int j=0; j<n; j++ ) {
+
+				btVector3 force_adder;
+				
+				gvWall * gl = gwlist->at(j);
+				if( gl == NULL )
+					continue;
+				
+				ofVec3f grav_dir = ad_geom_util::vec_pl(pos, gl->p1, gl->p2 );
+				ofVec3f grav_dirn = grav_dir.getNormalized();
+				btVector3 grav(grav_dirn.x, grav_dirn.y, grav_dirn.z );
+				float len = grav_dir.length();
+				
+				gravType = j;
+				switch( gravType ){
+						
+					case 0:
+						force_adder = grav * invMass / (len*len) * 100.0;
+						break;
+					case 1:
+						force_adder = grav * invMass * (len*len*0.00001 + 0.001);
+						break;
+				}
+				
+				force_adder *= impulse_rate[j] * impulses[j] * 400.0;
+
+				if( 0 && j == 1 ){
+					int cw = ofApp::app->exps[0].getFbo().getWidth()/2;
+					float rate = abs(pos.x-cw)/cw;
+					btVector3 rndf = grav * (1+ofNoise(pos.x*0.5)) * len/9.0 * rate;
+					force_adder += rndf;
+				}
+
+				force += force_adder;
+				
+				if( bDrawAttrLine ){
+					attrLines.addVertex( pos );
+					attrLines.addVertex( pos+grav_dir );
+					attrLines.addColor( ofFloatColor(0) );
+					attrLines.addColor( ofFloatColor(0) );
+				}
+			}
+			
+			body->applyCentralForce( force  );
+		}
     }
 }
 
 void ad_grav_wall::update_lines(){
 
     lines.clear();
-    
+	
     const vector<ofFloatColor> & pcol = points.getColors();
-    
+	
 	btCollisionObjectArray& objs = world.world->getCollisionObjectArray();
 	
 #pragma mark RANDOM_LINE
     if( 0 ){
-        
+		
         for( int i=0; i<1000; i++ ){
             
             int id1 = ofRandom(0, objs.size()-1);
@@ -342,7 +365,7 @@ void ad_grav_wall::update_points(){
 	
     for( int i=0; i<shapes.size(); i++ ){
         ofVec3f p = shapes[i]->getPosition();
-        //p.z = 0;
+        p.z = 0;
         verts[i] = p;
     }
 }
@@ -377,12 +400,8 @@ void ad_grav_wall::draw_lines(){
 }
 
 void ad_grav_wall::draw_points(){
-    glPointSize( 4 );
+    glPointSize( 2 );
     points.draw();
-}
-
-void ad_grav_wall::setGrav( float g){
-    impulse = g;
 }
 
 void ad_grav_wall::toggleCollision( float rate ){
@@ -406,10 +425,9 @@ void ad_grav_wall::toggleCollision( float rate ){
 void ad_grav_wall::change_attr(){
 
     for( int i=0; i<shapes.size(); i++ ){
-        
-        //if( shapes[i]->getRigidBody()->getUserPointer() != NULL)
-          //  continue;
-        
+		
+		vector<gvWall*> * gwlist = static_cast<vector<gvWall*>*>( shapes[i]->getRigidBody()->getUserPointer() );
+		
         ofVec3f pos = shapes[i]->getPosition();
 
         bool find = false;
@@ -427,7 +445,15 @@ void ad_grav_wall::change_attr(){
                 float dist = dir.length();
                 if( dist < nearest ){
                     // re register gbWall
-                    shapes[i]->getRigidBody()->setUserPointer( wl );
+					int n = gwlist->size();
+					if( n == 1 ){
+						gwlist->push_back( wl );
+					}else if( n == 2){
+						gwlist->at(1) = wl;
+					}else{
+						cout << "strrange" << endl;
+					}
+					
                     nearest = dist;
                     find = true;
                 }
@@ -453,22 +479,30 @@ void ad_grav_wall::change_attr(){
                 
                 if( dist1 < nearest ){
                     nearest = dist1;
-                    shapes[i]->getRigidBody()->setUserPointer( wl );
+					if( gwlist->size() == 1 ){
+						gwlist->push_back( wl );
+					}else{
+						gwlist->at(1) = wl;
+					}
                 }
                 if( dist2 < nearest ){
                     nearest = dist2;
-                    shapes[i]->getRigidBody()->setUserPointer( wl );
+					if( gwlist->size() == 1 ){
+						gwlist->push_back( wl );
+					}else{
+						gwlist->at(1) = wl;
+					}
                 }
             }
         }
     }
 }
 
-void ad_grav_wall::reset_attr(){
-   for( int i=0; i<shapes.size(); i++ ){
-        shapes[i]->getRigidBody()->setUserPointer( NULL );
-    }
-}
+//void ad_grav_wall::reset_attr(){
+//   for( int i=0; i<shapes.size(); i++ ){
+//        shapes[i]->getRigidBody()->setUserPointer( NULL );
+//    }
+//}
 
 void ad_grav_wall::change_size( float size ){
 

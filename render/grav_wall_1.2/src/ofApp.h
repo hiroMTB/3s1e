@@ -63,4 +63,7 @@ public:
     vector<ofxExportImageSequence> exps;
 
     ad_grav_wall grav_wall;
+	
+	
+	int sel_layer;
 };

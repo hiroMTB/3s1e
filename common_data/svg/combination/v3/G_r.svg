@@ -4,25 +4,16 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="1970px" height="1460px" viewBox="0 0 1970 1460" enable-background="new 0 0 1970 1460" xml:space="preserve">
 <g id="Layer_1_1_">
-	<path d="M-18-16v1492h2008V-16H-18z M22,1443.805l-1-267.967L184.569,21h1599.21l163.98,1155.854l0.412,266.946L22,1443.805
+	<path d="M-18-16v1492h2008V-16H-18z M22,1443.805l-1-267.967L184.569,21h1599.21l163.979,1155.854l0.412,266.946L22,1443.805
 		L22,1443.805z"/>
 </g>
 <g id="Layer_2">
-	<line id="pl4" fill="none" stroke="#000000" stroke-miterlimit="10" x1="1947.735" y1="1176.856" x2="1948.197" y2="1476.554"/>
+	<line id="pl4" fill="none" stroke="#000000" stroke-miterlimit="10" x1="1947.735" y1="1176.855" x2="1948.197" y2="1476.554"/>
 	<line id="pl3" fill="none" stroke="#000000" stroke-miterlimit="10" x1="22.061" y1="1476.554" x2="20.939" y2="1175.838"/>
-	<line id="pl2" fill="none" stroke="#000000" stroke-miterlimit="10" x1="1775.782" y1="-35.371" x2="1947.76" y2="1176.856"/>
+	<line id="pl2" fill="none" stroke="#000000" stroke-miterlimit="10" x1="1775.782" y1="-35.371" x2="1947.76" y2="1176.855"/>
 	<line id="pl1" fill="none" stroke="#000000" stroke-miterlimit="10" x1="21" y1="1175.838" x2="192.553" y2="-35.371"/>
 </g>
 <g id="Layer_3">
 	<line id="wl1" fill="none" stroke="#00FF00" stroke-miterlimit="10" x1="2356.179" y1="914.797" x2="-438.182" y2="914.346"/>
-</g>
-<g id="wall">
-	
-		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="228.045" y1="-285.859" x2="20.939" y2="1175.838"/>
-	<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="20.64" y1="1175.838" x2="22.361" y2="1637.044"/>
-	
-		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="1740.251" y1="-285.859" x2="1947.735" y2="1176.856"/>
-	
-		<line fill="none" stroke="#0000FF" stroke-width="6" stroke-miterlimit="10" x1="1947.644" y1="1176.856" x2="1948.314" y2="1637.044"/>
 </g>
 </svg>

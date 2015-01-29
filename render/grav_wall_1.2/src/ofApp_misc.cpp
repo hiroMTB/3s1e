@@ -121,7 +121,16 @@ void ofApp::draw_info(){
 
 void ofApp::keyPressed( int key ){
     switch( key ) {
-        case 'f':
+
+		case '0':
+			sel_layer = 0;
+			break;
+
+		case '1':
+			sel_layer = 1;
+			break;
+			
+		case 'f':
             ofToggleFullscreen();
             break;
             
@@ -175,7 +184,7 @@ void ofApp::setup_window( int w, int h ){
         exps[i].setup(w, h, 25, GL_RGB, 0);
         string pat = timeStamp + "/L" + ofToString(i) + "/F_%05i.png";
         exps[i].setFilePattern( pat );
-        exps[i].setFrameRange(1, 2502);
+        exps[i].setFrameRange(1, 3502);
         exps[i].setAutoExit(true);
     }
 
